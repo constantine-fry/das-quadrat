@@ -13,6 +13,7 @@
 		475D10661A0E35AB000F699A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 475D10641A0E35AB000F699A /* Main.storyboard */; };
 		475D10681A0E35AB000F699A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 475D10671A0E35AB000F699A /* Images.xcassets */; };
 		475D106B1A0E35AB000F699A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 475D10691A0E35AB000F699A /* LaunchScreen.xib */; };
+		475D10B51A0E3708000F699A /* Foursquare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 475D10B41A0E3708000F699A /* Foursquare.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		475D10651A0E35AB000F699A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		475D10671A0E35AB000F699A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		475D106A1A0E35AB000F699A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		475D10B41A0E3708000F699A /* Foursquare.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foursquare.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Foursquare-anrmxufunpanzdaqztlupbwzzaux/Build/Products/Debug-iphoneos/Foursquare.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				475D10B51A0E3708000F699A /* Foursquare.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +43,7 @@
 		475D10501A0E35AB000F699A = {
 			isa = PBXGroup;
 			children = (
+				475D10B41A0E3708000F699A /* Foursquare.framework */,
 				475D105B1A0E35AB000F699A /* Demo-iOS */,
 				475D105A1A0E35AB000F699A /* Products */,
 			);
@@ -254,6 +258,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Foursquare-anrmxufunpanzdaqztlupbwzzaux/Build/Products/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = "Demo-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -264,6 +272,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Foursquare-anrmxufunpanzdaqztlupbwzzaux/Build/Products/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = "Demo-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
