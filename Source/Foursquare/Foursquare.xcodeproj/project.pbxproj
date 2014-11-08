@@ -7,10 +7,52 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		47A1DF1919FD166E003A72CB /* Foursquare.h in Headers */ = {isa = PBXBuildFile; fileRef = 47A1DF1819FD166E003A72CB /* Foursquare.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		470E815A19FD1B7400E47356 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470E815919FD1B7400E47356 /* Session.swift */; };
+		470E815C19FD1BD100E47356 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470E815B19FD1BD100E47356 /* Keychain.swift */; };
+		470E815E19FD1BE500E47356 /* Authorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470E815D19FD1BE500E47356 /* Authorizer.swift */; };
+		470E816319FD20FE00E47356 /* Session.swift in Headers */ = {isa = PBXBuildFile; fileRef = 470E815919FD1B7400E47356 /* Session.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		470E816419FD211800E47356 /* Keychain.swift in Headers */ = {isa = PBXBuildFile; fileRef = 470E815B19FD1BD100E47356 /* Keychain.swift */; };
+		470E816519FD211800E47356 /* Authorizer.swift in Headers */ = {isa = PBXBuildFile; fileRef = 470E815D19FD1BE500E47356 /* Authorizer.swift */; };
+		470E816819FD244400E47356 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470E816719FD244400E47356 /* Users.swift */; };
+		470E816A19FD33A800E47356 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470E816919FD33A800E47356 /* Task.swift */; };
+		470E816C19FD94AE00E47356 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470E816B19FD94AE00E47356 /* Configuration.swift */; };
+		470E816D19FD9FA100E47356 /* Task.swift in Headers */ = {isa = PBXBuildFile; fileRef = 470E816919FD33A800E47356 /* Task.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		470E816E19FD9FA400E47356 /* Configuration.swift in Headers */ = {isa = PBXBuildFile; fileRef = 470E816B19FD94AE00E47356 /* Configuration.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		474FB9771A02D55200E5CCA4 /* Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474FB9761A02D55200E5CCA4 /* Photos.swift */; };
+		475D10391A0BF69D000F699A /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475D10381A0BF69D000F699A /* Endpoint.swift */; };
+		475D103B1A0C1F1A000F699A /* Venues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475D103A1A0C1F1A000F699A /* Venues.swift */; };
+		475D103D1A0C1F66000F699A /* VenueGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475D103C1A0C1F66000F699A /* VenueGroups.swift */; };
+		475D103F1A0C1F72000F699A /* Checkins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475D103E1A0C1F72000F699A /* Checkins.swift */; };
+		475D10411A0C1F7F000F699A /* Tips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475D10401A0C1F7F000F699A /* Tips.swift */; };
+		475D10431A0C1F96000F699A /* Lists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475D10421A0C1F96000F699A /* Lists.swift */; };
+		475D10451A0C1FA0000F699A /* Updates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475D10441A0C1FA0000F699A /* Updates.swift */; };
+		475D10471A0C1FB8000F699A /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475D10461A0C1FB8000F699A /* Settings.swift */; };
+		475D10491A0C1FC3000F699A /* Specials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475D10481A0C1FC3000F699A /* Specials.swift */; };
+		475D104B1A0C1FCE000F699A /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475D104A1A0C1FCE000F699A /* Events.swift */; };
+		475D104D1A0C1FD7000F699A /* Pages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475D104C1A0C1FD7000F699A /* Pages.swift */; };
+		475D104F1A0C1FE2000F699A /* PageUpdates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475D104E1A0C1FE2000F699A /* PageUpdates.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		470E815919FD1B7400E47356 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		470E815B19FD1BD100E47356 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
+		470E815D19FD1BE500E47356 /* Authorizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authorizer.swift; sourceTree = "<group>"; };
+		470E816719FD244400E47356 /* Users.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
+		470E816919FD33A800E47356 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		470E816B19FD94AE00E47356 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		474FB9761A02D55200E5CCA4 /* Photos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photos.swift; sourceTree = "<group>"; };
+		475D10381A0BF69D000F699A /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		475D103A1A0C1F1A000F699A /* Venues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Venues.swift; sourceTree = "<group>"; };
+		475D103C1A0C1F66000F699A /* VenueGroups.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VenueGroups.swift; sourceTree = "<group>"; };
+		475D103E1A0C1F72000F699A /* Checkins.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkins.swift; sourceTree = "<group>"; };
+		475D10401A0C1F7F000F699A /* Tips.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tips.swift; sourceTree = "<group>"; };
+		475D10421A0C1F96000F699A /* Lists.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lists.swift; sourceTree = "<group>"; };
+		475D10441A0C1FA0000F699A /* Updates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Updates.swift; sourceTree = "<group>"; };
+		475D10461A0C1FB8000F699A /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		475D10481A0C1FC3000F699A /* Specials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Specials.swift; sourceTree = "<group>"; };
+		475D104A1A0C1FCE000F699A /* Events.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
+		475D104C1A0C1FD7000F699A /* Pages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pages.swift; sourceTree = "<group>"; };
+		475D104E1A0C1FE2000F699A /* PageUpdates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageUpdates.swift; sourceTree = "<group>"; };
 		47A1DF1319FD166E003A72CB /* Foursquare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Foursquare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		47A1DF1719FD166E003A72CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47A1DF1819FD166E003A72CB /* Foursquare.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Foursquare.h; sourceTree = "<group>"; };
@@ -27,6 +69,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		470E816019FD1D1600E47356 /* Endpoints */ = {
+			isa = PBXGroup;
+			children = (
+				475D10381A0BF69D000F699A /* Endpoint.swift */,
+				470E816719FD244400E47356 /* Users.swift */,
+				475D103A1A0C1F1A000F699A /* Venues.swift */,
+				475D103C1A0C1F66000F699A /* VenueGroups.swift */,
+				475D103E1A0C1F72000F699A /* Checkins.swift */,
+				475D10401A0C1F7F000F699A /* Tips.swift */,
+				475D10421A0C1F96000F699A /* Lists.swift */,
+				475D10441A0C1FA0000F699A /* Updates.swift */,
+				474FB9761A02D55200E5CCA4 /* Photos.swift */,
+				475D10461A0C1FB8000F699A /* Settings.swift */,
+				475D10481A0C1FC3000F699A /* Specials.swift */,
+				475D104A1A0C1FCE000F699A /* Events.swift */,
+				475D104C1A0C1FD7000F699A /* Pages.swift */,
+				475D104E1A0C1FE2000F699A /* PageUpdates.swift */,
+			);
+			path = Endpoints;
+			sourceTree = "<group>";
+		};
 		47A1DF0919FD166D003A72CB = {
 			isa = PBXGroup;
 			children = (
@@ -47,6 +110,12 @@
 			isa = PBXGroup;
 			children = (
 				47A1DF1819FD166E003A72CB /* Foursquare.h */,
+				470E815919FD1B7400E47356 /* Session.swift */,
+				470E815B19FD1BD100E47356 /* Keychain.swift */,
+				470E815D19FD1BE500E47356 /* Authorizer.swift */,
+				470E816919FD33A800E47356 /* Task.swift */,
+				470E816B19FD94AE00E47356 /* Configuration.swift */,
+				470E816019FD1D1600E47356 /* Endpoints */,
 				47A1DF1619FD166E003A72CB /* Supporting Files */,
 			);
 			path = Foursquare;
@@ -67,7 +136,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				47A1DF1919FD166E003A72CB /* Foursquare.h in Headers */,
+				470E816319FD20FE00E47356 /* Session.swift in Headers */,
+				470E816D19FD9FA100E47356 /* Task.swift in Headers */,
+				470E816E19FD9FA400E47356 /* Configuration.swift in Headers */,
+				470E816419FD211800E47356 /* Keychain.swift in Headers */,
+				470E816519FD211800E47356 /* Authorizer.swift in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +211,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				475D104F1A0C1FE2000F699A /* PageUpdates.swift in Sources */,
+				475D10451A0C1FA0000F699A /* Updates.swift in Sources */,
+				470E815E19FD1BE500E47356 /* Authorizer.swift in Sources */,
+				475D103B1A0C1F1A000F699A /* Venues.swift in Sources */,
+				475D10391A0BF69D000F699A /* Endpoint.swift in Sources */,
+				470E816C19FD94AE00E47356 /* Configuration.swift in Sources */,
+				470E816819FD244400E47356 /* Users.swift in Sources */,
+				475D104D1A0C1FD7000F699A /* Pages.swift in Sources */,
+				475D10431A0C1F96000F699A /* Lists.swift in Sources */,
+				475D10411A0C1F7F000F699A /* Tips.swift in Sources */,
+				470E815C19FD1BD100E47356 /* Keychain.swift in Sources */,
+				475D10471A0C1FB8000F699A /* Settings.swift in Sources */,
+				470E816A19FD33A800E47356 /* Task.swift in Sources */,
+				475D103F1A0C1F72000F699A /* Checkins.swift in Sources */,
+				474FB9771A02D55200E5CCA4 /* Photos.swift in Sources */,
+				475D10491A0C1FC3000F699A /* Specials.swift in Sources */,
+				475D104B1A0C1FCE000F699A /* Events.swift in Sources */,
+				470E815A19FD1B7400E47356 /* Session.swift in Sources */,
+				475D103D1A0C1F66000F699A /* VenueGroups.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,27 +324,32 @@
 		47A1DF2A19FD166E003A72CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Foursquare/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		47A1DF2B19FD166E003A72CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Foursquare/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -278,6 +375,7 @@
 				47A1DF2B19FD166E003A72CB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

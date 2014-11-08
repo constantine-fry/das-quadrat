@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  Foursquare Demo
+//  Demo-iOS
 //
-//  Created by Constantine Fry on 26/10/14.
+//  Created by Constantine Fry on 08/11/14.
 //  Copyright (c) 2014 Constantine Fry. All rights reserved.
 //
 

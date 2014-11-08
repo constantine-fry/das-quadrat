@@ -1,0 +1,49 @@
+//
+//  PhotosEndPoint.swift
+//  Foursquare
+//
+//  Created by Constantine Fry on 30/10/14.
+//  Copyright (c) 2014 Constantine Fry. All rights reserved.
+//
+
+import Foundation
+
+public enum FoursquareId {
+    case CheckinId(String)
+    case TipId(String)
+    case VenueId(String)
+    case PageId(String)
+    
+    func parameters() -> Parameters {
+        switch self {
+        case .CheckinId(let idString):
+            return ["checkinId": idString]
+        case .TipId(let idString):
+            return ["tipId": idString]
+        case .VenueId(let idString):
+            return ["venueId": idString]
+        case .PageId(let idString):
+            return ["pageId": idString]
+        }
+    }
+}
+
+public class Photos : Endpoint {
+    
+    // MARK: - Main
+    
+    // MARK: - General
+    
+    public func add(fromURL: NSURL, foursquareID: FoursquareId, parameters: Parameters?, completionHandler:  ResponseCompletionHandler) -> Task {
+        let path = "photos/add"
+        var allParameters = foursquareID.parameters()
+        allParameters += parameters
+        let task = self.uploadTaskFromURL(fromURL, path: path, parameters: allParameters, HTTPMethod: "POST", completionHandler)
+        task.start()
+        return task
+    }
+    
+    // MARK: - Aspects
+    
+    // MARK: - Actions
+}
