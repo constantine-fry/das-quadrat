@@ -23,7 +23,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             callbackURL:    "testapp123://foursquare",
             version:         nil,
             accessToken:     "0Y05CMDZ1LBMAILF1ZZOXKQUXCEUZT1X0Z55IM0FKMVRXDI5")
-        self.quadratSession = Session(client: configuration)
+        self.quadratSession = Session(configuration: configuration)
 
     }
 

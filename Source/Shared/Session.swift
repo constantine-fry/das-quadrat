@@ -14,6 +14,8 @@ public let UserSelf = "self"
 
 public typealias Parameters = Dictionary<String, String>
 
+private var _sharedSession : Session?
+
 public class Session {
     let configuration       : Configuration
     let URLSession          : NSURLSession
@@ -79,7 +81,22 @@ public class Session {
         }
     }
     
-    public convenience init(client: Configuration) {
-        self.init(configuration:client, completionQueue: NSOperationQueue.mainQueue())
+    public convenience init(configuration: Configuration) {
+        self.init(configuration:configuration, completionQueue: NSOperationQueue.mainQueue())
+    }
+    
+    public class func setupSharedSessionWithConfiguration(configuration: Configuration) {
+        if _sharedSession == nil {
+            _sharedSession = Session(configuration: configuration)
+        } else {
+            fatalError("You shouldn't call call setupSharedSessionWithConfiguration twice!")
+        }
+    }
+    
+    public class func sharedSession() -> Session {
+        if _sharedSession == nil {
+            fatalError("You must call setupSharedInstanceWithConfiguration before!")
+        }
+        return _sharedSession!
     }
 }
