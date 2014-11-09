@@ -52,7 +52,6 @@
 		475D10891A0E3640000F699A = {
 			isa = PBXGroup;
 			children = (
-				47BA2E671A0FB73B00A334D2 /* Quadrat.framework */,
 				475D10941A0E3640000F699A /* Demo-OSX */,
 				475D10931A0E3640000F699A /* Products */,
 			);
@@ -80,6 +79,7 @@
 		475D10951A0E3640000F699A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				47BA2E671A0FB73B00A334D2 /* Quadrat.framework */,
 				475D10961A0E3640000F699A /* Info.plist */,
 			);
 			name = "Supporting Files";
