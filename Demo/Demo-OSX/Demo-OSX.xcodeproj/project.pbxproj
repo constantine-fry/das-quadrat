@@ -10,8 +10,23 @@
 		475D10981A0E3640000F699A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475D10971A0E3640000F699A /* AppDelegate.swift */; };
 		475D109A1A0E3640000F699A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 475D10991A0E3640000F699A /* Images.xcassets */; };
 		475D109D1A0E3640000F699A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 475D109B1A0E3640000F699A /* MainMenu.xib */; };
-		475D10B31A0E3700000F699A /* Foursquare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 475D10B21A0E3700000F699A /* Foursquare.framework */; };
+		47BA2E681A0FB73B00A334D2 /* Quadrat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47BA2E671A0FB73B00A334D2 /* Quadrat.framework */; };
+		47BA2E691A0FB73B00A334D2 /* Quadrat.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 47BA2E671A0FB73B00A334D2 /* Quadrat.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		47BA2E6A1A0FB73B00A334D2 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				47BA2E691A0FB73B00A334D2 /* Quadrat.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		475D10921A0E3640000F699A /* Demo-OSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Demo-OSX.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -19,7 +34,7 @@
 		475D10971A0E3640000F699A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		475D10991A0E3640000F699A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		475D109C1A0E3640000F699A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		475D10B21A0E3700000F699A /* Foursquare.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foursquare.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Foursquare-anrmxufunpanzdaqztlupbwzzaux/Build/Products/Debug-iphoneos/Foursquare.framework"; sourceTree = "<group>"; };
+		47BA2E671A0FB73B00A334D2 /* Quadrat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Quadrat.framework; path = "/Users/fry/Library/Developer/Xcode/DerivedData/Foursquare-anrmxufunpanzdaqztlupbwzzaux/Build/Products/Debug/Quadrat.framework"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,7 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				475D10B31A0E3700000F699A /* Foursquare.framework in Frameworks */,
+				47BA2E681A0FB73B00A334D2 /* Quadrat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -37,7 +52,7 @@
 		475D10891A0E3640000F699A = {
 			isa = PBXGroup;
 			children = (
-				475D10B21A0E3700000F699A /* Foursquare.framework */,
+				47BA2E671A0FB73B00A334D2 /* Quadrat.framework */,
 				475D10941A0E3640000F699A /* Demo-OSX */,
 				475D10931A0E3640000F699A /* Products */,
 			);
@@ -80,6 +95,7 @@
 				475D108E1A0E3640000F699A /* Sources */,
 				475D108F1A0E3640000F699A /* Frameworks */,
 				475D10901A0E3640000F699A /* Resources */,
+				47BA2E6A1A0FB73B00A334D2 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -242,6 +258,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Foursquare-anrmxufunpanzdaqztlupbwzzaux/Build/Products/Debug-iphoneos",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Foursquare-anrmxufunpanzdaqztlupbwzzaux/Build/Products/Debug",
 				);
 				INFOPLIST_FILE = "Demo-OSX/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -257,6 +274,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Foursquare-anrmxufunpanzdaqztlupbwzzaux/Build/Products/Debug-iphoneos",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Foursquare-anrmxufunpanzdaqztlupbwzzaux/Build/Products/Debug",
 				);
 				INFOPLIST_FILE = "Demo-OSX/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";

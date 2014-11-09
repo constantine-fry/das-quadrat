@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
+        <plugIn identifier="com.apple.WebKitIBPlugin" version="6250"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AuthorizationWindowController" customModule="Quadrat" customModuleProvider="target">
+            <connections>
+                <outlet property="webView" destination="Z5c-uc-JfA" id="c3i-f6-Nx3"/>
+                <outlet property="window" destination="Jxz-Ck-5MM" id="3Ob-jO-s8K"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="Jxz-Ck-5MM">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="283" y="305" width="770" height="567"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
+            <view key="contentView" id="P1U-Vr-otG">
+                <rect key="frame" x="0.0" y="0.0" width="770" height="567"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <webView translatesAutoresizingMaskIntoConstraints="NO" id="Z5c-uc-JfA">
+                        <rect key="frame" x="0.0" y="30" width="770" height="537"/>
+                        <webPreferences key="preferences" defaultFontSize="12" defaultFixedFontSize="12">
+                            <nil key="identifier"/>
+                        </webPreferences>
+                        <connections>
+                            <outlet property="UIDelegate" destination="-2" id="rpQ-Wm-wuB"/>
+                            <outlet property="policyDelegate" destination="-2" id="kb6-SC-U2j"/>
+                        </connections>
+                    </webView>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hPG-PN-bab">
+                        <rect key="frame" x="674" y="-1" width="82" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="PEo-bG-wzD"/>
+                        </constraints>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="BtE-MS-v9s">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="doneButtonClicked:" target="-2" id="Gcx-ZT-EhD"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Z5c-uc-JfA" firstAttribute="leading" secondItem="P1U-Vr-otG" secondAttribute="leading" id="A7K-oD-hKY"/>
+                    <constraint firstItem="Z5c-uc-JfA" firstAttribute="top" secondItem="P1U-Vr-otG" secondAttribute="top" id="HaP-wK-VDh"/>
+                    <constraint firstAttribute="trailing" secondItem="hPG-PN-bab" secondAttribute="trailing" constant="20" id="IeF-9q-p0v"/>
+                    <constraint firstAttribute="bottom" secondItem="Z5c-uc-JfA" secondAttribute="bottom" constant="30" id="MQl-bN-EoJ"/>
+                    <constraint firstAttribute="bottom" secondItem="hPG-PN-bab" secondAttribute="bottom" constant="6" id="OQw-sN-Hoi"/>
+                    <constraint firstAttribute="trailing" secondItem="Z5c-uc-JfA" secondAttribute="trailing" id="wVd-lq-dE3"/>
+                </constraints>
+            </view>
+            <point key="canvasLocation" x="442" y="562.5"/>
+        </window>
+    </objects>
+</document>

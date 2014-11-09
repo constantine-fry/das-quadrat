@@ -1,6 +1,6 @@
 //
 //  FSSession.swift
-//  Foursquare
+//  Quadrat
 //
 //  Created by Constantine Fry on 26/10/14.
 //  Copyright (c) 2014 Constantine Fry. All rights reserved.
@@ -17,7 +17,6 @@ public typealias Parameters = Dictionary<String, String>
 public class Session {
     let configuration       : Configuration
     let URLSession          : NSURLSession
-    
     
     public lazy var users : Users = {
         return Users(configuration: self.configuration, session: self)
@@ -79,8 +78,6 @@ public class Session {
             self.configuration.accessToken = Keychain().accessToken()
         }
     }
-    
-    
     
     public convenience init(client: Configuration) {
         self.init(configuration:client, completionQueue: NSOperationQueue.mainQueue())

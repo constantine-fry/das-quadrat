@@ -13,8 +13,47 @@
 		475D10661A0E35AB000F699A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 475D10641A0E35AB000F699A /* Main.storyboard */; };
 		475D10681A0E35AB000F699A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 475D10671A0E35AB000F699A /* Images.xcassets */; };
 		475D106B1A0E35AB000F699A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 475D10691A0E35AB000F699A /* LaunchScreen.xib */; };
-		475D10B51A0E3708000F699A /* Foursquare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 475D10B41A0E3708000F699A /* Foursquare.framework */; };
+		47C471521A0FBFB800BB1CA0 /* QuadratTouch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C471511A0FBFAF00BB1CA0 /* QuadratTouch.framework */; };
+		47C471531A0FBFB800BB1CA0 /* QuadratTouch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 47C471511A0FBFAF00BB1CA0 /* QuadratTouch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		47C4714E1A0FBFAF00BB1CA0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47C471491A0FBFAF00BB1CA0 /* Quadrat.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 476B70891A0EBAE700AFAC33;
+			remoteInfo = Quadrat;
+		};
+		47C471501A0FBFAF00BB1CA0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47C471491A0FBFAF00BB1CA0 /* Quadrat.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 476B70DA1A0EBBA500AFAC33;
+			remoteInfo = QuadratTouch;
+		};
+		47C471541A0FBFB800BB1CA0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47C471491A0FBFAF00BB1CA0 /* Quadrat.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 476B70D91A0EBBA500AFAC33;
+			remoteInfo = QuadratTouch;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		47C471561A0FBFB900BB1CA0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				47C471531A0FBFB800BB1CA0 /* QuadratTouch.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		475D10591A0E35AB000F699A /* Demo-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Demo-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -25,7 +64,7 @@
 		475D10651A0E35AB000F699A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		475D10671A0E35AB000F699A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		475D106A1A0E35AB000F699A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		475D10B41A0E3708000F699A /* Foursquare.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foursquare.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Foursquare-anrmxufunpanzdaqztlupbwzzaux/Build/Products/Debug-iphoneos/Foursquare.framework"; sourceTree = "<group>"; };
+		47C471491A0FBFAF00BB1CA0 /* Quadrat.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Quadrat.xcodeproj; path = ../../Source/Quadrat.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,7 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				475D10B51A0E3708000F699A /* Foursquare.framework in Frameworks */,
+				47C471521A0FBFB800BB1CA0 /* QuadratTouch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,7 +82,7 @@
 		475D10501A0E35AB000F699A = {
 			isa = PBXGroup;
 			children = (
-				475D10B41A0E3708000F699A /* Foursquare.framework */,
+				47C471491A0FBFAF00BB1CA0 /* Quadrat.xcodeproj */,
 				475D105B1A0E35AB000F699A /* Demo-iOS */,
 				475D105A1A0E35AB000F699A /* Products */,
 			);
@@ -79,6 +118,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		47C4714A1A0FBFAF00BB1CA0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				47C4714F1A0FBFAF00BB1CA0 /* Quadrat.framework */,
+				47C471511A0FBFAF00BB1CA0 /* QuadratTouch.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -89,10 +137,12 @@
 				475D10551A0E35AB000F699A /* Sources */,
 				475D10561A0E35AB000F699A /* Frameworks */,
 				475D10571A0E35AB000F699A /* Resources */,
+				47C471561A0FBFB900BB1CA0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				47C471551A0FBFB800BB1CA0 /* PBXTargetDependency */,
 			);
 			name = "Demo-iOS";
 			productName = "Demo-iOS";
@@ -110,6 +160,7 @@
 				TargetAttributes = {
 					475D10581A0E35AB000F699A = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = 6E9832W2ZK;
 					};
 				};
 			};
@@ -124,12 +175,35 @@
 			mainGroup = 475D10501A0E35AB000F699A;
 			productRefGroup = 475D105A1A0E35AB000F699A /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 47C4714A1A0FBFAF00BB1CA0 /* Products */;
+					ProjectRef = 47C471491A0FBFAF00BB1CA0 /* Quadrat.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				475D10581A0E35AB000F699A /* Demo-iOS */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		47C4714F1A0FBFAF00BB1CA0 /* Quadrat.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Quadrat.framework;
+			remoteRef = 47C4714E1A0FBFAF00BB1CA0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		47C471511A0FBFAF00BB1CA0 /* QuadratTouch.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = QuadratTouch.framework;
+			remoteRef = 47C471501A0FBFAF00BB1CA0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		475D10571A0E35AB000F699A /* Resources */ = {
@@ -156,6 +230,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		47C471551A0FBFB800BB1CA0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = QuadratTouch;
+			targetProxy = 47C471541A0FBFB800BB1CA0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		475D10641A0E35AB000F699A /* Main.storyboard */ = {
@@ -196,6 +278,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -238,6 +321,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -258,13 +342,22 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Foursquare-anrmxufunpanzdaqztlupbwzzaux/Build/Products/Debug-iphoneos",
+					"/Users/fry/dev/Foursquare-API-Swift/Source/Foursquare/build/Debug-iphoneos",
+					"/Users/fry/dev/Foursquare-API-Swift/Source/build/Debug-iphoneos",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Foursquare-anrmxufunpanzdaqztlupbwzzaux/Build/Products/Debug",
 				);
 				INFOPLIST_FILE = "Demo-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -272,13 +365,22 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Foursquare-anrmxufunpanzdaqztlupbwzzaux/Build/Products/Debug-iphoneos",
+					"/Users/fry/dev/Foursquare-API-Swift/Source/Foursquare/build/Debug-iphoneos",
+					"/Users/fry/dev/Foursquare-API-Swift/Source/build/Debug-iphoneos",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Foursquare-anrmxufunpanzdaqztlupbwzzaux/Build/Products/Debug",
 				);
 				INFOPLIST_FILE = "Demo-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

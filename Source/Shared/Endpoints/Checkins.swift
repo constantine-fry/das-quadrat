@@ -1,6 +1,6 @@
 //
-//  Venuegroups.swift
-//  Foursquare
+//  Checkins.swift
+//  Quadrat
 //
 //  Created by Constantine Fry on 06/11/14.
 //  Copyright (c) 2014 Constantine Fry. All rights reserved.
@@ -8,23 +8,21 @@
 
 import Foundation
 
-public class VenueGroups: Endpoint {
+public class Checkins: Endpoint {
     
     // MARK: - General
     
         // add
-        // delete
-        // list
+        // recent
     
     // MARK: - Aspects
     
-        // timeseries
+        // likes
     
     // MARK: - Actions
     
-        // addvenue
-        // edit
-        // removevenue
-        // update
-    
+        // addcomment
+        // addpost
+        // deletecomment
+        // like
 }
