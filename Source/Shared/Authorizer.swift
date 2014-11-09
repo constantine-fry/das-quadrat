@@ -10,7 +10,7 @@ import Foundation
 
 protocol AuthorizationDelegate {
     func userDidCancel()
-    func didRichRedirectURL(redirectURL: NSURL)
+    func didReachRedirectURL(redirectURL: NSURL)
 }
 
 class Authorizer: AuthorizationDelegate {
@@ -35,7 +35,7 @@ class Authorizer: AuthorizationDelegate {
         self.finilizeAuthorization(nil, error: error)
     }
     
-    func didRichRedirectURL(redirectURL: NSURL) {
+    func didReachRedirectURL(redirectURL: NSURL) {
         println("redirectURL" + redirectURL.absoluteString!)
         let accessToken = ""
         self.finilizeAuthorization(accessToken, error: nil)

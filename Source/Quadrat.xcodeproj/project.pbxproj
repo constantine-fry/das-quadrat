@@ -185,8 +185,8 @@
 		476B70AD1A0EBB5C00AFAC33 /* Endpoints */ = {
 			isa = PBXGroup;
 			children = (
-				476B70AE1A0EBB5C00AFAC33 /* Checkins.swift */,
 				476B70AF1A0EBB5C00AFAC33 /* Endpoint.swift */,
+				476B70AE1A0EBB5C00AFAC33 /* Checkins.swift */,
 				476B70B01A0EBB5C00AFAC33 /* Events.swift */,
 				476B70B11A0EBB5C00AFAC33 /* Lists.swift */,
 				476B70B21A0EBB5C00AFAC33 /* Pages.swift */,
