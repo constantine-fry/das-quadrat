@@ -25,7 +25,7 @@ public class AuthorizationViewController : UIViewController, UIWebViewDelegate {
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var statusLabel: UILabel!
 
-    private var UIStatus : AuthorizationViewControllerRequestStatus = .None {
+    private var status : AuthorizationViewControllerRequestStatus = .None {
         didSet {
             self.updateUI()
         }
@@ -57,7 +57,7 @@ public class AuthorizationViewController : UIViewController, UIWebViewDelegate {
     // MARK: - Actions
     
     @objc func loadAuthorizationPage() {
-        self.UIStatus = .Loading
+        self.status = .Loading
         let request = NSURLRequest(URL: self.authorizationURL)
         self.webView.loadRequest(request)
     }
@@ -80,18 +80,18 @@ public class AuthorizationViewController : UIViewController, UIWebViewDelegate {
     }
     
     public func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
-        self.UIStatus = .Failed(error)
+        self.status = .Failed(error)
     }
     
     public func webViewDidFinishLoad(webView: UIWebView) {
-        self.UIStatus = .Loaded
+        self.status = .Loaded
     }
     
     // MARK: -
     
     /** Updates UI to current status. */
     func updateUI() {
-        switch (self.UIStatus) {
+        switch (self.status) {
             
         case .Loading:
             // Show activity indicator in rightBarButtonItem, hide web view and status label.
