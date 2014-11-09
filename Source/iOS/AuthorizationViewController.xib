@@ -23,13 +23,13 @@
                         <outlet property="delegate" destination="-1" id="Nf8-id-YtV"/>
                     </connections>
                 </webView>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lh-m2-DIa">
-                    <rect key="frame" x="0.0" y="234" width="320" height="100"/>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lh-m2-DIa">
+                    <rect key="frame" x="15" y="234" width="290" height="100"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="100" id="dGf-wk-w2t"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
@@ -41,8 +41,8 @@
                 <constraint firstItem="AlV-6I-rVx" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="IJp-u0-qOG"/>
                 <constraint firstItem="AlV-6I-rVx" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="TFf-86-bPc"/>
                 <constraint firstAttribute="centerY" secondItem="5lh-m2-DIa" secondAttribute="centerY" id="bCH-2s-lFl"/>
-                <constraint firstAttribute="trailing" secondItem="5lh-m2-DIa" secondAttribute="trailing" id="cBo-fB-6zn"/>
-                <constraint firstItem="5lh-m2-DIa" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="yWa-2g-Qlp"/>
+                <constraint firstAttribute="trailing" secondItem="5lh-m2-DIa" secondAttribute="trailing" constant="15" id="cBo-fB-6zn"/>
+                <constraint firstItem="5lh-m2-DIa" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="yWa-2g-Qlp"/>
             </constraints>
             <point key="canvasLocation" x="208" y="108"/>
         </view>

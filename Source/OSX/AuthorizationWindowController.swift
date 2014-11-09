@@ -18,7 +18,6 @@ class AuthorizationWindowController: NSWindowController {
 
     override func windowDidLoad() {
         super.windowDidLoad()
-
         let request = NSURLRequest(URL: self.authorizationURL)
         self.webView.mainFrame.loadRequest(request)
     }
