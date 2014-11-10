@@ -15,7 +15,9 @@ var _nativeAuthorizer : NativeTouchAuthorizer?
 extension Session {
     
     public func canUseNativeOAuth() -> Bool {
-        return NativeTouchAuthorizer.canUseNativeOAuth()
+        let baseURL = self.configuration.server.nativeOauthBaseURL
+        let URL = NSURL(string: baseURL) as NSURL!
+        return UIApplication.sharedApplication().canOpenURL(URL)
     }
     
     public func handleURL(URL: NSURL) -> Bool {
@@ -75,25 +77,21 @@ class TouchAuthorizer : Authorizer {
     }
 }
 
-let _nativeOAuthScheme = "foursquareauth"
 class NativeTouchAuthorizer : Authorizer {
     var configuration : Configuration!
     
      convenience init(configuration: Configuration) {
-        let callbackString = configuration.callbackURL.absoluteString?.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
-        let URLString = String(format: (_nativeOAuthScheme + "://authorize?client_id=%@&redirect_uri=%@&v=20130509"),
-            configuration.identintifier, callbackString!)
-        let URL = NSURL(string: URLString)
-        if URL == nil {
+        let baseURL = configuration.server.nativeOauthBaseURL
+        let URLString = String(format: (baseURL + "?client_id=%@&redirect_uri=%@&v=20130509"),
+            configuration.client.id, configuration.client.redirectURL)
+
+        let authorizationURL = NSURL(string: URLString)
+        let redirectURL = NSURL(string: configuration.client.redirectURL)
+        if authorizationURL == nil || redirectURL == nil {
             fatalError("Can't build auhorization URL. Check your clientId and redirectURL")
         }
-        self.init(authorizationURL: URL!, redirectURL: configuration.callbackURL)
+        self.init(authorizationURL: authorizationURL!, redirectURL: redirectURL!)
         self.configuration = configuration
-    }
-    
-    class func canUseNativeOAuth() -> Bool {
-        let URL = NSURL(string: (_nativeOAuthScheme + "://")) as NSURL!
-        return UIApplication.sharedApplication().canOpenURL(URL)
     }
     
     func authorize(completionHandler: (String?, NSError?) -> Void) {
@@ -122,9 +120,9 @@ class NativeTouchAuthorizer : Authorizer {
     }
     
     func requestAccessTokenWithCode(code: String) {
-        let path = "https://foursquare.com/oauth2/access_token"
+        let path = self.configuration.server.nativeOauthAccessTokenBaseURL
         let URLString = String(format: (path + "?client_id=%@&client_secret=%@&grant_type=authorization_code&redirect_uri=%@&code=%@"),
-            self.configuration.identintifier, self.configuration.secret, self.configuration.callbackURL.absoluteString!, code)
+            self.configuration.client.id, self.configuration.client.secret, self.configuration.client.redirectURL, code)
         let URL = NSURL(string: URLString) as NSURL!
         let request = NSURLRequest(URL: URL)
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue())

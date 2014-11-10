@@ -19,14 +19,16 @@ class Authorizer: AuthorizationDelegate {
     var completionHandler: ((String?, NSError?) -> Void)?
     
     convenience init(configuration: Configuration) {
-        let URLString = String(format: "https://foursquare.com/oauth2/authenticate?client_id=%@&response_type=token&redirect_uri=%@&v=20130509",
-            configuration.identintifier, configuration.callbackURL)
-        let URL = NSURL(string: URLString)
-        if URL == nil {
+        let baseURL = configuration.server.oauthBaseURL
+        let URLString = String(format: (baseURL + "?client_id=%@&response_type=token&redirect_uri=%@&v=20130509"),
+            configuration.client.id, configuration.client.redirectURL)
+        let authorizationURL = NSURL(string: URLString)
+        let redirectURL = NSURL(string: configuration.client.redirectURL)
+        if authorizationURL == nil || redirectURL == nil {
             fatalError("Can't build auhorization URL. Check your clientId and redirectURL")
         }
-        self.init(authorizationURL: URL!, redirectURL: configuration.callbackURL)
-        self.cleanupCookiesForURL(authorizationURL)
+        self.init(authorizationURL: authorizationURL!, redirectURL: redirectURL!)
+        self.cleanupCookiesForURL(authorizationURL!)
     }
     
     init(authorizationURL: NSURL, redirectURL: NSURL) {

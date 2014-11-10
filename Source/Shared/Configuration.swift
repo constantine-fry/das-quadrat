@@ -8,25 +8,52 @@
 
 import Foundation
 
+/** Client configuration. */
+public struct Client {
+    let id : String
+    let secret : String
+    let redirectURL : String
+    
+    public init(clientID: String, clientSecret: String, redirectURL: String) {
+        self.id = clientID
+        self.secret = clientSecret
+        self.redirectURL = redirectURL
+    }
+}
 
+/** Server configuration. */
+struct Server {
+    
+    /** Base URL for all foursquare requests. */
+    let apiBaseURL = "https://api.foursquare.com/v2"
+    
+    /** Base URL to login oauth2 page. */
+    let oauthBaseURL = "https://foursquare.com/oauth2/authenticate"
+    
+    /** Base URL to open Foursquare iOS app for authorization. 
+        In response app will get access code, which should be exchange to access token. */
+    let nativeOauthBaseURL = "foursquareauth://authorize"
+    
+    /** Base URL to exchange access code to access token. */
+    let nativeOauthAccessTokenBaseURL = "https://foursquare.com/oauth2/access_token"
+}
+
+/** Session configuartion. */
 public struct Configuration {
     
-    let identintifier   : String
-    let secret          : String
-    let callbackURL     : NSURL
+    let client          : Client
+    let server          : Server = Server()
+    
     let locale          : String
     var accessToken     : String?
     let version         : String = "20140503"
     
-    public init(clientID: String, clientSecret: String, callbackURL: String) {
-        self.init(clientID: clientID, clientSecret: clientSecret, callbackURL: callbackURL, version: nil, accessToken: nil)
+    public init(client: Client) {
+        self.init(client: client, version: nil, accessToken: nil)
     }
     
-    public init(clientID: String, clientSecret: String, callbackURL: String, version: String?, accessToken: String?) {
-        self.identintifier = clientID
-        self.secret = clientSecret
-        self.accessToken = accessToken
-        self.callbackURL = NSURL(string: callbackURL) as NSURL!
+    public init(client: Client, version: String?, accessToken: String?) {
+        self.client = client
         self.locale = NSLocale.currentLocale().objectForKey(NSLocaleLanguageCode) as String
         if version != nil {
             self.version = version!
@@ -38,8 +65,8 @@ public struct Configuration {
         if self.accessToken != nil {
             result["oauth_token"] = self.accessToken
         }
-        result["client_id"] = self.identintifier
-        result["client_secret"] = self.secret
+        result["client_id"] = self.client.id
+        result["client_secret"] = self.client.secret
         result["v"] = self.version
         result["locale"] = self.locale
         return result

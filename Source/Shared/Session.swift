@@ -8,8 +8,6 @@
 
 import Foundation
 
-let _baseURL = NSURL(string: "https://api.foursquare.com/v2") as NSURL!
-
 public let UserSelf = "self"
 
 public typealias Parameters = Dictionary<String, String>

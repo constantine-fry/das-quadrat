@@ -18,17 +18,19 @@ func +=<K, V> (inout left: Dictionary<K, V>, right: Dictionary<K, V>?) -> Dictio
 }
 
 public class Endpoint  {
-    let configuration : Configuration
-    weak var session : Session?
+    let configuration   : Configuration
+    let baseURL         :NSURL
+    weak var session    : Session?
     
     init(configuration: Configuration, session: Session) {
         self.configuration = configuration
         self.session = session
+        self.baseURL = NSURL(string: self.configuration.server.apiBaseURL) as NSURL!
     }
     
     func taskWithPath(path: String, parameters: Parameters?, HTTPMethod: String, completionHandler:  ResponseCompletionHandler) -> Task {
         
-        let URL = _baseURL.URLByAppendingPathComponent(path)
+        let URL = self.baseURL.URLByAppendingPathComponent(path)
         let components = NSURLComponents(URL: URL, resolvingAgainstBaseURL: false) as NSURLComponents!
         components.query = self.makeQuery(parameters)
         let requestURL = components.URL as NSURL!
@@ -38,7 +40,7 @@ public class Endpoint  {
     
     func uploadTaskFromURL(fromURL: NSURL, path: String, parameters: Parameters?, HTTPMethod: String, completionHandler:  ResponseCompletionHandler) -> Task {
         
-        let URL = _baseURL.URLByAppendingPathComponent(path)
+        let URL = self.baseURL.URLByAppendingPathComponent(path)
         let components = NSURLComponents(URL: URL, resolvingAgainstBaseURL: false) as NSURLComponents!
         components.query = self.makeQuery(parameters)
         let requestURL = components.URL as NSURL!
