@@ -8,6 +8,36 @@
 
 import Foundation
 
+public class Parameter {
+    // Internal.
+    class var client_id       : String { return "client_id" }
+    class var client_secret   : String { return "client_secret" }
+    class var redirect_uri    : String { return "redirect_uri" }
+    class var code            : String { return "code" }
+    class var grant_type      : String { return "grant_type" }
+    class var oauth_token     : String { return "oauth_token" }
+    class var v               : String { return "v" }
+    class var locale          : String { return "locale" }
+    class var response_type   : String { return "response_type" }
+    
+    // Public.
+    public class var checkinId       : String { return "checkinId" }
+    public class var tipId           : String { return "tipId" }
+    public class var venueId         : String { return "venueId" }
+    public class var pageId          : String { return "pageId" }
+    
+    
+    class func makeQuery(parameters: Parameters) -> String {
+        var query = String()
+        for (key,value) in parameters {
+            query += key + "=" + value + "&"
+        }
+        query.removeAtIndex(query.endIndex.predecessor())
+        return query.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+    }
+}
+
+
 /** Client configuration. */
 public struct Client {
     let id : String
@@ -54,21 +84,24 @@ public struct Configuration {
     
     public init(client: Client, version: String?, accessToken: String?) {
         self.client = client
-        self.locale = NSLocale.currentLocale().objectForKey(NSLocaleLanguageCode) as String
+        let languageCode = NSLocale.currentLocale().objectForKey(NSLocaleLanguageCode) as String
+        self.locale = languageCode
         if version != nil {
             self.version = version!
+        }
+        if accessToken != nil {
+            self.accessToken = accessToken
         }
     }
     
     func parameters() -> Parameters {
-        var result = Parameters()
+        var result = [Parameter.client_id:self.client.id,
+                        Parameter.client_secret:self.client.secret,
+                        Parameter.v: self.version,
+                        Parameter.locale:self.locale]
         if self.accessToken != nil {
-            result["oauth_token"] = self.accessToken
+            result[Parameter.oauth_token] = self.accessToken!
         }
-        result["client_id"] = self.client.id
-        result["client_secret"] = self.client.secret
-        result["v"] = self.version
-        result["locale"] = self.locale
         return result
     }
 }

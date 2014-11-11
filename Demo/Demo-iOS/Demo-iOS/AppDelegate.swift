@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             redirectURL:    "testapp123://foursquare")
         let configuration = Configuration(client:client)
         Session.setupSharedSessionWithConfiguration(configuration)
+        
         return true
     }
     

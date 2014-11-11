@@ -14,16 +14,16 @@ public enum FoursquareId {
     case VenueId(String)
     case PageId(String)
     
-    func parameters() -> Parameters {
+    func parameter() -> Parameters {
         switch self {
         case .CheckinId(let idString):
-            return ["checkinId": idString]
+            return [Parameter.checkinId: idString]
         case .TipId(let idString):
-            return ["tipId": idString]
+            return [Parameter.tipId: idString]
         case .VenueId(let idString):
-            return ["venueId": idString]
+            return [Parameter.venueId: idString]
         case .PageId(let idString):
-            return ["pageId": idString]
+            return [Parameter.pageId: idString]
         }
     }
 }
@@ -36,8 +36,10 @@ public class Photos : Endpoint {
     
     public func add(fromURL: NSURL, foursquareID: FoursquareId, parameters: Parameters?, completionHandler:  ResponseCompletionHandler) -> Task {
         let path = "photos/add"
-        var allParameters = foursquareID.parameters()
-        allParameters += parameters
+        var allParameters = foursquareID.parameter()
+        if parameters != nil {
+            allParameters += parameters!
+        }
         let task = self.uploadTaskFromURL(fromURL, path: path, parameters: allParameters, HTTPMethod: "POST", completionHandler)
         task.start()
         return task

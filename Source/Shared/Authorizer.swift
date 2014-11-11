@@ -20,8 +20,11 @@ class Authorizer: AuthorizationDelegate {
     
     convenience init(configuration: Configuration) {
         let baseURL = configuration.server.oauthBaseURL
-        let URLString = String(format: (baseURL + "?client_id=%@&response_type=token&redirect_uri=%@&v=20130509"),
-            configuration.client.id, configuration.client.redirectURL)
+        let parameters = [Parameter.client_id           : configuration.client.id,
+                            Parameter.redirect_uri      : configuration.client.redirectURL,
+                            Parameter.response_type     :"token",
+                            Parameter.v                 :"20130509"]
+        let URLString = baseURL + "?" + Parameter.makeQuery(parameters)
         let authorizationURL = NSURL(string: URLString)
         let redirectURL = NSURL(string: configuration.client.redirectURL)
         if authorizationURL == nil || redirectURL == nil {

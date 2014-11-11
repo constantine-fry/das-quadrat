@@ -8,9 +8,10 @@
 
 import Foundation
 
+
 public let UserSelf = "self"
 
-public typealias Parameters = Dictionary<String, String>
+public typealias Parameters = [String:String]
 
 private var _sharedSession : Session?
 

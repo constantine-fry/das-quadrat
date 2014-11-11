@@ -82,8 +82,10 @@ class NativeTouchAuthorizer : Authorizer {
     
      convenience init(configuration: Configuration) {
         let baseURL = configuration.server.nativeOauthBaseURL
-        let URLString = String(format: (baseURL + "?client_id=%@&redirect_uri=%@&v=20130509"),
-            configuration.client.id, configuration.client.redirectURL)
+        let parameters = [Parameter.client_id : configuration.client.id,
+                            Parameter.redirect_uri : configuration.client.redirectURL,
+                            Parameter.v:"20130509"]
+        let URLString = baseURL + "?" + Parameter.makeQuery(parameters)
 
         let authorizationURL = NSURL(string: URLString)
         let redirectURL = NSURL(string: configuration.client.redirectURL)
@@ -121,8 +123,14 @@ class NativeTouchAuthorizer : Authorizer {
     
     func requestAccessTokenWithCode(code: String) {
         let path = self.configuration.server.nativeOauthAccessTokenBaseURL
-        let URLString = String(format: (path + "?client_id=%@&client_secret=%@&grant_type=authorization_code&redirect_uri=%@&code=%@"),
-            self.configuration.client.id, self.configuration.client.secret, self.configuration.client.redirectURL, code)
+        
+        let client = self.configuration.client
+        let parameters = [Parameter.client_id:client.id,
+                            Parameter.client_secret:client.secret,
+                            Parameter.redirect_uri: client.redirectURL,
+                            Parameter.code:"code",
+                            Parameter.grant_type:"authorization_code"]
+        let URLString = path + "?" + Parameter.makeQuery(parameters)
         let URL = NSURL(string: URLString) as NSURL!
         let request = NSURLRequest(URL: URL)
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue())
