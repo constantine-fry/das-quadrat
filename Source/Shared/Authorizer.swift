@@ -22,8 +22,8 @@ class Authorizer: AuthorizationDelegate {
         let baseURL = configuration.server.oauthBaseURL
         let parameters = [Parameter.client_id           : configuration.client.id,
                             Parameter.redirect_uri      : configuration.client.redirectURL,
-                            Parameter.response_type     :"token",
-                            Parameter.v                 :"20130509"]
+                            Parameter.v                 : configuration.version,
+                            Parameter.response_type     : "token"]
         let URLString = baseURL + "?" + Parameter.makeQuery(parameters)
         let authorizationURL = NSURL(string: URLString)
         let redirectURL = NSURL(string: configuration.client.redirectURL)
