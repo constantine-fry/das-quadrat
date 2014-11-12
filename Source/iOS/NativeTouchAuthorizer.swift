@@ -14,11 +14,12 @@ class NativeTouchAuthorizer : Authorizer {
     
     convenience init(configuration: Configuration) {
         let baseURL = configuration.server.nativeOauthBaseURL
-        let parameters = [Parameter.client_id : configuration.client.id,
-            Parameter.redirect_uri : configuration.client.redirectURL,
-            Parameter.v:"20130509"]
-        let URLString = baseURL + "?" + Parameter.makeQuery(parameters)
+        let parameters =
+            [Parameter.client_id    : configuration.client.id,
+            Parameter.redirect_uri  : configuration.client.redirectURL,
+            Parameter.v             : "20130509"]
         
+        let URLString = baseURL + "?" + Parameter.makeQuery(parameters)
         let authorizationURL = NSURL(string: URLString)
         let redirectURL = NSURL(string: configuration.client.redirectURL)
         if authorizationURL == nil || redirectURL == nil {
@@ -57,11 +58,13 @@ class NativeTouchAuthorizer : Authorizer {
         let path = self.configuration.server.nativeOauthAccessTokenBaseURL
         
         let client = self.configuration.client
-        let parameters = [Parameter.client_id:client.id,
-            Parameter.client_secret:client.secret,
-            Parameter.redirect_uri:client.redirectURL,
-            Parameter.code:code,
-            Parameter.grant_type:"authorization_code"]
+        let parameters =    
+            [Parameter.client_id    : client.id,
+            Parameter.client_secret : client.secret,
+            Parameter.redirect_uri  : client.redirectURL,
+            Parameter.code          : code,
+            Parameter.grant_type    : "authorization_code"]
+        
         let URLString = path + "?" + Parameter.makeQuery(parameters)
         let URL = NSURL(string: URLString) as NSURL!
         let request = NSURLRequest(URL: URL)
