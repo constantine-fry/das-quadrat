@@ -59,7 +59,7 @@ class Authorizer: AuthorizationDelegate {
     func finilizeAuthorizationWithParameters(parameters: Parameters) {
         var error: NSError?
         if let errorString = parameters["error"] {
-            error = NSError.quadratErrorForString(errorString)
+            error = NSError.quadratOauthErrorForString(errorString)
         }
         self.finilizeAuthorization(parameters["access_token"], error: error)
     }

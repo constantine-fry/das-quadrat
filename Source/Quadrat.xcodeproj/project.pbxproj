@@ -54,9 +54,9 @@
 		4773F8731A13DB1C0001603F /* NativeTouchAuthorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F8721A13DB1C0001603F /* NativeTouchAuthorizer.swift */; };
 		4773F8751A13DB280001603F /* TouchAuthorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F8741A13DB280001603F /* TouchAuthorizer.swift */; };
 		4773F8791A13DBF70001603F /* Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F8781A13DBF70001603F /* Parameters.swift */; };
-		4773F87B1A13DC5A0001603F /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F87A1A13DC5A0001603F /* Errors.swift */; };
+		4773F87B1A13DC5A0001603F /* OauthErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F87A1A13DC5A0001603F /* OauthErrors.swift */; };
 		4773F87C1A13DFFF0001603F /* MacAuthorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F8761A13DBDC0001603F /* MacAuthorizer.swift */; };
-		4773F87D1A13E08F0001603F /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F87A1A13DC5A0001603F /* Errors.swift */; };
+		4773F87D1A13E08F0001603F /* OauthErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F87A1A13DC5A0001603F /* OauthErrors.swift */; };
 		4773F87E1A13E10D0001603F /* Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F8781A13DBF70001603F /* Parameters.swift */; };
 		47A96E4F1A0F73CE00C38E9A /* AuthorizationWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47A96E4E1A0F73CE00C38E9A /* AuthorizationWindowController.xib */; };
 		47A96E511A0F741B00C38E9A /* AuthorizationWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A96E501A0F741B00C38E9A /* AuthorizationWindowController.swift */; };
@@ -97,7 +97,7 @@
 		4773F8741A13DB280001603F /* TouchAuthorizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchAuthorizer.swift; sourceTree = "<group>"; };
 		4773F8761A13DBDC0001603F /* MacAuthorizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacAuthorizer.swift; sourceTree = "<group>"; };
 		4773F8781A13DBF70001603F /* Parameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parameters.swift; sourceTree = "<group>"; };
-		4773F87A1A13DC5A0001603F /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		4773F87A1A13DC5A0001603F /* OauthErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OauthErrors.swift; sourceTree = "<group>"; };
 		47A96E4E1A0F73CE00C38E9A /* AuthorizationWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthorizationWindowController.xib; sourceTree = "<group>"; };
 		47A96E501A0F741B00C38E9A /* AuthorizationWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationWindowController.swift; sourceTree = "<group>"; };
 		47A96E541A0F80E100C38E9A /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -189,12 +189,12 @@
 			children = (
 				476B70AD1A0EBB5C00AFAC33 /* Endpoints */,
 				476B70AC1A0EBB5C00AFAC33 /* Configuration.swift */,
-				4773F87A1A13DC5A0001603F /* Errors.swift */,
 				4773F8781A13DBF70001603F /* Parameters.swift */,
 				476B70BC1A0EBB5C00AFAC33 /* Keychain.swift */,
 				476B70BD1A0EBB5C00AFAC33 /* Session.swift */,
 				476B70BE1A0EBB5C00AFAC33 /* Task.swift */,
 				4735978F1A0F8DF500CD6EA3 /* Authorizer.swift */,
+				4773F87A1A13DC5A0001603F /* OauthErrors.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -373,7 +373,7 @@
 				476B70CC1A0EBB5C00AFAC33 /* Specials.swift in Sources */,
 				476B70CD1A0EBB5C00AFAC33 /* Tips.swift in Sources */,
 				47A96E511A0F741B00C38E9A /* AuthorizationWindowController.swift in Sources */,
-				4773F87D1A13E08F0001603F /* Errors.swift in Sources */,
+				4773F87D1A13E08F0001603F /* OauthErrors.swift in Sources */,
 				476B70CB1A0EBB5C00AFAC33 /* Settings.swift in Sources */,
 				476B70C51A0EBB5C00AFAC33 /* Endpoint.swift in Sources */,
 				476B70D01A0EBB5C00AFAC33 /* VenueGroups.swift in Sources */,
@@ -406,7 +406,7 @@
 				4773F8731A13DB1C0001603F /* NativeTouchAuthorizer.swift in Sources */,
 				476B71041A0EBBC500AFAC33 /* VenueGroups.swift in Sources */,
 				476B70F91A0EBBC500AFAC33 /* Endpoint.swift in Sources */,
-				4773F87B1A13DC5A0001603F /* Errors.swift in Sources */,
+				4773F87B1A13DC5A0001603F /* OauthErrors.swift in Sources */,
 				476B71011A0EBBC500AFAC33 /* Tips.swift in Sources */,
 				476B70F81A0EBBC500AFAC33 /* Checkins.swift in Sources */,
 				476B70FD1A0EBBC500AFAC33 /* PageUpdates.swift in Sources */,
