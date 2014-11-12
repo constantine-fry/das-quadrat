@@ -59,8 +59,8 @@ class NativeTouchAuthorizer : Authorizer {
         let client = self.configuration.client
         let parameters = [Parameter.client_id:client.id,
             Parameter.client_secret:client.secret,
-            Parameter.redirect_uri: client.redirectURL,
-            Parameter.code:"code",
+            Parameter.redirect_uri:client.redirectURL,
+            Parameter.code:code,
             Parameter.grant_type:"authorization_code"]
         let URLString = path + "?" + Parameter.makeQuery(parameters)
         let URL = NSURL(string: URLString) as NSURL!
