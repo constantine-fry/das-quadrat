@@ -20,8 +20,7 @@ public class Task {
 
     init (session: Session, request: NSURLRequest, completionHandler: ResponseCompletionHandler) {
         let URLsession = session.URLSession
-        self.task = URLsession.dataTaskWithRequest(request)
-            {
+        self.task = URLsession.dataTaskWithRequest(request) {
                 (data, response, error) -> Void in
                 if data != nil {
                     let result = NSString(data: data!, encoding: NSUTF8StringEncoding)
@@ -34,8 +33,7 @@ public class Task {
     
     init (uploadFromFile:NSURL, session: Session, request: NSURLRequest, completionHandler: ResponseCompletionHandler) {
         let URLsession = session.URLSession
-        self.task = URLsession.uploadTaskWithRequest(request, fromFile: uploadFromFile)
-            {
+        self.task = URLsession.uploadTaskWithRequest(request, fromFile: uploadFromFile) {
                 (data, response, error) -> Void in
                 if data != nil {
                     let result = NSString(data: data!, encoding: NSUTF8StringEncoding)

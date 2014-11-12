@@ -56,14 +56,18 @@ class Authorizer: AuthorizationDelegate {
     
     func finilizeAuthorizationWithParameters(parameters: Parameters) {
         var error: NSError?
-        if parameters["error"] != nil {
-            error = self.errorForErrorString(parameters["error"]!)
+        if let errorString = parameters["error"] {
+            error = NSError.quadratErrorForString(errorString)
         }
         self.finilizeAuthorization(parameters["access_token"], error: error)
     }
     
     func finilizeAuthorization(accessToken: String?, error: NSError?) {
-        println("access token:  " + accessToken!)
+        if accessToken != nil {
+            println("access token:  " + accessToken!)
+        } else {
+            println("acces token error: ", error)
+        }
         self.completionHandler?(accessToken, error)
         self.completionHandler = nil
     }

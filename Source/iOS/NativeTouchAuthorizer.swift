@@ -65,20 +65,20 @@ class NativeTouchAuthorizer : Authorizer {
         let URLString = path + "?" + Parameter.makeQuery(parameters)
         let URL = NSURL(string: URLString) as NSURL!
         let request = NSURLRequest(URL: URL)
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue())
-            { (response, data, error) -> Void in
-                if data != nil {
-                    var parseError: NSError?
-                    var jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &parseError)
-                    if jsonObject != nil && jsonObject!.isKindOfClass(NSDictionary) {
-                        let parameters = jsonObject as Parameters
-                        self.finilizeAuthorizationWithParameters(parameters)
-                    } else {
-                        self.finilizeAuthorization(nil, error: parseError)
-                    }
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {
+            (response, data, error) -> Void in
+            if data != nil {
+                var parseError: NSError?
+                var jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &parseError)
+                if jsonObject != nil && jsonObject!.isKindOfClass(NSDictionary) {
+                    let parameters = jsonObject as Parameters
+                    self.finilizeAuthorizationWithParameters(parameters)
                 } else {
-                    self.finilizeAuthorization(nil, error: error)
+                    self.finilizeAuthorization(nil, error: parseError)
                 }
+            } else {
+                self.finilizeAuthorization(nil, error: error)
+            }
         }
     }
 }

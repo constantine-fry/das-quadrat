@@ -56,6 +56,8 @@
 		4773F8791A13DBF70001603F /* Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F8781A13DBF70001603F /* Parameters.swift */; };
 		4773F87B1A13DC5A0001603F /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F87A1A13DC5A0001603F /* Errors.swift */; };
 		4773F87C1A13DFFF0001603F /* MacAuthorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F8761A13DBDC0001603F /* MacAuthorizer.swift */; };
+		4773F87D1A13E08F0001603F /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F87A1A13DC5A0001603F /* Errors.swift */; };
+		4773F87E1A13E10D0001603F /* Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F8781A13DBF70001603F /* Parameters.swift */; };
 		47A96E4F1A0F73CE00C38E9A /* AuthorizationWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47A96E4E1A0F73CE00C38E9A /* AuthorizationWindowController.xib */; };
 		47A96E511A0F741B00C38E9A /* AuthorizationWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A96E501A0F741B00C38E9A /* AuthorizationWindowController.swift */; };
 		47A96E551A0F80E100C38E9A /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47A96E541A0F80E100C38E9A /* WebKit.framework */; };
@@ -371,10 +373,12 @@
 				476B70CC1A0EBB5C00AFAC33 /* Specials.swift in Sources */,
 				476B70CD1A0EBB5C00AFAC33 /* Tips.swift in Sources */,
 				47A96E511A0F741B00C38E9A /* AuthorizationWindowController.swift in Sources */,
+				4773F87D1A13E08F0001603F /* Errors.swift in Sources */,
 				476B70CB1A0EBB5C00AFAC33 /* Settings.swift in Sources */,
 				476B70C51A0EBB5C00AFAC33 /* Endpoint.swift in Sources */,
 				476B70D01A0EBB5C00AFAC33 /* VenueGroups.swift in Sources */,
 				476B710E1A0EBCC000AFAC33 /* Authorization.swift in Sources */,
+				4773F87E1A13E10D0001603F /* Parameters.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

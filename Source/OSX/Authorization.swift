@@ -19,7 +19,8 @@ extension Session {
         }
         
         _authorizer = MacAuthorizer(configuration: self.configuration)
-        _authorizer?.authorize(window, completionHandler: { (accessToken, error) -> Void in
+        _authorizer?.authorize(window, completionHandler: {
+            (accessToken, error) -> Void in
             //
             _authorizer = nil
         })

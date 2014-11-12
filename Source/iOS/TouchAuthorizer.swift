@@ -25,8 +25,7 @@ class TouchAuthorizer : Authorizer {
     }
     
     override func finilizeAuthorization(accessToken: String?, error: NSError?) {
-        presentingViewController?.dismissViewControllerAnimated(true)
-            {
+        presentingViewController?.dismissViewControllerAnimated(true) {
                 self.completionHandler?(accessToken, error)
                 self.completionHandler = nil
                 self.presentingViewController = nil
