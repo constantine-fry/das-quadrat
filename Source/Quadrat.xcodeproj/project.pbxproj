@@ -51,6 +51,11 @@
 		476B71071A0EBBCA00AFAC33 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476B70AC1A0EBB5C00AFAC33 /* Configuration.swift */; };
 		476B710C1A0EBC7C00AFAC33 /* Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476B710A1A0EBC7400AFAC33 /* Authorization.swift */; };
 		476B710E1A0EBCC000AFAC33 /* Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476B710D1A0EBCC000AFAC33 /* Authorization.swift */; };
+		4773F8731A13DB1C0001603F /* NativeTouchAuthorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F8721A13DB1C0001603F /* NativeTouchAuthorizer.swift */; };
+		4773F8751A13DB280001603F /* TouchAuthorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F8741A13DB280001603F /* TouchAuthorizer.swift */; };
+		4773F8791A13DBF70001603F /* Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F8781A13DBF70001603F /* Parameters.swift */; };
+		4773F87B1A13DC5A0001603F /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F87A1A13DC5A0001603F /* Errors.swift */; };
+		4773F87C1A13DFFF0001603F /* MacAuthorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F8761A13DBDC0001603F /* MacAuthorizer.swift */; };
 		47A96E4F1A0F73CE00C38E9A /* AuthorizationWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47A96E4E1A0F73CE00C38E9A /* AuthorizationWindowController.xib */; };
 		47A96E511A0F741B00C38E9A /* AuthorizationWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A96E501A0F741B00C38E9A /* AuthorizationWindowController.swift */; };
 		47A96E551A0F80E100C38E9A /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47A96E541A0F80E100C38E9A /* WebKit.framework */; };
@@ -86,6 +91,11 @@
 		476B70DE1A0EBBA500AFAC33 /* QuadratTouch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuadratTouch.h; sourceTree = "<group>"; };
 		476B710A1A0EBC7400AFAC33 /* Authorization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authorization.swift; sourceTree = "<group>"; };
 		476B710D1A0EBCC000AFAC33 /* Authorization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authorization.swift; sourceTree = "<group>"; };
+		4773F8721A13DB1C0001603F /* NativeTouchAuthorizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeTouchAuthorizer.swift; sourceTree = "<group>"; };
+		4773F8741A13DB280001603F /* TouchAuthorizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchAuthorizer.swift; sourceTree = "<group>"; };
+		4773F8761A13DBDC0001603F /* MacAuthorizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacAuthorizer.swift; sourceTree = "<group>"; };
+		4773F8781A13DBF70001603F /* Parameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parameters.swift; sourceTree = "<group>"; };
+		4773F87A1A13DC5A0001603F /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		47A96E4E1A0F73CE00C38E9A /* AuthorizationWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthorizationWindowController.xib; sourceTree = "<group>"; };
 		47A96E501A0F741B00C38E9A /* AuthorizationWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationWindowController.swift; sourceTree = "<group>"; };
 		47A96E541A0F80E100C38E9A /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -153,6 +163,8 @@
 			isa = PBXGroup;
 			children = (
 				476B710A1A0EBC7400AFAC33 /* Authorization.swift */,
+				4773F8741A13DB280001603F /* TouchAuthorizer.swift */,
+				4773F8721A13DB1C0001603F /* NativeTouchAuthorizer.swift */,
 				476B70A61A0EBB5C00AFAC33 /* AuthorizationViewController.swift */,
 				476B70A71A0EBB5C00AFAC33 /* AuthorizationViewController.xib */,
 			);
@@ -163,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				476B710D1A0EBCC000AFAC33 /* Authorization.swift */,
+				4773F8761A13DBDC0001603F /* MacAuthorizer.swift */,
 				47A96E501A0F741B00C38E9A /* AuthorizationWindowController.swift */,
 				47A96E4E1A0F73CE00C38E9A /* AuthorizationWindowController.xib */,
 			);
@@ -174,6 +187,8 @@
 			children = (
 				476B70AD1A0EBB5C00AFAC33 /* Endpoints */,
 				476B70AC1A0EBB5C00AFAC33 /* Configuration.swift */,
+				4773F87A1A13DC5A0001603F /* Errors.swift */,
+				4773F8781A13DBF70001603F /* Parameters.swift */,
 				476B70BC1A0EBB5C00AFAC33 /* Keychain.swift */,
 				476B70BD1A0EBB5C00AFAC33 /* Session.swift */,
 				476B70BE1A0EBB5C00AFAC33 /* Task.swift */,
@@ -342,6 +357,7 @@
 				473597901A0F8DF500CD6EA3 /* Authorizer.swift in Sources */,
 				476B70C61A0EBB5C00AFAC33 /* Events.swift in Sources */,
 				476B70C91A0EBB5C00AFAC33 /* PageUpdates.swift in Sources */,
+				4773F87C1A13DFFF0001603F /* MacAuthorizer.swift in Sources */,
 				476B70D11A0EBB5C00AFAC33 /* Venues.swift in Sources */,
 				476B70C31A0EBB5C00AFAC33 /* Configuration.swift in Sources */,
 				476B70D21A0EBB5C00AFAC33 /* Keychain.swift in Sources */,
@@ -366,7 +382,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4773F8791A13DBF70001603F /* Parameters.swift in Sources */,
 				476B70F71A0EBBC200AFAC33 /* Task.swift in Sources */,
+				4773F8751A13DB280001603F /* TouchAuthorizer.swift in Sources */,
 				473597911A0F8E3000CD6EA3 /* Authorizer.swift in Sources */,
 				476B71051A0EBBC500AFAC33 /* Venues.swift in Sources */,
 				476B70F31A0EBBBB00AFAC33 /* AuthorizationViewController.swift in Sources */,
@@ -381,8 +399,10 @@
 				476B70FB1A0EBBC500AFAC33 /* Lists.swift in Sources */,
 				476B710C1A0EBC7C00AFAC33 /* Authorization.swift in Sources */,
 				476B70FC1A0EBBC500AFAC33 /* Pages.swift in Sources */,
+				4773F8731A13DB1C0001603F /* NativeTouchAuthorizer.swift in Sources */,
 				476B71041A0EBBC500AFAC33 /* VenueGroups.swift in Sources */,
 				476B70F91A0EBBC500AFAC33 /* Endpoint.swift in Sources */,
+				4773F87B1A13DC5A0001603F /* Errors.swift in Sources */,
 				476B71011A0EBBC500AFAC33 /* Tips.swift in Sources */,
 				476B70F81A0EBBC500AFAC33 /* Checkins.swift in Sources */,
 				476B70FD1A0EBBC500AFAC33 /* PageUpdates.swift in Sources */,

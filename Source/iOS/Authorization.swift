@@ -7,7 +7,6 @@
 //
 
 import Foundation
-
 import UIKit
 
 var _authorizer : TouchAuthorizer?
@@ -29,125 +28,22 @@ extension Session {
     }
     
     public func authorizeWithViewController(viewController: UIViewController, completionHandler: () -> Void) {
-        if (_authorizer != nil) {
+        if (_authorizer != nil || _nativeAuthorizer != nil) {
             fatalError("You are currently authorizing.")
             return
         }
         
+        let completionHandler = { (accessToken, error) -> Void in
+            _authorizer = nil
+            _nativeAuthorizer = nil
+        } as (String?, NSError?) -> Void
+        
         if (self.canUseNativeOAuth()) {
             _nativeAuthorizer = NativeTouchAuthorizer(configuration: self.configuration)
-            _nativeAuthorizer?.authorize()
-                {   (accessToken, error) -> Void in
-                    //
-                    _authorizer = nil
-                }
+            _nativeAuthorizer?.authorize(completionHandler)
         } else {
             _authorizer = TouchAuthorizer(configuration: self.configuration)
-            _authorizer?.authorize(viewController)
-                {   (accessToken, error) -> Void in
-                    //
-                    _authorizer = nil
-                }
+            _authorizer?.authorize(viewController, completionHandler: completionHandler)
         }
     }
 }
-
-class TouchAuthorizer : Authorizer {
-    var presentingViewController: UIViewController?
-    
-    func authorize(viewController: UIViewController, completionHandler: (String?, NSError?) -> Void) {
-
-        let authorizationViewController = AuthorizationViewController(authorizationURL: authorizationURL, redirectURL: redirectURL, delegate: self)
-        
-        let navigationController = UINavigationController(rootViewController: authorizationViewController)
-        navigationController.modalPresentationStyle = .FormSheet
-        viewController.presentViewController(navigationController, animated: true, completion: nil)
-        
-        self.presentingViewController = viewController
-        self.completionHandler = completionHandler
-    }
-
-    override func finilizeAuthorization(accessToken: String?, error: NSError?) {
-        presentingViewController?.dismissViewControllerAnimated(true)
-            {
-                self.completionHandler?(accessToken, error)
-                self.completionHandler = nil
-                self.presentingViewController = nil
-            }
-    }
-}
-
-class NativeTouchAuthorizer : Authorizer {
-    var configuration : Configuration!
-    
-     convenience init(configuration: Configuration) {
-        let baseURL = configuration.server.nativeOauthBaseURL
-        let parameters = [Parameter.client_id : configuration.client.id,
-                            Parameter.redirect_uri : configuration.client.redirectURL,
-                            Parameter.v:"20130509"]
-        let URLString = baseURL + "?" + Parameter.makeQuery(parameters)
-
-        let authorizationURL = NSURL(string: URLString)
-        let redirectURL = NSURL(string: configuration.client.redirectURL)
-        if authorizationURL == nil || redirectURL == nil {
-            fatalError("Can't build auhorization URL. Check your clientId and redirectURL")
-        }
-        self.init(authorizationURL: authorizationURL!, redirectURL: redirectURL!)
-        self.configuration = configuration
-    }
-    
-    func authorize(completionHandler: (String?, NSError?) -> Void) {
-        self.completionHandler = completionHandler
-        UIApplication.sharedApplication().openURL(self.authorizationURL)
-    }
-    
-    func handleURL(URL: NSURL) -> Bool {
-        if (URL.scheme == self.redirectURL.scheme) {
-            self.didReachRedirectURL(URL)
-            return true
-        }
-        return false
-    }
-    
-    override func didReachRedirectURL(redirectURL: NSURL) {
-        let parameters = self.extractParametersFromURL(redirectURL)
-        let accessCode = parameters["code"]
-        if accessCode != nil {
-            // We should exchange access code to access token.
-            self.requestAccessTokenWithCode(accessCode!)
-        } else {
-            // No access code, so we have error there. This method will take care about it.
-            super.didReachRedirectURL(redirectURL)
-        }
-    }
-    
-    func requestAccessTokenWithCode(code: String) {
-        let path = self.configuration.server.nativeOauthAccessTokenBaseURL
-        
-        let client = self.configuration.client
-        let parameters = [Parameter.client_id:client.id,
-                            Parameter.client_secret:client.secret,
-                            Parameter.redirect_uri: client.redirectURL,
-                            Parameter.code:"code",
-                            Parameter.grant_type:"authorization_code"]
-        let URLString = path + "?" + Parameter.makeQuery(parameters)
-        let URL = NSURL(string: URLString) as NSURL!
-        let request = NSURLRequest(URL: URL)
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue())
-            { (response, data, error) -> Void in
-                if data != nil {
-                    var parseError: NSError?
-                    var jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &parseError)
-                    if jsonObject != nil && jsonObject!.isKindOfClass(NSDictionary) {
-                        let parameters = jsonObject as Parameters
-                        self.finilizeAuthorizationWithParameters(parameters)
-                    } else {
-                        self.finilizeAuthorization(nil, error: parseError)
-                    }
-                } else {
-                    self.finilizeAuthorization(nil, error: error)
-                }
-        }
-    }
-}
-
