@@ -25,7 +25,8 @@ class NativeTouchAuthorizer : Authorizer {
         if authorizationURL == nil || redirectURL == nil {
             fatalError("Can't build auhorization URL. Check your clientId and redirectURL")
         }
-        self.init(authorizationURL: authorizationURL!, redirectURL: redirectURL!)
+        let keychain = Keychain(configuration: configuration)
+        self.init(authorizationURL: authorizationURL!, redirectURL: redirectURL!, keychain:keychain)
         self.configuration = configuration
     }
     

@@ -17,14 +17,16 @@ class Authorizer: AuthorizationDelegate {
     var redirectURL : NSURL
     var authorizationURL : NSURL
     var completionHandler: ((String?, NSError?) -> Void)?
+    let keychain : Keychain
     
     convenience init(configuration: Configuration) {
         let baseURL = configuration.server.oauthBaseURL
-        let parameters =
-            [Parameter.client_id        : configuration.client.id,
-            Parameter.redirect_uri      : configuration.client.redirectURL,
-            Parameter.v                 : configuration.version,
-            Parameter.response_type     : "token"]
+        let parameters = [
+            Parameter.client_id        : configuration.client.id,
+            Parameter.redirect_uri     : configuration.client.redirectURL,
+            Parameter.v                : configuration.version,
+            Parameter.response_type    : "token"
+        ]
         
         let URLString = baseURL + "?" + Parameter.makeQuery(parameters)
         let authorizationURL = NSURL(string: URLString)
@@ -32,13 +34,15 @@ class Authorizer: AuthorizationDelegate {
         if authorizationURL == nil || redirectURL == nil {
             fatalError("Can't build auhorization URL. Check your clientId and redirectURL")
         }
-        self.init(authorizationURL: authorizationURL!, redirectURL: redirectURL!)
+        let keychain = Keychain(configuration: configuration)
+        self.init(authorizationURL: authorizationURL!, redirectURL: redirectURL!, keychain: keychain)
         self.cleanupCookiesForURL(authorizationURL!)
     }
     
-    init(authorizationURL: NSURL, redirectURL: NSURL) {
+    init(authorizationURL: NSURL, redirectURL: NSURL, keychain:Keychain) {
         self.authorizationURL = authorizationURL
         self.redirectURL = redirectURL
+        self.keychain = keychain
     }
     
     // MARK: - Delegate methods
@@ -66,6 +70,7 @@ class Authorizer: AuthorizationDelegate {
     
     func finilizeAuthorization(accessToken: String?, error: NSError?) {
         if accessToken != nil {
+            self.keychain.saveAccessToken(accessToken!)
             println("access token: " + accessToken!)
         } else {
             println("acces token error: ", error)

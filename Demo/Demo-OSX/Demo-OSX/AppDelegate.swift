@@ -23,7 +23,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                             redirectURL:    "testapp123://foursquare")
         let configuration = Configuration(client:client)
         self.quadratSession = Session(configuration: configuration)
-
+        let authorized = self.quadratSession.isAuthorized()
+        println("authorized: ", authorized)
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {

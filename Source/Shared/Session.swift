@@ -75,9 +75,6 @@ public class Session {
         self.configuration = configuration
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
         self.URLSession = NSURLSession(configuration: configuration, delegate: nil, delegateQueue: completionQueue)
-        if self.configuration.accessToken == nil {
-            self.configuration.accessToken = Keychain().accessToken()
-        }
     }
     
     public convenience init(configuration: Configuration) {
@@ -97,6 +94,11 @@ public class Session {
             fatalError("You must call setupSharedInstanceWithConfiguration before!")
         }
         return _sharedSession!
+    }
+    
+    public func isAuthorized() -> Bool {
+        let keychain = Keychain(configuration: self.configuration)
+        return keychain.accessToken() != nil
     }
     
     

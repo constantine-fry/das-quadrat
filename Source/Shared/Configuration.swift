@@ -67,10 +67,12 @@ public struct Configuration {
     }
     
     func parameters() -> Parameters {
-        var result = [Parameter.client_id:self.client.id,
-                        Parameter.client_secret:self.client.secret,
-                        Parameter.v: self.version,
-                        Parameter.locale:self.locale]
+        var result = [
+            Parameter.client_id     : self.client.id,
+            Parameter.client_secret : self.client.secret,
+            Parameter.v             : self.version,
+            Parameter.locale        : self.locale
+        ]
         if self.accessToken != nil {
             result[Parameter.oauth_token] = self.accessToken!
         }

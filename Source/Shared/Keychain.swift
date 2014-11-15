@@ -7,20 +7,57 @@
 //
 
 import Foundation
-
+import Security
 
 class Keychain {
+    let serviceAttribute = "Foursquare2API-FSKeychain"
+    let account: String
+    let keychainQuery: [String:AnyObject]
     
-    func accessToken() -> String {
-        return ""
+    init(configuration: Configuration) {
+        if let userTag = configuration.userTag {
+            self.account = configuration.client.id + "_" + configuration.userTag!
+        } else {
+            self.account = configuration.client.id
+        }
+        self.keychainQuery = [
+            kSecClass           : kSecClassGenericPassword,
+            kSecAttrAccessible  : kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
+            kSecAttrService     : self.serviceAttribute,
+            kSecAttrAccount     : self.account
+        ]
     }
     
-    func accessTokenForUserWithTag(tag: String) -> String {
-        return ""
+    func accessToken() -> String? {
+        var query = self.keychainQuery
+        query[kSecReturnData] = kCFBooleanTrue
+        query[kSecMatchLimit] = kSecMatchLimitOne
+        var dataTypeRef: Unmanaged<AnyObject>?
+        let status = SecItemCopyMatching(query, &dataTypeRef)
+        if status == noErr {
+            if let opaque = dataTypeRef?.toOpaque() {
+                let accossTokenData = Unmanaged<NSData>.fromOpaque(opaque).takeUnretainedValue()
+                let accessToken = NSString(data: accossTokenData, encoding: NSUTF8StringEncoding)
+                return accessToken
+            }
+        }
+        return nil
     }
     
-    func storeAccessToken(accessToken: String, tag: String) -> Bool {
-        return true
+    func deleteAccessToken() {
+        let query = self.keychainQuery
+        let status = SecItemDelete(query)
+    }
+    
+    func saveAccessToken(accessToken: String) -> Bool {
+        var query = self.keychainQuery
+        if let accesToken = self.accessToken()  {
+            self.deleteAccessToken()
+        }
+        let accessTokenData = accessToken.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+        query[kSecValueData] =  accessTokenData
+        let status = SecItemAdd(query, nil)
+        return status == noErr
     }
     
     func allAllAccessTokens() -> [String] {

@@ -21,11 +21,13 @@ public class Endpoint  {
     let configuration   : Configuration
     let baseURL         : NSURL
     weak var session    : Session?
+    let keychain        : Keychain
     
     init(configuration: Configuration, session: Session) {
         self.configuration = configuration
         self.session = session
         self.baseURL = NSURL(string: self.configuration.server.apiBaseURL) as NSURL!
+        self.keychain = Keychain(configuration: configuration)
     }
     
     func taskWithPath(path: String, parameters: Parameters?, HTTPMethod: String, completionHandler:  ResponseCompletionHandler) -> Task {
@@ -47,6 +49,11 @@ public class Endpoint  {
         var allParameters = self.configuration.parameters()
         if parameters != nil {
             allParameters += parameters!
+            if allParameters[Parameter.oauth_token] == nil {
+                if let accessToken = self.keychain.accessToken() {
+                    allParameters[Parameter.oauth_token] = accessToken
+                }
+            }
         }
         components.query = Parameter.makeQuery(allParameters)
         let requestURL = components.URL as NSURL!
