@@ -22,7 +22,11 @@ extension Session {
         authorizer.authorize(window) {
             (accessToken, error) -> Void in
             completionHandler(accessToken != nil, error)
-            self.authorizer = nil
+            
+            // Fixes the crash.
+            dispatch_async(dispatch_get_main_queue()){
+                self.authorizer = nil
+            }
         }
         self.authorizer = authorizer
     }

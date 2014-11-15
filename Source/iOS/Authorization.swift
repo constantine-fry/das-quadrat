@@ -18,11 +18,11 @@ extension Session {
     }
     
     public func handleURL(URL: NSURL) -> Bool {
-        if _nativeAuthorizer == nil {
-            let nativeAuthorizer = NativeTouchAuthorizer(configuration: self.configuration)
-            return nativeAuthorizer.handleURL(URL)
+        if let nativeAuthorizer = self.authorizer as? NativeTouchAuthorizer {
+            nativeAuthorizer.handleURL(URL) as Bool!
         }
-        return _nativeAuthorizer?.handleURL(URL) as Bool!
+        let nativeAuthorizer = NativeTouchAuthorizer(configuration: self.configuration)
+        return nativeAuthorizer.handleURL(URL) as Bool!
     }
     
     public func authorizeWithViewController(viewController: UIViewController, completionHandler: AuthorizationHandler) {

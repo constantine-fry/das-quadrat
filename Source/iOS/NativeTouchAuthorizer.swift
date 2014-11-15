@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class NativeTouchAuthorizer : Authorizer {
-    var configuration : Configuration!
+    private var configuration : Configuration!
     
     convenience init(configuration: Configuration) {
         let baseURL = configuration.server.nativeOauthBaseURL

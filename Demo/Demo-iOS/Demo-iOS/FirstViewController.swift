@@ -25,9 +25,10 @@ class FirstViewController: UITableViewController {
     }
 
     @IBAction func authorizeButtonTapped() {
-        self.quadratSession?.authorizeWithViewController(self, completionHandler: { () -> Void in
+        self.quadratSession?.authorizeWithViewController(self) {
+            (authorized, error) -> Void in
             //
-        })
+        }
     }
 }
 
