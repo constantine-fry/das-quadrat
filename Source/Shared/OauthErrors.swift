@@ -13,12 +13,12 @@ let QuadratOauthErrorOriginalStringKey = "QuadratErrorOriginalString"
 
 /** Oauth errors. */
 enum QuadratOauthErrorCode : Int {
-    case OauthInvalidRequest = -999
-    case OauthInvalidClient = -998
-    case OauthInvalidGrant = -997
-    case OauthUnauthorizedClient = -996
-    case OauthUnsupportedGrantType = -995
-    case OauthUnknownError = -994
+    case OauthInvalidRequest        = -999
+    case OauthInvalidClient         = -998
+    case OauthInvalidGrant          = -997
+    case OauthUnauthorizedClient    = -996
+    case OauthUnsupportedGrantType  = -995
+    case OauthUnknownError          = -994
 }
 
 extension NSError {

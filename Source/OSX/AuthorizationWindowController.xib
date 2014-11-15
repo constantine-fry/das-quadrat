@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14A389" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
-        <plugIn identifier="com.apple.WebKitIBPlugin" version="6250"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+        <plugIn identifier="com.apple.WebKitIBPlugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AuthorizationWindowController" customModule="Quadrat" customModuleProvider="target">
@@ -22,7 +22,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="283" y="305" width="770" height="567"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="P1U-Vr-otG">
                 <rect key="frame" x="0.0" y="0.0" width="770" height="567"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -39,7 +39,7 @@
                         </connections>
                     </webView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hPG-PN-bab">
-                        <rect key="frame" x="674" y="3" width="82" height="32"/>
+                        <rect key="frame" x="673" y="3" width="83" height="32"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="PEo-bG-wzD"/>
                         </constraints>
@@ -66,7 +66,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="feo-rX-vKf">
-                        <rect key="frame" x="635" y="3" width="39" height="32"/>
+                        <rect key="frame" x="634" y="3" width="39" height="32"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="27" id="5Bu-4x-6s2"/>
                         </constraints>
@@ -102,6 +102,6 @@ Gw
         </window>
     </objects>
     <resources>
-        <image name="NSRefreshTemplate" width="10" height="12"/>
+        <image name="NSRefreshTemplate" width="11" height="15"/>
     </resources>
 </document>

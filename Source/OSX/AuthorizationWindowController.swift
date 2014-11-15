@@ -19,7 +19,7 @@ enum AuthorizationWindowControllerRequestStatus  {
 class AuthorizationWindowController: NSWindowController {
     var authorizationURL: NSURL!
     var redirectURL     : NSURL!
-    var delegate        : AuthorizationDelegate?
+    weak var delegate   : AuthorizationDelegate?
     var status : AuthorizationWindowControllerRequestStatus = .None {
         didSet {
             self.updateUI()
@@ -32,6 +32,10 @@ class AuthorizationWindowController: NSWindowController {
     @IBOutlet weak var loadIndicator: NSProgressIndicator!
     
     // MARK: -
+    
+    deinit {
+        self.webView.mainFrame.stopLoading()
+    }
 
     override func windowDidLoad() {
         super.windowDidLoad()

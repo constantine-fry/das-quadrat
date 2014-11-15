@@ -1,5 +1,5 @@
 //
-//  Client.swift
+//  Configuration.swift
 //  Quadrat
 //
 //  Created by Constantine Fry on 26/10/14.

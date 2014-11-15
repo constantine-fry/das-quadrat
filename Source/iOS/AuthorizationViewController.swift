@@ -20,7 +20,7 @@ public class AuthorizationViewController : UIViewController, UIWebViewDelegate {
     let authorizationURL: NSURL
     let redirectURL : NSURL
     
-    var delegate : AuthorizationDelegate?
+    weak var delegate : AuthorizationDelegate?
     
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var statusLabel: UILabel!

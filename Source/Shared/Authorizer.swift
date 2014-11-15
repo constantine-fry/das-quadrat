@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol AuthorizationDelegate {
+protocol AuthorizationDelegate : class {
     func userDidCancel()
     func didReachRedirectURL(redirectURL: NSURL)
 }

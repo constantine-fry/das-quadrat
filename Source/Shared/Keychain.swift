@@ -34,14 +34,15 @@ class Keychain {
         query[kSecMatchLimit] = kSecMatchLimitOne
         var dataTypeRef: Unmanaged<AnyObject>?
         let status = SecItemCopyMatching(query, &dataTypeRef)
+        var accessToken : String?
         if status == noErr {
             if let opaque = dataTypeRef?.toOpaque() {
-                let accossTokenData = Unmanaged<NSData>.fromOpaque(opaque).takeUnretainedValue()
-                let accessToken = NSString(data: accossTokenData, encoding: NSUTF8StringEncoding)
-                return accessToken
+                let accessTokenData = Unmanaged<NSData>.fromOpaque(opaque).takeUnretainedValue()
+                accessToken = NSString(data: accessTokenData, encoding: NSUTF8StringEncoding) as String?
             }
         }
-        return nil
+        dataTypeRef?.release()
+        return accessToken
     }
     
     func deleteAccessToken() {
