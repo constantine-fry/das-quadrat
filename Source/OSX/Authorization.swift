@@ -9,20 +9,21 @@
 import Foundation
 import AppKit
 
-var _authorizer : MacAuthorizer?
+
 extension Session {
     
-    public func authorizeWithViewController(window: NSWindow, completionHandler: () -> Void) {
-        if (_authorizer != nil) {
+    public func authorizeWithViewController(window: NSWindow, completionHandler: AuthorizationHandler) {
+        if (self.authorizer != nil) {
             fatalError("You are currently authorizing.")
             return
         }
         
-        _authorizer = MacAuthorizer(configuration: self.configuration)
-        _authorizer?.authorize(window, completionHandler: {
+        let authorizer = MacAuthorizer(configuration: self.configuration)
+        authorizer.authorize(window) {
             (accessToken, error) -> Void in
-            //
-            _authorizer = nil
-        })
+            completionHandler(accessToken != nil, error)
+            self.authorizer = nil
+        }
+        self.authorizer = authorizer
     }
 }

@@ -8,6 +8,7 @@
 
 import Foundation
 
+public typealias AuthorizationHandler = (Bool, NSError?) -> Void
 
 public let UserSelf = "self"
 
@@ -18,6 +19,7 @@ private var _sharedSession : Session?
 public class Session {
     let configuration       : Configuration
     let URLSession          : NSURLSession
+    var authorizer          : Authorizer?
     
     public lazy var users : Users = {
         return Users(configuration: self.configuration, session: self)

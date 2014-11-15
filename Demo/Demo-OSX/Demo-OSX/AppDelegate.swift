@@ -33,6 +33,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBAction func loginButtonClicked(sender: AnyObject) {
         self.quadratSession.authorizeWithViewController(self.window) {
+                authorized, error in
                 //
             }   
     }

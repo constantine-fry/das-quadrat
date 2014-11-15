@@ -9,8 +9,6 @@
 import Foundation
 import UIKit
 
-var _authorizer : TouchAuthorizer?
-var _nativeAuthorizer : NativeTouchAuthorizer?
 extension Session {
     
     public func canUseNativeOAuth() -> Bool {
@@ -27,23 +25,25 @@ extension Session {
         return _nativeAuthorizer?.handleURL(URL) as Bool!
     }
     
-    public func authorizeWithViewController(viewController: UIViewController, completionHandler: () -> Void) {
-        if (_authorizer != nil || _nativeAuthorizer != nil) {
+    public func authorizeWithViewController(viewController: UIViewController, completionHandler: AuthorizationHandler) {
+        if (self.authorizer != nil) {
             fatalError("You are currently authorizing.")
             return
         }
         
-        let completionHandler = { (accessToken, error) -> Void in
-            _authorizer = nil
-            _nativeAuthorizer = nil
+        let block = { (accessToken, error) -> Void in
+            self.authorizer = nil
+            completionHandler(accessToken != nil, error)
         } as (String?, NSError?) -> Void
         
         if (self.canUseNativeOAuth()) {
-            _nativeAuthorizer = NativeTouchAuthorizer(configuration: self.configuration)
-            _nativeAuthorizer?.authorize(completionHandler)
+            let nativeAuthorizer = NativeTouchAuthorizer(configuration: self.configuration)
+            nativeAuthorizer.authorize(block)
+            self.authorizer = nativeAuthorizer
         } else {
-            _authorizer = TouchAuthorizer(configuration: self.configuration)
-            _authorizer?.authorize(viewController, completionHandler: completionHandler)
+            let touchAuthorizer = TouchAuthorizer(configuration: self.configuration)
+            touchAuthorizer.authorize(viewController, completionHandler: block)
+            self.authorizer = touchAuthorizer
         }
     }
 }

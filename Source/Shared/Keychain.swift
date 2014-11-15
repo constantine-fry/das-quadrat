@@ -10,7 +10,13 @@ import Foundation
 import Security
 
 class Keychain {
-    let serviceAttribute = "Foursquare2API-FSKeychain"
+    
+    #if os(iOS)
+        let serviceAttribute = "Foursquare2API-FSKeychain"
+    #else
+        let serviceAttribute = "Foursquare Access Token"
+    #endif
+    
     let account: String
     let keychainQuery: [String:AnyObject]
     
