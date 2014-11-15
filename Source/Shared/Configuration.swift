@@ -44,9 +44,11 @@ public struct Configuration {
     let client          : Client
     let server          : Server = Server()
     
-    let locale          : String
     var accessToken     : String?
     let version         : String = "20140503"
+    
+    public let locale   : String
+    public var userTag  : String?
     
     public init(client: Client) {
         self.init(client: client, version: nil, accessToken: nil)

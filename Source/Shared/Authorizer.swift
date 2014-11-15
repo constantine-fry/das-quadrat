@@ -66,7 +66,7 @@ class Authorizer: AuthorizationDelegate {
     
     func finilizeAuthorization(accessToken: String?, error: NSError?) {
         if accessToken != nil {
-            println("access token:  " + accessToken!)
+            println("access token: " + accessToken!)
         } else {
             println("acces token error: ", error)
         }

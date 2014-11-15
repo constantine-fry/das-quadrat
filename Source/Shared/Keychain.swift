@@ -15,4 +15,15 @@ class Keychain {
         return ""
     }
     
+    func accessTokenForUserWithTag(tag: String) -> String {
+        return ""
+    }
+    
+    func storeAccessToken(accessToken: String, tag: String) -> Bool {
+        return true
+    }
+    
+    func allAllAccessTokens() -> [String] {
+        return [""]
+    }
 }
