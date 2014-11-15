@@ -23,6 +23,10 @@ public class Endpoint  {
     weak var session    : Session?
     let keychain        : Keychain
     
+    var endpoint   : String {
+        return ""
+    }
+    
     init(configuration: Configuration, session: Session) {
         self.configuration = configuration
         self.session = session
@@ -43,7 +47,7 @@ public class Endpoint  {
     }
     
     func requestWithPath(path: String, parameters: Parameters?, HTTPMethod: String) -> NSURLRequest {
-        let URL = self.baseURL.URLByAppendingPathComponent(path)
+        let URL = self.baseURL.URLByAppendingPathComponent(self.endpoint).URLByAppendingPathComponent(path)
         let components = NSURLComponents(URL: URL, resolvingAgainstBaseURL: false) as NSURLComponents!
         
         var allParameters = self.configuration.parameters()

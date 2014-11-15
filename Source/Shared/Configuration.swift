@@ -38,26 +38,69 @@ struct Server {
     let nativeOauthAccessTokenBaseURL = "https://foursquare.com/oauth2/access_token"
 }
 
-/** Session configuartion. */
+/** 
+    Session configuartion.
+
+    Read 'Versioning & Internationalization' for `version`, `mode` and `locale` parameters.
+    https://developer.foursquare.com/overview/versioning
+*/
 public struct Configuration {
     
+    /** The Oauth2 specific information of application. */
     let client          : Client
+    
+    /** The server specific information. */
     let server          : Server = Server()
     
+    /** The access token. May be set for some tests. */
     var accessToken     : String?
-    let version         : String = "20140503"
     
-    public let locale   : String
-    public var userTag  : String?
+    /** 
+        The `v` parameter of API. Global parameter for session.
+        Date in format YYYYMMDD.
+    */
+    public let version         : String = "20140503"
     
+    /** 
+        The `m` parameter of API. Global parameter for session.
+    */
+    public let mode            : String = "swarm"
+    
+    /** 
+        The `locale` parameter of API. Global parameter for session.
+        Two-letters language code. For example: "en" or "de"
+        Default value is system language.
+    */
+    public let locale          : String
+    
+    /** The user tag. */
+    public var userTag         : String?
+    
+    /** 
+        Creates Configuration with specified client.
+        `Mode` is swarm.
+        `Locale` is system language. (NSLocale.preferredLanguages().first)
+        `Version` is 20140503.
+    */
     public init(client: Client) {
         self.init(client: client, version: nil, accessToken: nil)
     }
     
+    /** 
+        Creates Configuration with specified client.
+        @discussion Access token passed in configuration never stored in Keychain.
+        The main purpose: create session for some tests classes with hard coded access token.
+    */
     public init(client: Client, version: String?, accessToken: String?) {
         self.client = client
-        let languageCode = NSLocale.currentLocale().objectForKey(NSLocaleLanguageCode) as String
-        self.locale = languageCode
+        
+        let languageCode = NSLocale.preferredLanguages().first as String
+        let supportedCodes = ["en", "es", "fr", "de", "it", "ja", "th", "tr", "ko", "ru", "pt", "id"]
+        if contains(supportedCodes, languageCode) {
+            self.locale = languageCode
+        } else {
+            self.locale = "en"
+        }
         if version != nil {
             self.version = version!
         }
@@ -71,7 +114,8 @@ public struct Configuration {
             Parameter.client_id     : self.client.id,
             Parameter.client_secret : self.client.secret,
             Parameter.v             : self.version,
-            Parameter.locale        : self.locale
+            Parameter.locale        : self.locale,
+            Parameter.m             : self.mode
         ]
         if self.accessToken != nil {
             result[Parameter.oauth_token] = self.accessToken!

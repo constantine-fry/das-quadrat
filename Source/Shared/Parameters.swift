@@ -19,6 +19,7 @@ public class Parameter {
     class var v               : String { return "v" }
     class var locale          : String { return "locale" }
     class var response_type   : String { return "response_type" }
+    class var m               : String { return "m" }
     
     // Public.
     public class var checkinId       : String { return "checkinId" }
@@ -26,6 +27,7 @@ public class Parameter {
     public class var venueId         : String { return "venueId" }
     public class var pageId          : String { return "pageId" }
     
+    public class var value           : String { return "value" }
     
     class func makeQuery(parameters: Parameters) -> String {
         var query = String()
