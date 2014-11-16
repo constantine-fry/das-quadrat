@@ -8,11 +8,11 @@
 
 import Foundation
 
-let QuadratOauthErrorDomain = "QuadratOauthErrorDomain"
-let QuadratOauthErrorOriginalStringKey = "QuadratErrorOriginalString"
+public let QuadratOauthErrorDomain = "QuadratOauthErrorDomain"
+public let QuadratOauthErrorOriginalStringKey = "QuadratErrorOriginalString"
 
 /** Oauth errors. */
-enum QuadratOauthErrorCode : Int {
+public enum QuadratOauthErrorCode : Int {
     case OauthInvalidRequest        = -999
     case OauthInvalidClient         = -998
     case OauthInvalidGrant          = -997

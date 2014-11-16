@@ -58,6 +58,8 @@
 		4773F87C1A13DFFF0001603F /* MacAuthorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F8761A13DBDC0001603F /* MacAuthorizer.swift */; };
 		4773F87D1A13E08F0001603F /* OauthErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F87A1A13DC5A0001603F /* OauthErrors.swift */; };
 		4773F87E1A13E10D0001603F /* Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F8781A13DBF70001603F /* Parameters.swift */; };
+		47888BEE1A18A3E900A76E47 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47888BED1A18A3E900A76E47 /* Response.swift */; };
+		47888BEF1A18A92200A76E47 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47888BED1A18A3E900A76E47 /* Response.swift */; };
 		47A96E4F1A0F73CE00C38E9A /* AuthorizationWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47A96E4E1A0F73CE00C38E9A /* AuthorizationWindowController.xib */; };
 		47A96E511A0F741B00C38E9A /* AuthorizationWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A96E501A0F741B00C38E9A /* AuthorizationWindowController.swift */; };
 		47A96E551A0F80E100C38E9A /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47A96E541A0F80E100C38E9A /* WebKit.framework */; };
@@ -98,6 +100,7 @@
 		4773F8761A13DBDC0001603F /* MacAuthorizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacAuthorizer.swift; sourceTree = "<group>"; };
 		4773F8781A13DBF70001603F /* Parameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parameters.swift; sourceTree = "<group>"; };
 		4773F87A1A13DC5A0001603F /* OauthErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OauthErrors.swift; sourceTree = "<group>"; };
+		47888BED1A18A3E900A76E47 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Response.swift; path = Shared/Response.swift; sourceTree = SOURCE_ROOT; };
 		47A96E4E1A0F73CE00C38E9A /* AuthorizationWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthorizationWindowController.xib; sourceTree = "<group>"; };
 		47A96E501A0F741B00C38E9A /* AuthorizationWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationWindowController.swift; sourceTree = "<group>"; };
 		47A96E541A0F80E100C38E9A /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -195,6 +198,7 @@
 				476B70BE1A0EBB5C00AFAC33 /* Task.swift */,
 				4735978F1A0F8DF500CD6EA3 /* Authorizer.swift */,
 				4773F87A1A13DC5A0001603F /* OauthErrors.swift */,
+				47888BED1A18A3E900A76E47 /* Response.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -203,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				476B70AF1A0EBB5C00AFAC33 /* Endpoint.swift */,
+				476B70B91A0EBB5C00AFAC33 /* Users.swift */,
 				476B70AE1A0EBB5C00AFAC33 /* Checkins.swift */,
 				476B70B01A0EBB5C00AFAC33 /* Events.swift */,
 				476B70B11A0EBB5C00AFAC33 /* Lists.swift */,
@@ -213,7 +218,6 @@
 				476B70B61A0EBB5C00AFAC33 /* Specials.swift */,
 				476B70B71A0EBB5C00AFAC33 /* Tips.swift */,
 				476B70B81A0EBB5C00AFAC33 /* Updates.swift */,
-				476B70B91A0EBB5C00AFAC33 /* Users.swift */,
 				476B70BA1A0EBB5C00AFAC33 /* VenueGroups.swift */,
 				476B70BB1A0EBB5C00AFAC33 /* Venues.swift */,
 			);
@@ -355,6 +359,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47888BEE1A18A3E900A76E47 /* Response.swift in Sources */,
 				476B70CE1A0EBB5C00AFAC33 /* Updates.swift in Sources */,
 				473597901A0F8DF500CD6EA3 /* Authorizer.swift in Sources */,
 				476B70C61A0EBB5C00AFAC33 /* Events.swift in Sources */,
@@ -392,6 +397,7 @@
 				473597911A0F8E3000CD6EA3 /* Authorizer.swift in Sources */,
 				476B71051A0EBBC500AFAC33 /* Venues.swift in Sources */,
 				476B70F31A0EBBBB00AFAC33 /* AuthorizationViewController.swift in Sources */,
+				47888BEF1A18A92200A76E47 /* Response.swift in Sources */,
 				476B70F51A0EBBC200AFAC33 /* Keychain.swift in Sources */,
 				476B70F61A0EBBC200AFAC33 /* Session.swift in Sources */,
 				476B70FA1A0EBBC500AFAC33 /* Events.swift in Sources */,

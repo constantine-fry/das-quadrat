@@ -53,10 +53,10 @@ public class Endpoint  {
         var allParameters = self.configuration.parameters()
         if parameters != nil {
             allParameters += parameters!
-            if allParameters[Parameter.oauth_token] == nil {
-                if let accessToken = self.keychain.accessToken() {
-                    allParameters[Parameter.oauth_token] = accessToken
-                }
+        }
+        if allParameters[Parameter.oauth_token] == nil {
+            if let accessToken = self.keychain.accessToken() {
+                allParameters[Parameter.oauth_token] = accessToken
             }
         }
         components.query = Parameter.makeQuery(allParameters)

@@ -25,6 +25,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.quadratSession = Session(configuration: configuration)
         let authorized = self.quadratSession.isAuthorized()
         println("authorized: ", authorized)
+        let task = self.quadratSession.users.get("self") {
+            (response) -> Void in
+            println(response)
+        }
+        task.start()
+        //task.cancel()
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
