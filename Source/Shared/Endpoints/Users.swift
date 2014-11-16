@@ -25,14 +25,14 @@ public class Users: Endpoint {
     
     // requests
     public func requests(completionHandler:  ResponseCompletionHandler) -> Task {
-        let path = __FUNCTION__
+        let path = "requests"
         let task = self.taskWithPath(path, parameters: nil, HTTPMethod: "GET", completionHandler)
         return task
     }
     
     // search
     public func search(parameters: Parameters, completionHandler:  ResponseCompletionHandler) -> Task {
-        let path = __FUNCTION__
+        let path = "search"
         let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
         return task
     }
@@ -41,42 +41,42 @@ public class Users: Endpoint {
     
     // checkins
     public func checkins(parameters: Parameters, completionHandler:  ResponseCompletionHandler) -> Task {
-        let path = "self/" + __FUNCTION__
+        let path = "self/checkins"
         let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
         return task
     }
     
     // friends
     public func friends(userID: String, parameters: Parameters, completionHandler:  ResponseCompletionHandler) -> Task {
-        let path = userID + "/" + __FUNCTION__
+        let path = userID + "/friends"
         let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
         return task
     }
     
     // lists
     public func lists(userID: String, parameters: Parameters, completionHandler:  ResponseCompletionHandler) -> Task {
-        let path = userID + "/" + __FUNCTION__
+        let path = userID + "/lists"
         let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
         return task
     }
     
     // mayorships
     public func lists(userID: String, completionHandler:  ResponseCompletionHandler) -> Task {
-        let path = userID + "/" + __FUNCTION__
+        let path = userID + "/lists"
         let task = self.taskWithPath(path, parameters: nil, HTTPMethod: "GET", completionHandler)
         return task
     }
     
     // photos
     public func photos(parameters: Parameters, completionHandler:  ResponseCompletionHandler) -> Task {
-        let path = "self/" + __FUNCTION__
+        let path = "self/photos"
         let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
         return task
     }
     
     // tastes
     public func tastes(parameters: Parameters, completionHandler:  ResponseCompletionHandler) -> Task {
-        let path = "self/" + __FUNCTION__
+        let path = "self/tastes"
         let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
         return task
     }
@@ -86,14 +86,14 @@ public class Users: Endpoint {
     
     // venuehistory
     public func venuehistory(parameters: Parameters, completionHandler:  ResponseCompletionHandler) -> Task {
-        let path = "self/" + __FUNCTION__
+        let path = "self/venuehistory"
         let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
         return task
     }
     
     // venuelikes
     public func venuelikes(userID: String, parameters: Parameters, completionHandler:  ResponseCompletionHandler) -> Task {
-        let path = userID + "/" + __FUNCTION__
+        let path = userID + "/venuelikes"
         let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
         return task
     }
@@ -102,21 +102,21 @@ public class Users: Endpoint {
     
     // approve
     public func approve(userID: String, completionHandler:  ResponseCompletionHandler) -> Task {
-        let path = userID + "/" + __FUNCTION__
+        let path = userID + "/approve"
         let task = self.taskWithPath(path, parameters: nil, HTTPMethod: "POST", completionHandler)
         return task
     }
     
     // deny
     public func deny(userID: String, completionHandler:  ResponseCompletionHandler) -> Task {
-        let path = userID + "/" + __FUNCTION__
+        let path = userID + "/deny"
         let task = self.taskWithPath(path, parameters: nil, HTTPMethod: "POST", completionHandler)
         return task
     }
     
     // setpings
     public func setpings(userID: String, value: Bool, completionHandler:  ResponseCompletionHandler) -> Task {
-        let path = userID + "/" + __FUNCTION__
+        let path = userID + "/setpings"
         let parameters = [Parameter.value: (value) ? "true":"false"]
         let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "POST", completionHandler)
         task.start()
@@ -125,7 +125,7 @@ public class Users: Endpoint {
     
     // unfriend
     public func unfriend(userID: String, completionHandler:  ResponseCompletionHandler) -> Task {
-        let path = userID + "/" + __FUNCTION__
+        let path = userID + "/unfriend"
         let task = self.taskWithPath(path, parameters: nil, HTTPMethod: "POST", completionHandler)
         return task
     }
