@@ -61,7 +61,8 @@ public class Endpoint  {
         }
         components.query = Parameter.makeQuery(allParameters)
         let requestURL = components.URL as NSURL!
-        let request = NSURLRequest(URL: requestURL)
+        let request = NSMutableURLRequest(URL: requestURL)
+        request.HTTPMethod = HTTPMethod
         return request
     }
     

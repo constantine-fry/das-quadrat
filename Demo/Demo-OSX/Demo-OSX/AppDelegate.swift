@@ -25,7 +25,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.quadratSession = Session(configuration: configuration)
         let authorized = self.quadratSession.isAuthorized()
         println("authorized: ", authorized)
-        let task = self.quadratSession.users.get("self") {
+        let URL = NSBundle.mainBundle().URLForResource("Apple_Swift_Logo", withExtension: "png")
+        let task = self.quadratSession.users.update(URL!) {
             (response) -> Void in
             println(response)
         }

@@ -32,6 +32,10 @@ public class Response {
     */
     public var HTTPHeaders    : [NSObject:AnyObject]?
     
+    /** The URL which has been requested. */
+    public var URL    : NSURL?
+    
+    
     /*
         Can contain error with following error domains:
             QuadratResponseErrorDomain  - in case of error in `meta` parameter of Foursquare response. Error doesn't have localized description.
@@ -55,4 +59,5 @@ public class Response {
     public func rateLimit() -> Int? {
         return self.HTTPHeaders?["X-RateLimit-Limit"] as Int?
     }
+    
 }

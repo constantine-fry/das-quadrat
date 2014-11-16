@@ -132,7 +132,7 @@ public class Users: Endpoint {
     
     // update
     public func update(photoURL: NSURL, completionHandler:  ResponseCompletionHandler) -> Task {
-        let path = "self/" + __FUNCTION__
+        let path = "self/update"
         let task = self.uploadTaskFromURL(photoURL, path: path, parameters: nil, HTTPMethod: "POST", completionHandler: completionHandler)
         return task
     }

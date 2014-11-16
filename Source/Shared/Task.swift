@@ -28,7 +28,30 @@ public class Task {
     
     init (uploadFromFile:NSURL, session: Session, request: NSURLRequest, completionHandler: ResponseCompletionHandler) {
         let URLsession = session.URLSession
-        self.task = URLsession.uploadTaskWithRequest(request, fromFile: uploadFromFile) {
+        let mutableRequest = request.mutableCopy() as NSMutableURLRequest
+        
+        let boundary = NSUUID().UUIDString
+        let contentType = "multipart/form-data; boundary=" + boundary
+        mutableRequest.addValue(contentType, forHTTPHeaderField: "Content-Type")
+        let body = NSMutableData()
+        let appendStringBlock = {
+            (string: String) in
+            body.appendData(string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!)
+        }
+        var extention = uploadFromFile.pathExtension
+        if extention == nil {
+            extention = "png"
+        }
+        appendStringBlock("\r\n--\(boundary)\r\n")
+        appendStringBlock("Content-Disposition: form-data; name=\"photo\"; filename=\"photo.\(extention)\"\r\n")
+        appendStringBlock("Content-Type: image/\(extention)\r\n\r\n")
+        if let imageData = NSData(contentsOfURL: uploadFromFile) {
+            body.appendData(imageData)
+        } else {
+            fatalError("Can't read data at URL: \(uploadFromFile)")
+        }
+        appendStringBlock("\r\n--\(boundary)--\r\n")
+        self.task = URLsession.uploadTaskWithRequest(mutableRequest, fromData: body) {
             (data, response, error) -> Void in
             self.processResponse(response, data: data, error: error, completionHandler:completionHandler)
         }
@@ -40,14 +63,14 @@ public class Task {
         if let HTTPResponse = response as NSHTTPURLResponse? {
             quatratResponse.HTTPHeaders     = HTTPResponse.allHeaderFields
             quatratResponse.HTTPSTatusCode  = HTTPResponse.statusCode
+            quatratResponse.URL             = HTTPResponse.URL
         }
         quatratResponse.error = error
         
         var result : [String: AnyObject]?
         if data != nil && error == nil {
             var JSONError : NSError?
-            let subData = data!.subdataWithRange(NSMakeRange(1, data!.length-10))
-            let object: AnyObject? = NSJSONSerialization.JSONObjectWithData(subData, options: NSJSONReadingOptions(0), error: &JSONError)
+            let object: AnyObject? = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(0), error: &JSONError)
             if object != nil {
                 result = object as [String: AnyObject]?
             } else {
@@ -63,8 +86,8 @@ public class Task {
                     }
                 }
             }
-            quatratResponse.notification    = result!["notification"] as [String:AnyObject]?
-            quatratResponse.response        = result!["response"] as [String:AnyObject]?
+            quatratResponse.notification    = result!["notification"]   as [String:AnyObject]?
+            quatratResponse.response        = result!["response"]       as [String:AnyObject]?
             
         }
         completionHandler(response: quatratResponse)
