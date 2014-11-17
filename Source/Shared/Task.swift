@@ -82,7 +82,7 @@ public class Task {
             fatalError("No sessin fo this task.")
         }
         if (self.task == nil) {
-            self.constructFileUploadTask()
+            self.constructURLSessionTask()
         }
         self.task!.resume()
     }

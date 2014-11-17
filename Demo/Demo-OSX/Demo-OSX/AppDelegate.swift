@@ -31,7 +31,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             println(response)
         }
         task.start()
-        //task.cancel()
+        
+        let task2 = self.quadratSession.users.get("self") {
+            (response) -> Void in
+            println(response)
+        }
+        task2.start()
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
