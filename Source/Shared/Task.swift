@@ -40,7 +40,8 @@ public class Task {
         let URLsession = self.session?.URLSession
         self.task = URLsession?.dataTaskWithRequest(request.URLRequest()) {
             (data, response, error) -> Void in
-            self.processResponse(response, data: data, error: error, completionHandler:self.completionHandler)
+            let quatratResponse = Response.responseFromURLSessionResponse(response, data: data, error: error)
+            self.completionHandler(response: quatratResponse)
         }
     }
     
@@ -70,44 +71,9 @@ public class Task {
         appendStringBlock("\r\n--\(boundary)--\r\n")
         self.task = self.session?.URLSession.uploadTaskWithRequest(mutableRequest, fromData: body) {
             (data, response, error) -> Void in
-            self.processResponse(response, data: data, error: error, completionHandler:self.completionHandler)
+            let quatratResponse = Response.responseFromURLSessionResponse(response, data: data, error: error)
+            self.completionHandler(response: quatratResponse)
         }
-    }
-    
-    func processResponse(response:NSURLResponse?, data: NSData?, error: NSError?, completionHandler: ResponseCompletionHandler) {
-        
-        let quatratResponse = Response()
-        if let HTTPResponse = response as NSHTTPURLResponse? {
-            quatratResponse.HTTPHeaders     = HTTPResponse.allHeaderFields
-            quatratResponse.HTTPSTatusCode  = HTTPResponse.statusCode
-            quatratResponse.URL             = HTTPResponse.URL
-        }
-        quatratResponse.error = error
-        
-        var result : [String: AnyObject]?
-        if data != nil && error == nil {
-            var JSONError : NSError?
-            let object: AnyObject? = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(0), error: &JSONError)
-            if object != nil {
-                result = object as [String: AnyObject]?
-            } else {
-                quatratResponse.error = JSONError
-            }
-        }
-        
-        if result != nil {
-            if let meta = result!["meta"] as [String:AnyObject]? {
-                if let code = meta["code"] as Int? {
-                    if code < 200 || code > 299 {
-                        quatratResponse.error = NSError(domain: QuadratResponseErrorDomain, code: code, userInfo: meta)
-                    }
-                }
-            }
-            quatratResponse.notification    = result!["notification"]   as [String:AnyObject]?
-            quatratResponse.response        = result!["response"]       as [String:AnyObject]?
-            
-        }
-        completionHandler(response: quatratResponse)
     }
     
     /** Starts the task. */
