@@ -29,13 +29,15 @@ public enum FoursquareId {
 }
 
 public class Photos : Endpoint {
-    
+    override var endpoint   : String {
+        return "photos"
+    }
     // MARK: - Main
     
     // MARK: - General
     
     public func add(fromURL: NSURL, foursquareID: FoursquareId, parameters: Parameters?, completionHandler:  ResponseCompletionHandler) -> Task {
-        let path = "photos/add"
+        let path = "add"
         var allParameters = foursquareID.parameter()
         if parameters != nil {
             allParameters += parameters!

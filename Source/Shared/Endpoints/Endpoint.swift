@@ -18,55 +18,43 @@ func +=<K, V> (inout left: Dictionary<K, V>, right: Dictionary<K, V>?) -> Dictio
 }
 
 public class Endpoint  {
-    let configuration   : Configuration
-    let baseURL         : NSURL
-    weak var session    : Session?
-    let keychain        : Keychain
+    private let configuration   : Configuration
+    private weak var session    : Session?
+    private let baseURL         : NSURL
+    private let keychain        : Keychain
     
-    var endpoint   : String {
+    var endpoint: String {
         return ""
     }
     
     init(configuration: Configuration, session: Session) {
         self.configuration = configuration
         self.session = session
-        self.baseURL = NSURL(string: self.configuration.server.apiBaseURL) as NSURL!
+        self.baseURL = NSURL(string:configuration.server.apiBaseURL) as NSURL!
         self.keychain = Keychain(configuration: configuration)
     }
     
     func taskWithPath(path: String, parameters: Parameters?, HTTPMethod: String, completionHandler:  ResponseCompletionHandler) -> Task {
-        
         let request = self.requestWithPath(path, parameters: parameters, HTTPMethod: HTTPMethod)
-        return Task(session:self.session!, request: request, completionHandler)
+        return Task(session: self.session!, request: request, completionHandler: completionHandler)
     }
     
     func uploadTaskFromURL(fromURL: NSURL, path: String, parameters: Parameters?, HTTPMethod: String, completionHandler:  ResponseCompletionHandler) -> Task {
         
         let request = self.requestWithPath(path, parameters: parameters, HTTPMethod: HTTPMethod)
-        return Task(uploadFromFile: fromURL, session: self.session!, request: request, completionHandler)
+        let task = Task(session: self.session!, request: request, completionHandler)
+        task.fileURL = fromURL
+        return task
     }
     
-    func requestWithPath(path: String, parameters: Parameters?, HTTPMethod: String) -> NSURLRequest {
-        let URL = self.baseURL.URLByAppendingPathComponent(self.endpoint).URLByAppendingPathComponent(path)
-        let components = NSURLComponents(URL: URL, resolvingAgainstBaseURL: false) as NSURLComponents!
-        
-        var allParameters = self.configuration.parameters()
-        if parameters != nil {
-            allParameters += parameters!
-        }
-        if allParameters[Parameter.oauth_token] == nil {
+    func requestWithPath(path: String, parameters: Parameters?, HTTPMethod: String) -> Request {
+        var sessionParameters = self.configuration.parameters()
+        if sessionParameters[Parameter.oauth_token] == nil {
             if let accessToken = self.keychain.accessToken() {
-                allParameters[Parameter.oauth_token] = accessToken
+                sessionParameters[Parameter.oauth_token] = accessToken
             }
         }
-        components.query = Parameter.makeQuery(allParameters)
-        let requestURL = components.URL as NSURL!
-        let request = NSMutableURLRequest(URL: requestURL)
-        request.HTTPMethod = HTTPMethod
+        let request = Request(baseURL: self.baseURL, path: (self.endpoint + "/" + path), parameters: parameters, sessionParameters: sessionParameters, HTTPMethod: HTTPMethod)
         return request
-    }
-    
-    public func taskWithRequest(request: NSURLRequest, completionHandler:  ResponseCompletionHandler) -> Task {
-        return Task(session:self.session!, request: request, completionHandler)
     }
 }

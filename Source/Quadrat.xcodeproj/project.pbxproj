@@ -60,6 +60,8 @@
 		4773F87E1A13E10D0001603F /* Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4773F8781A13DBF70001603F /* Parameters.swift */; };
 		47888BEE1A18A3E900A76E47 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47888BED1A18A3E900A76E47 /* Response.swift */; };
 		47888BEF1A18A92200A76E47 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47888BED1A18A3E900A76E47 /* Response.swift */; };
+		47888BF31A1A8DD500A76E47 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47888BF21A1A8DD500A76E47 /* Request.swift */; };
+		47888BF41A1A8DEE00A76E47 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47888BF21A1A8DD500A76E47 /* Request.swift */; };
 		47A96E4F1A0F73CE00C38E9A /* AuthorizationWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47A96E4E1A0F73CE00C38E9A /* AuthorizationWindowController.xib */; };
 		47A96E511A0F741B00C38E9A /* AuthorizationWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A96E501A0F741B00C38E9A /* AuthorizationWindowController.swift */; };
 		47A96E551A0F80E100C38E9A /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47A96E541A0F80E100C38E9A /* WebKit.framework */; };
@@ -101,6 +103,7 @@
 		4773F8781A13DBF70001603F /* Parameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parameters.swift; sourceTree = "<group>"; };
 		4773F87A1A13DC5A0001603F /* OauthErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OauthErrors.swift; sourceTree = "<group>"; };
 		47888BED1A18A3E900A76E47 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Response.swift; path = Shared/Response.swift; sourceTree = SOURCE_ROOT; };
+		47888BF21A1A8DD500A76E47 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		47A96E4E1A0F73CE00C38E9A /* AuthorizationWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthorizationWindowController.xib; sourceTree = "<group>"; };
 		47A96E501A0F741B00C38E9A /* AuthorizationWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationWindowController.swift; sourceTree = "<group>"; };
 		47A96E541A0F80E100C38E9A /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -196,6 +199,7 @@
 				476B70BC1A0EBB5C00AFAC33 /* Keychain.swift */,
 				476B70BD1A0EBB5C00AFAC33 /* Session.swift */,
 				476B70BE1A0EBB5C00AFAC33 /* Task.swift */,
+				47888BF21A1A8DD500A76E47 /* Request.swift */,
 				4735978F1A0F8DF500CD6EA3 /* Authorizer.swift */,
 				4773F87A1A13DC5A0001603F /* OauthErrors.swift */,
 				47888BED1A18A3E900A76E47 /* Response.swift */,
@@ -360,6 +364,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				47888BEE1A18A3E900A76E47 /* Response.swift in Sources */,
+				47888BF31A1A8DD500A76E47 /* Request.swift in Sources */,
 				476B70CE1A0EBB5C00AFAC33 /* Updates.swift in Sources */,
 				473597901A0F8DF500CD6EA3 /* Authorizer.swift in Sources */,
 				476B70C61A0EBB5C00AFAC33 /* Events.swift in Sources */,
@@ -407,6 +412,7 @@
 				476B71001A0EBBC500AFAC33 /* Specials.swift in Sources */,
 				476B71031A0EBBC500AFAC33 /* Users.swift in Sources */,
 				476B70FB1A0EBBC500AFAC33 /* Lists.swift in Sources */,
+				47888BF41A1A8DEE00A76E47 /* Request.swift in Sources */,
 				476B710C1A0EBC7C00AFAC33 /* Authorization.swift in Sources */,
 				476B70FC1A0EBBC500AFAC33 /* Pages.swift in Sources */,
 				4773F8731A13DB1C0001603F /* NativeTouchAuthorizer.swift in Sources */,
