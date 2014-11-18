@@ -73,6 +73,10 @@ public class Session {
         return PageUpdates(configuration: self.configuration, session: self)
         }()
     
+    public lazy var multi : Multi = {
+        return Multi(configuration: self.configuration, session: self)
+        }()
+    
     public init(configuration: Configuration, completionQueue: NSOperationQueue) {
         self.configuration = configuration
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()

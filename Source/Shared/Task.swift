@@ -16,11 +16,12 @@ public enum FoursquareResponse {
 public typealias ResponseCompletionHandler = (response: Response) -> Void
 
 public class Task {
-    private var task                    : NSURLSessionTask?
-    private weak var session            : Session?
-    private let request                 : Request
-    private let completionHandler       : ResponseCompletionHandler
-    var fileURL                         : NSURL?
+    private var         task               : NSURLSessionTask?
+    private weak var    session            : Session?
+    private let         completionHandler  : ResponseCompletionHandler
+    
+    let                 request            : Request
+    var                 fileURL            : NSURL?
     
     init (session: Session, request: Request, completionHandler: ResponseCompletionHandler) {
         self.session = session
@@ -79,7 +80,7 @@ public class Task {
     /** Starts the task. */
     public func start() {
         if self.session == nil {
-            fatalError("No sessin fo this task.")
+            fatalError("No session fo this task.")
         }
         if (self.task == nil) {
             self.constructURLSessionTask()

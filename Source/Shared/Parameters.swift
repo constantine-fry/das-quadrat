@@ -20,6 +20,7 @@ public class Parameter {
     class var locale          : String { return "locale" }
     class var response_type   : String { return "response_type" }
     class var m               : String { return "m" }
+    class var requests        : String { return "requests" }
     
     // Public.
     public class var checkinId       : String { return "checkinId" }

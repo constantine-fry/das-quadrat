@@ -19,7 +19,7 @@ func +=<K, V> (inout left: Dictionary<K, V>, right: Dictionary<K, V>?) -> Dictio
 
 public class Endpoint  {
     private let configuration   : Configuration
-    private weak var session    : Session?
+    weak    var session         : Session?
     private let baseURL         : NSURL
     private let keychain        : Keychain
     

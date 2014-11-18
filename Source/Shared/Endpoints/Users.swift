@@ -31,7 +31,7 @@ public class Users: Endpoint {
     }
     
     // search
-    public func search(parameters: Parameters, completionHandler:  ResponseCompletionHandler) -> Task {
+    public func search(parameters: Parameters?, completionHandler:  ResponseCompletionHandler) -> Task {
         let path = "search"
         let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
         return task
@@ -40,21 +40,21 @@ public class Users: Endpoint {
     // MARK: - Aspects
     
     // checkins
-    public func checkins(parameters: Parameters, completionHandler:  ResponseCompletionHandler) -> Task {
+    public func checkins(parameters: Parameters?, completionHandler:  ResponseCompletionHandler) -> Task {
         let path = "self/checkins"
         let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
         return task
     }
     
     // friends
-    public func friends(userID: String, parameters: Parameters, completionHandler:  ResponseCompletionHandler) -> Task {
+    public func friends(userID: String, parameters: Parameters?, completionHandler:  ResponseCompletionHandler) -> Task {
         let path = userID + "/friends"
         let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
         return task
     }
     
     // lists
-    public func lists(userID: String, parameters: Parameters, completionHandler:  ResponseCompletionHandler) -> Task {
+    public func lists(userID: String, parameters: Parameters?, completionHandler:  ResponseCompletionHandler) -> Task {
         let path = userID + "/lists"
         let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
         return task
@@ -68,14 +68,14 @@ public class Users: Endpoint {
     }
     
     // photos
-    public func photos(parameters: Parameters, completionHandler:  ResponseCompletionHandler) -> Task {
+    public func photos(parameters: Parameters?, completionHandler:  ResponseCompletionHandler) -> Task {
         let path = "self/photos"
         let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
         return task
     }
     
     // tastes
-    public func tastes(parameters: Parameters, completionHandler:  ResponseCompletionHandler) -> Task {
+    public func tastes(parameters: Parameters?, completionHandler:  ResponseCompletionHandler) -> Task {
         let path = "self/tastes"
         let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
         return task
@@ -85,14 +85,14 @@ public class Users: Endpoint {
         // This endpoint is deprecated. Use /lists/USER_ID/tips instead.
     
     // venuehistory
-    public func venuehistory(parameters: Parameters, completionHandler:  ResponseCompletionHandler) -> Task {
+    public func venuehistory(parameters: Parameters?, completionHandler:  ResponseCompletionHandler) -> Task {
         let path = "self/venuehistory"
         let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
         return task
     }
     
     // venuelikes
-    public func venuelikes(userID: String, parameters: Parameters, completionHandler:  ResponseCompletionHandler) -> Task {
+    public func venuelikes(userID: String, parameters: Parameters?, completionHandler:  ResponseCompletionHandler) -> Task {
         let path = userID + "/venuelikes"
         let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
         return task

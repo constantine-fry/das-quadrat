@@ -36,7 +36,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             (response) -> Void in
             println(response)
         }
-        task2.start()
+
+        let task3 = self.quadratSession.users.friends("self", parameters: nil) {
+            (response) -> Void in
+            println(response)
+        }
+
+        let multiTask = self.quadratSession.multi.get([task2, task3]){
+                (response) -> Void in
+                println(response.response)
+        }
+        multiTask.start()
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {

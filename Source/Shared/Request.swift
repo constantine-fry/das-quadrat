@@ -39,7 +39,7 @@ class Request {
         
         var allParameters = self.sessionParameters
         if parameters != nil {
-            allParameters += parameters!
+            //allParameters += parameters!
         }
         components.query = Parameter.makeQuery(allParameters)
         let requestURL = components.URL as NSURL!
