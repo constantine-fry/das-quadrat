@@ -34,12 +34,12 @@ public class Endpoint  {
         self.keychain = Keychain(configuration: configuration)
     }
     
-    func taskWithPath(path: String, parameters: Parameters?, HTTPMethod: String, completionHandler:  ResponseCompletionHandler) -> Task {
+    func taskWithPath(path: String, parameters: Parameters?, HTTPMethod: String, completionHandler:  ResponseCompletionHandler?) -> Task {
         let request = self.requestWithPath(path, parameters: parameters, HTTPMethod: HTTPMethod)
         return DataTask(session: self.session!, request: request, completionHandler: completionHandler)
     }
     
-    func uploadTaskFromURL(fromURL: NSURL, path: String, parameters: Parameters?, HTTPMethod: String, completionHandler:  ResponseCompletionHandler) -> Task {
+    func uploadTaskFromURL(fromURL: NSURL, path: String, parameters: Parameters?, HTTPMethod: String, completionHandler:  ResponseCompletionHandler?) -> Task {
         
         let request = self.requestWithPath(path, parameters: parameters, HTTPMethod: HTTPMethod)
         let task = UploadTask(session: self.session!, request: request, completionHandler)
