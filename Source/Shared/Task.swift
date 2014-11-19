@@ -18,36 +18,54 @@ public typealias ResponseCompletionHandler = (response: Response) -> Void
 public class Task {
     private var         task               : NSURLSessionTask?
     private weak var    session            : Session?
-    private let         completionHandler  : ResponseCompletionHandler
+    private let         completionHandler  : ResponseCompletionHandler?
     
-    let                 request            : Request
-    var                 fileURL            : NSURL?
+    var                 request            : Request
     
-    init (session: Session, request: Request, completionHandler: ResponseCompletionHandler) {
+    init (session: Session, request: Request, completionHandler: ResponseCompletionHandler?) {
         self.session = session
         self.request = request
         self.completionHandler = completionHandler
     }
     
-    func constructURLSessionTask() {
-        if self.fileURL == nil {
-            self.constractDataTask()
-        } else {
-            self.constructFileUploadTask()
+    func constructURLSessionTask() {fatalError("Use subclasses!")}
+    
+    /** Starts the task. */
+    public func start() {
+        if self.session == nil {
+            fatalError("No session for this task.")
         }
+        if (self.task == nil) {
+            self.constructURLSessionTask()
+        }
+        self.task!.resume()
     }
     
-    func constractDataTask() {
+    /** 
+        Cancels the task.
+        Returns error with NSURLErrorDomain and code NSURLErrorCancelled in `completionHandler`.
+    */
+    public func cancel() {
+        self.task!.cancel()
+    }
+}
+
+class DataTask: Task {
+    override func constructURLSessionTask() {
         let URLsession = self.session?.URLSession
         self.task = URLsession?.dataTaskWithRequest(request.URLRequest()) {
             (data, response, error) -> Void in
             let quatratResponse = Response.responseFromURLSessionResponse(response, data: data, error: error)
-            self.completionHandler(response: quatratResponse)
+            self.completionHandler?(response: quatratResponse)
         }
     }
+}
+
+class UploadTask: Task {
+    var  fileURL: NSURL?
     
-    func constructFileUploadTask() {
-        let mutableRequest = request.URLRequest().mutableCopy() as NSMutableURLRequest
+    override func constructURLSessionTask() {
+        let mutableRequest = self.request.URLRequest().mutableCopy() as NSMutableURLRequest
         
         let boundary = NSUUID().UUIDString
         let contentType = "multipart/form-data; boundary=" + boundary
@@ -70,29 +88,11 @@ public class Task {
             fatalError("Can't read data at URL: \(self.fileURL!)")
         }
         appendStringBlock("\r\n--\(boundary)--\r\n")
+        
         self.task = self.session?.URLSession.uploadTaskWithRequest(mutableRequest, fromData: body) {
             (data, response, error) -> Void in
             let quatratResponse = Response.responseFromURLSessionResponse(response, data: data, error: error)
-            self.completionHandler(response: quatratResponse)
+            self.completionHandler?(response: quatratResponse)
         }
-    }
-    
-    /** Starts the task. */
-    public func start() {
-        if self.session == nil {
-            fatalError("No session fo this task.")
-        }
-        if (self.task == nil) {
-            self.constructURLSessionTask()
-        }
-        self.task!.resume()
-    }
-    
-    /** 
-        Cancels the task.
-        Returns error with NSURLErrorDomain and code NSURLErrorCancelled.
-    */
-    public func cancel() {
-        self.task!.cancel()
     }
 }

@@ -78,9 +78,9 @@ public struct Configuration {
     
     /** 
         Creates Configuration with specified client.
-        `Mode` is swarm.
-        `Locale` is system language. (NSLocale.preferredLanguages().first)
-        `Version` is 20140503.
+        `Mode`      is swarm.
+        `Locale`    is system language. (NSLocale.preferredLanguages().first)
+        `Version`   is 20141102.
     */
     public init(client: Client) {
         self.init(client: client, version: nil, accessToken: nil)

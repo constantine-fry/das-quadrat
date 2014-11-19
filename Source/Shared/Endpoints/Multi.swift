@@ -8,11 +8,16 @@
 
 import Foundation
 
+
 public class Multi: Endpoint {
     override var endpoint   : String {
         return "multi"
     }
     
+    /** 
+        Returns task to make request to `multi` endpoint.
+        Use `subresponses` property of response object.
+    */
     public func get(tasks:[Task], completionHandler: ResponseCompletionHandler) -> Task {
         let firstTask = tasks.first as Task!
         var queries = [String]()
@@ -35,7 +40,7 @@ public class Multi: Endpoint {
             sessionParameters: firstTask.request.sessionParameters,
             HTTPMethod: "POST")
         
-        let multiTask = Task(session: self.session!, request: request, completionHandler: completionHandler)
+        let multiTask = DataTask(session: self.session!, request: request, completionHandler: completionHandler)
         return multiTask
     }
     

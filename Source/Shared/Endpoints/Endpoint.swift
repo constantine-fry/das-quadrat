@@ -36,13 +36,13 @@ public class Endpoint  {
     
     func taskWithPath(path: String, parameters: Parameters?, HTTPMethod: String, completionHandler:  ResponseCompletionHandler) -> Task {
         let request = self.requestWithPath(path, parameters: parameters, HTTPMethod: HTTPMethod)
-        return Task(session: self.session!, request: request, completionHandler: completionHandler)
+        return DataTask(session: self.session!, request: request, completionHandler: completionHandler)
     }
     
     func uploadTaskFromURL(fromURL: NSURL, path: String, parameters: Parameters?, HTTPMethod: String, completionHandler:  ResponseCompletionHandler) -> Task {
         
         let request = self.requestWithPath(path, parameters: parameters, HTTPMethod: HTTPMethod)
-        let task = Task(session: self.session!, request: request, completionHandler)
+        let task = UploadTask(session: self.session!, request: request, completionHandler)
         task.fileURL = fromURL
         return task
     }

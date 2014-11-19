@@ -32,7 +32,9 @@ public class Response {
     */
     public var HTTPHeaders    : [NSObject:AnyObject]?
     
-    /** The URL which has been requested. */
+    /** 
+        The URL which has been requested. 
+    */
     public var URL    : NSURL?
     
     
@@ -43,8 +45,24 @@ public class Response {
             NSCocoaErrorDomain          - in case of error during JSON parsing.
     */
     public var error          : NSError?
+    
+    /** 
+        A response. Extracted from JSON `response` field.
+        Can be empty in case of error or `multi` request. 
+        If you are doung `multi` request use `subresponses` property
+    */
     public var response       : [String:AnyObject]?
-    public var notification   : [String:AnyObject]?
+    
+    /** 
+        Responses returned from `multi` endpoint. Subresponses never have HTTP headers and status code.
+        Extracted from JSON `responses` field.
+    */
+    public var subresponses   : [Response]?
+    
+    /** 
+        A notifications. Extracted from JSON `notifications` field.
+    */
+    public var notifications   : [String:AnyObject]?
     
     init() {
         
@@ -60,38 +78,56 @@ public class Response {
         return self.HTTPHeaders?["X-RateLimit-Limit"] as Int?
     }
     
-    class func responseFromURLSessionResponse(response:NSURLResponse?, data: NSData?, error: NSError?) -> Response {
-        let quatratResponse = Response()
-        if let HTTPResponse = response as NSHTTPURLResponse? {
-            quatratResponse.HTTPHeaders     = HTTPResponse.allHeaderFields
-            quatratResponse.HTTPSTatusCode  = HTTPResponse.statusCode
-            quatratResponse.URL             = HTTPResponse.URL
-        }
-        quatratResponse.error = error
-        
-        var result : [String: AnyObject]?
-        if data != nil && error == nil {
-            var JSONError : NSError?
-            let object: AnyObject? = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(0), error: &JSONError)
-            if object != nil {
-                result = object as [String: AnyObject]?
-            } else {
-                quatratResponse.error = JSONError
-            }
+    class func createResponse(HTTPResponse: NSHTTPURLResponse?, JSON: [String:AnyObject]?, error: NSError? ) -> Response {
+        let response = Response()
+        if HTTPResponse != nil {
+            response.HTTPHeaders     = HTTPResponse!.allHeaderFields
+            response.HTTPSTatusCode  = HTTPResponse!.statusCode
+            response.URL             = HTTPResponse!.URL
         }
         
-        if result != nil {
-            if let meta = result!["meta"] as [String:AnyObject]? {
+        if JSON != nil {
+            if let meta = JSON!["meta"] as [String:AnyObject]? {
                 if let code = meta["code"] as Int? {
                     if code < 200 || code > 299 {
-                        quatratResponse.error = NSError(domain: QuadratResponseErrorDomain, code: code, userInfo: meta)
+                        response.error = NSError(domain: QuadratResponseErrorDomain, code: code, userInfo: meta)
                     }
                 }
             }
-            quatratResponse.notification    = result!["notification"]   as [String:AnyObject]?
-            quatratResponse.response        = result!["response"]       as [String:AnyObject]?
+            response.notifications   = JSON!["notifications"]   as [String:AnyObject]?
+            response.response        = JSON!["response"]        as [String:AnyObject]?
             
+            if response.response != nil {
+                if let responses = response.response!["responses"] as [[String:AnyObject]]?{
+                    var subResponses = [Response]()
+                    for aJSONResponse in responses {
+                        let quatratResponse = Response.createResponse(nil, JSON: aJSONResponse, error: nil)
+                        subResponses.append(quatratResponse)
+                    }
+                    response.subresponses = subResponses
+                    response.response = nil
+                }
+            }
         }
+        
+        if error != nil {
+            response.error = error
+        }
+        return response
+    }
+    
+    class func responseFromURLSessionResponse(response:NSURLResponse?, data: NSData?, error: NSError?) -> Response {
+        let HTTPResponse = response as NSHTTPURLResponse?
+        var JSONResult: [String: AnyObject]?
+        var JSONError = error
+        
+        if data != nil && JSONError == nil {
+            let object: AnyObject? = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(0), error: &JSONError)
+            if object != nil {
+                JSONResult = object as [String: AnyObject]?
+            }
+        }
+        let quatratResponse = Response.createResponse(HTTPResponse, JSON: JSONResult, error: JSONError)
         return quatratResponse
     }
 }

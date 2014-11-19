@@ -43,8 +43,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         let multiTask = self.quadratSession.multi.get([task2, task3]){
-                (response) -> Void in
-                println(response.response)
+                (responses) -> Void in
+                println(responses)
         }
         multiTask.start()
     }
