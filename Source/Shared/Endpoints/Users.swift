@@ -15,125 +15,105 @@ public class Users: Endpoint {
     
     // MARK: - Main
     
-    public func get(userID: String, completionHandler:  ResponseCompletionHandler?) -> Task {
-        let path = userID
-        let task = self.taskWithPath(path, parameters: nil, HTTPMethod: "GET", completionHandler)
-        return task
+    public func get(userID: String = UserSelf, completionHandler:  ResponseCompletionHandler? = nil) -> Task {
+        return self.getWithPath(userID, parameters: nil, completionHandler)
     }
     
     // MARK: - General
     
     // requests
-    public func requests(completionHandler:  ResponseCompletionHandler?) -> Task {
+    public func requests(completionHandler:  ResponseCompletionHandler? = nil) -> Task {
         let path = "requests"
-        let task = self.taskWithPath(path, parameters: nil, HTTPMethod: "GET", completionHandler)
-        return task
+        return self.getWithPath(path, parameters: nil, completionHandler)
     }
     
     // search
-    public func search(parameters: Parameters?, completionHandler:  ResponseCompletionHandler?) -> Task {
+    public func search(parameters: Parameters?, completionHandler:  ResponseCompletionHandler? = nil) -> Task {
         let path = "search"
-        let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
-        return task
+        return self.getWithPath(path, parameters: parameters, completionHandler)
     }
     
     // MARK: - Aspects
     
     // checkins
-    public func checkins(parameters: Parameters?, completionHandler:  ResponseCompletionHandler?) -> Task {
-        let path = "self/checkins"
-        let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
-        return task
+    public func checkins(userID: String = UserSelf, parameters: Parameters?, completionHandler:  ResponseCompletionHandler? = nil) -> Task {
+        let path = userID + "/checkins"
+        return self.getWithPath(path, parameters: parameters, completionHandler)
     }
     
     // friends
-    public func friends(userID: String, parameters: Parameters?, completionHandler:  ResponseCompletionHandler?) -> Task {
+    public func friends(userID: String = UserSelf, parameters: Parameters?, completionHandler:  ResponseCompletionHandler? = nil) -> Task {
         let path = userID + "/friends"
-        let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
-        return task
+        return self.getWithPath(path, parameters: parameters, completionHandler)
     }
     
     // lists
-    public func lists(userID: String, parameters: Parameters?, completionHandler:  ResponseCompletionHandler?) -> Task {
+    public func lists(userID: String = UserSelf, parameters: Parameters?, completionHandler:  ResponseCompletionHandler? = nil) -> Task {
         let path = userID + "/lists"
-        let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
-        return task
+        return self.getWithPath(path, parameters: parameters, completionHandler)
     }
     
     // mayorships
-    public func lists(userID: String, completionHandler:  ResponseCompletionHandler?) -> Task {
+    public func lists(userID: String = UserSelf, completionHandler:  ResponseCompletionHandler? = nil) -> Task {
         let path = userID + "/lists"
-        let task = self.taskWithPath(path, parameters: nil, HTTPMethod: "GET", completionHandler)
-        return task
+        return self.getWithPath(path, parameters: nil, completionHandler)
     }
     
     // photos
-    public func photos(parameters: Parameters?, completionHandler:  ResponseCompletionHandler?) -> Task {
-        let path = "self/photos"
-        let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
-        return task
+    public func photos(userID: String = UserSelf, parameters: Parameters?, completionHandler:  ResponseCompletionHandler? = nil) -> Task {
+        let path = userID + "/photos"
+        return self.getWithPath(path, parameters: parameters, completionHandler)
     }
     
     // tastes
-    public func tastes(parameters: Parameters?, completionHandler:  ResponseCompletionHandler?) -> Task {
-        let path = "self/tastes"
-        let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
-        return task
+    public func tastes(userID: String = UserSelf, parameters: Parameters?, completionHandler:  ResponseCompletionHandler? = nil) -> Task {
+        let path = userID + "/tastes"
+        return self.getWithPath(path, parameters: parameters, completionHandler)
     }
     
-    // tips
-        // This endpoint is deprecated. Use /lists/USER_ID/tips instead.
-    
     // venuehistory
-    public func venuehistory(parameters: Parameters?, completionHandler:  ResponseCompletionHandler?) -> Task {
-        let path = "self/venuehistory"
-        let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
-        return task
+    public func venuehistory(userID: String = UserSelf, parameters: Parameters?, completionHandler:  ResponseCompletionHandler? = nil) -> Task {
+        let path = userID + "/venuehistory"
+        return self.getWithPath(path, parameters: parameters, completionHandler)
     }
     
     // venuelikes
-    public func venuelikes(userID: String, parameters: Parameters?, completionHandler:  ResponseCompletionHandler?) -> Task {
+    public func venuelikes(userID: String = UserSelf, parameters: Parameters?, completionHandler:  ResponseCompletionHandler? = nil) -> Task {
         let path = userID + "/venuelikes"
-        let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler)
-        return task
+        return self.getWithPath(path, parameters: parameters, completionHandler)
     }
     
     // MARK: - Actions
     
     // approve
-    public func approve(userID: String, completionHandler:  ResponseCompletionHandler?) -> Task {
+    public func approve(userID: String, completionHandler:  ResponseCompletionHandler? = nil) -> Task {
         let path = userID + "/approve"
-        let task = self.taskWithPath(path, parameters: nil, HTTPMethod: "POST", completionHandler)
-        return task
+        return self.postWithPath(path, parameters: nil, completionHandler)
     }
     
     // deny
-    public func deny(userID: String, completionHandler:  ResponseCompletionHandler?) -> Task {
+    public func deny(userID: String, completionHandler:  ResponseCompletionHandler? = nil) -> Task {
         let path = userID + "/deny"
-        let task = self.taskWithPath(path, parameters: nil, HTTPMethod: "POST", completionHandler)
-        return task
+        return self.postWithPath(path, parameters: nil, completionHandler)
     }
     
     // setpings
-    public func setpings(userID: String, value: Bool, completionHandler:  ResponseCompletionHandler?) -> Task {
+    public func setpings(userID: String, value: Bool, completionHandler:  ResponseCompletionHandler? = nil) -> Task {
         let path = userID + "/setpings"
         let parameters = [Parameter.value: (value) ? "true":"false"]
-        let task = self.taskWithPath(path, parameters: parameters, HTTPMethod: "POST", completionHandler)
-        task.start()
-        return task
+        return self.postWithPath(path, parameters: parameters, completionHandler)
     }
     
     // unfriend
-    public func unfriend(userID: String, completionHandler:  ResponseCompletionHandler?) -> Task {
+    public func unfriend(userID: String, completionHandler:  ResponseCompletionHandler? = nil) -> Task {
         let path = userID + "/unfriend"
-        let task = self.taskWithPath(path, parameters: nil, HTTPMethod: "POST", completionHandler)
-        return task
+        return self.postWithPath(path, parameters: nil, completionHandler)
     }
     
     // update
-    public func update(photoURL: NSURL, completionHandler:  ResponseCompletionHandler?) -> Task {
-        let path = "self/update"
-        let task = self.uploadTaskFromURL(photoURL, path: path, parameters: nil, HTTPMethod: "POST", completionHandler: completionHandler)
+    public func update(photoURL: NSURL, completionHandler:  ResponseCompletionHandler? = nil) -> Task {
+        let path = UserSelf + "/update"
+        let task = self.uploadTaskFromURL(photoURL, path: path, parameters: nil, completionHandler: completionHandler)
         return task
     }
 }

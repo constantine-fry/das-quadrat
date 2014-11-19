@@ -34,20 +34,28 @@ public class Endpoint  {
         self.keychain = Keychain(configuration: configuration)
     }
     
-    func taskWithPath(path: String, parameters: Parameters?, HTTPMethod: String, completionHandler:  ResponseCompletionHandler?) -> Task {
-        let request = self.requestWithPath(path, parameters: parameters, HTTPMethod: HTTPMethod)
-        return DataTask(session: self.session!, request: request, completionHandler: completionHandler)
+    func getWithPath(path: String, parameters: Parameters?, completionHandler:  ResponseCompletionHandler?) -> Task {
+        return self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler: completionHandler)
     }
     
-    func uploadTaskFromURL(fromURL: NSURL, path: String, parameters: Parameters?, HTTPMethod: String, completionHandler:  ResponseCompletionHandler?) -> Task {
+    func postWithPath(path: String, parameters: Parameters?, completionHandler:  ResponseCompletionHandler?) -> Task {
+        return self.taskWithPath(path, parameters: parameters, HTTPMethod: "POST", completionHandler: completionHandler)
+    }
+    
+    func uploadTaskFromURL(fromURL: NSURL, path: String, parameters: Parameters?, completionHandler:  ResponseCompletionHandler?) -> Task {
         
-        let request = self.requestWithPath(path, parameters: parameters, HTTPMethod: HTTPMethod)
+        let request = self.requestWithPath(path, parameters: parameters, HTTPMethod: "POST")
         let task = UploadTask(session: self.session!, request: request, completionHandler)
         task.fileURL = fromURL
         return task
     }
     
-    func requestWithPath(path: String, parameters: Parameters?, HTTPMethod: String) -> Request {
+    private func taskWithPath(path: String, parameters: Parameters?, HTTPMethod: String, completionHandler:  ResponseCompletionHandler?) -> Task {
+        let request = self.requestWithPath(path, parameters: parameters, HTTPMethod: HTTPMethod)
+        return DataTask(session: self.session!, request: request, completionHandler: completionHandler)
+    }
+    
+    private func requestWithPath(path: String, parameters: Parameters?, HTTPMethod: String) -> Request {
         var sessionParameters = self.configuration.parameters()
         if sessionParameters[Parameter.oauth_token] == nil {
             if let accessToken = self.keychain.accessToken() {

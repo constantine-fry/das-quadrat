@@ -36,15 +36,11 @@ public class Photos : Endpoint {
     
     // MARK: - General
     
-    public func add(fromURL: NSURL, foursquareID: FoursquareId, parameters: Parameters?, completionHandler:  ResponseCompletionHandler?) -> Task {
+    public func add(fromURL: NSURL, foursquareID: FoursquareId, parameters: Parameters?, completionHandler:  ResponseCompletionHandler? = nil) -> Task {
         let path = "add"
         var allParameters = foursquareID.parameter()
-        if parameters != nil {
-            allParameters += parameters!
-        }
-        let task = self.uploadTaskFromURL(fromURL, path: path, parameters: allParameters, HTTPMethod: "POST", completionHandler)
-        task.start()
-        return task
+        allParameters += parameters
+        return self.uploadTaskFromURL(fromURL, path: path, parameters: allParameters, completionHandler)
     }
     
     // MARK: - Aspects
