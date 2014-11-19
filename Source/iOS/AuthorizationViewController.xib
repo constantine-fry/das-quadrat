@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AuthorizationViewController" customModule="QuadratTouch" customModuleProvider="target">
+            <connections>
+                <outlet property="statusLabel" destination="5lh-m2-DIa" id="HRH-Q1-AG3"/>
+                <outlet property="view" destination="iN0-l3-epB" id="HYd-pB-n9f"/>
+                <outlet property="webView" destination="AlV-6I-rVx" id="fss-iA-euR"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AlV-6I-rVx">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" red="0.87058830261230469" green="0.87450987100601196" blue="0.87843143939971924" alpha="1" colorSpace="deviceRGB"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="Nf8-id-YtV"/>
+                    </connections>
+                </webView>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lh-m2-DIa">
+                    <rect key="frame" x="15" y="234" width="290" height="100"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="100" id="dGf-wk-w2t"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.87058830259999997" green="0.87450987099999999" blue="0.87843143940000001" alpha="1" colorSpace="deviceRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="AlV-6I-rVx" secondAttribute="bottom" id="5uK-Uh-3NY"/>
+                <constraint firstAttribute="centerX" secondItem="5lh-m2-DIa" secondAttribute="centerX" id="7m2-uY-M68"/>
+                <constraint firstAttribute="trailing" secondItem="AlV-6I-rVx" secondAttribute="trailing" id="BAU-Fv-5qT"/>
+                <constraint firstItem="AlV-6I-rVx" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="IJp-u0-qOG"/>
+                <constraint firstItem="AlV-6I-rVx" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="TFf-86-bPc"/>
+                <constraint firstAttribute="centerY" secondItem="5lh-m2-DIa" secondAttribute="centerY" id="bCH-2s-lFl"/>
+                <constraint firstAttribute="trailing" secondItem="5lh-m2-DIa" secondAttribute="trailing" constant="15" id="cBo-fB-6zn"/>
+                <constraint firstItem="5lh-m2-DIa" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="yWa-2g-Qlp"/>
+            </constraints>
+            <point key="canvasLocation" x="208" y="108"/>
+        </view>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
