@@ -11,7 +11,7 @@ Work in progress!
 
 2. Native oauth on iOS.
 
-3. Access token storing in Keychain.
+3. Storing access token in Keychain.
 
 4. `multi` endpoint.
 
