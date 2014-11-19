@@ -7,9 +7,9 @@ Work in progress!
 
 ####What has been done:
 
-1. Authorization UI for iOS and OSX.
+1. Authorization on iOS and OSX.
 
-2. Native oauth on iOS.
+2. Native authorization on iOS.
 
 3. Storing access token in Keychain.
 
