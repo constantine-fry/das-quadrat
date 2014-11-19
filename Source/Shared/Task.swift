@@ -44,6 +44,7 @@ public class Task {
     /** 
         Cancels the task.
         Returns error with NSURLErrorDomain and code NSURLErrorCancelled in `completionHandler`.
+        Hint: use `isCancelled()` on `Response` object.
     */
     public func cancel() {
         self.task!.cancel()

@@ -10,7 +10,7 @@ import Foundation
 
 public let QuadratResponseErrorDomain   = "QuadratOauthErrorDomain"
 public let QuadratResponseErrorTypeKey  = "errorType"
-public let QuadratResponseErroretailKey = "errorDetail"
+public let QuadratResponseErrorDetailKey = "errorDetail"
 
 
 /**
@@ -40,7 +40,7 @@ public class Response {
     
     /*
         Can contain error with following error domains:
-            QuadratResponseErrorDomain  - in case of error in `meta` parameter of Foursquare response. Error doesn't have localized description.
+            QuadratResponseErrorDomain  - in case of error in `meta` parameter of Foursquare response. Error doesn't have localized description, but has `QuadratResponseErrorTypeKey` and `QuadratResponseErrorDetailKey` parameters in `userUnfo`.
             NSURLErrorDomain            - in case of some networking problem.
             NSCocoaErrorDomain          - in case of error during JSON parsing.
     */
@@ -68,15 +68,11 @@ public class Response {
         
     }
     
-    /** Returns `RateLimit-Remaining` parameter, if there is one in `HTTPHeaders`. */
-    public func rateLimitRemaining() -> Int? {
-        return self.HTTPHeaders?["RateLimit-Remaining"] as Int?
-    }
-    
-    /** Returns `X-RateLimit-Limit` parameter, if there is one in `HTTPHeaders`. */
-    public func rateLimit() -> Int? {
-        return self.HTTPHeaders?["X-RateLimit-Limit"] as Int?
-    }
+}
+
+
+/** Response creation from HTTP response. */
+extension Response {
     
     class func createResponse(HTTPResponse: NSHTTPURLResponse?, JSON: [String:AnyObject]?, error: NSError? ) -> Response {
         let response = Response()
@@ -129,5 +125,27 @@ public class Response {
         }
         let quatratResponse = Response.createResponse(HTTPResponse, JSON: JSONResult, error: JSONError)
         return quatratResponse
+    }
+}
+
+/** Same helpers methods. */
+extension Response {
+    
+    /** Returns `RateLimit-Remaining` parameter, if there is one in `HTTPHeaders`. */
+    public func rateLimitRemaining() -> Int? {
+        return self.HTTPHeaders?["RateLimit-Remaining"] as Int?
+    }
+    
+    /** Returns `X-RateLimit-Limit` parameter, if there is one in `HTTPHeaders`. */
+    public func rateLimit() -> Int? {
+        return self.HTTPHeaders?["X-RateLimit-Limit"] as Int?
+    }
+    
+    /** Whether task has been cancelled or not. */
+    public func isCancelled() -> Bool {
+        if self.error != nil {
+            return (self.error!.domain == NSURLErrorDomain  && self.error!.code == NSURLErrorCancelled)
+        }
+        return false
     }
 }
