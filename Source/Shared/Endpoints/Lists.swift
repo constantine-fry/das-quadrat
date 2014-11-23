@@ -22,7 +22,7 @@ public class Lists: Endpoint {
     // add
     public func add(name: String, text: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "add"
-        var allParameters = [Parameter.name:name]
+        var allParameters = [Parameter.name:name, Parameter.text:text]
         allParameters += parameters
         return self.postWithPath(path, parameters: allParameters, completionHandler)
     }
