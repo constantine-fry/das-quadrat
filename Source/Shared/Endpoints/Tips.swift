@@ -9,21 +9,65 @@
 import Foundation
 
 public class Tips: Endpoint {
-  
+    override var endpoint   : String {
+        return "tips"
+    }
+    
+    public func get(tipId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
+        return self.getWithPath(tipId, parameters: nil, completionHandler)
+    }
+    
     // MARK: - General
     
-        // add
+    // add
+    public func add(venueId: String, text: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
+        let path = "add"
+        var allParameters = [Parameter.venueId:venueId, Parameter.text:text]
+        allParameters += parameters
+        return self.postWithPath(path, parameters: allParameters, completionHandler)
+    }
     
     // MARK: - Aspects
     
-        // likes
-        // listed
-        // saves
+    // likes
+    public func likes(tipID: String, completionHandler: ResponseClosure? = nil) -> Task {
+        let path = tipID + "/likes"
+        return self.getWithPath(path, parameters: nil, completionHandler)
+    }
+    
+    // listed
+    public func listed(tipId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
+        let path = tipId + "/listed"
+        return self.getWithPath(path, parameters: parameters, completionHandler)
+    }
+    
+    // saves
+    public func saves(tipId: String, completionHandler: ResponseClosure? = nil) -> Task {
+        let path = tipId + "/saves"
+        return self.getWithPath(path, parameters: nil, completionHandler)
+    }
     
     // MARK: - Actions
     
-        // flag
-        // like
-        // unmark
+    // flag
+    public func flag(tipId: String, problem: String, parameters: Parameters?,  completionHandler: ResponseClosure? = nil) -> Task {
+        let path = tipId + "/flag"
+        var allParameters = [Parameter.problem:problem]
+        allParameters += parameters
+        return self.postWithPath(path, parameters: allParameters, completionHandler)
+    }
     
+    // like
+    public func like(tipId: String, like: Bool, completionHandler: ResponseClosure? = nil) -> Task {
+        let path = tipId + "/like"
+        let parameters = [Parameter.set: (like) ? "1":"0"]
+        return self.postWithPath(path, parameters: parameters, completionHandler)
+    }
+    
+    // unmark
+    public func unmark(tipId: String, completionHandler: ResponseClosure? = nil) -> Task {
+        let path = tipId + "/unmark"
+        return self.postWithPath(path, parameters: nil, completionHandler)
+    }
 }
+
