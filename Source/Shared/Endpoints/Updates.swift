@@ -19,7 +19,22 @@ public class Updates: Endpoint {
     
     // MARK: - General
     
-    // MARK: - Aspects
+    // notifications
+    public func notifications(limit: String?, completionHandler: ResponseClosure? = nil) -> Task {
+        let path = "notifications"
+        var parameters: Parameters?
+        if limit != nil {
+            parameters = [Parameter.limit:limit!]
+        }
+        return self.getWithPath(path, parameters: parameters, completionHandler)
+    }
     
     // MARK: - Actions
+    
+    // marknotificationsread
+    public func notifications(highWatermark: String, completionHandler: ResponseClosure? = nil) -> Task {
+        let path = "marknotificationsread"
+        var parameters = [Parameter.highWatermark:highWatermark]
+        return self.postWithPath(path, parameters: parameters, completionHandler)
+    }
 }
