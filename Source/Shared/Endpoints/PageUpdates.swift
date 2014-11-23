@@ -19,7 +19,29 @@ public class PageUpdates: Endpoint {
     
     // MARK: - General
     
-    // MARK: - Aspects
+    // add
+    public func add(pageId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
+        let path = pageId + "/add"
+        return self.postWithPath(path, parameters: parameters, completionHandler)
+    }
+    
+    // list
+    public func list(completionHandler: ResponseClosure? = nil) -> Task {
+        let path = "list"
+        return self.postWithPath(path, parameters: nil, completionHandler)
+    }
     
     // MARK: - Actions
+    
+    // delete
+    public func delete(updateId: String, completionHandler: ResponseClosure? = nil) -> Task {
+        let path = updateId + "/delete"
+        return self.postWithPath(path, parameters: nil, completionHandler)
+    }
+    
+    // like
+    public func like(updateId: String, completionHandler: ResponseClosure? = nil) -> Task {
+        let path = updateId + "/like"
+        return self.postWithPath(path, parameters: nil, completionHandler)
+    }
 }
