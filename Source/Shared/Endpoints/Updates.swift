@@ -13,13 +13,14 @@ public class Updates: Endpoint {
         return "updates"
     }
     
+    /* https://developer.foursquare.com/docs/updates/updates */
     public func get(updateId: String, completionHandler: ResponseClosure? = nil) -> Task {
         return self.getWithPath(updateId, parameters: nil, completionHandler)
     }
     
     // MARK: - General
     
-    // notifications
+    /* https://developer.foursquare.com/docs/updates/notifications */
     public func notifications(limit: String?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "notifications"
         var parameters: Parameters?
@@ -31,7 +32,7 @@ public class Updates: Endpoint {
     
     // MARK: - Actions
     
-    // marknotificationsread
+    /* https://developer.foursquare.com/docs/updates/marknotificationsread */
     public func notifications(highWatermark: String, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "marknotificationsread"
         var parameters = [Parameter.highWatermark:highWatermark]

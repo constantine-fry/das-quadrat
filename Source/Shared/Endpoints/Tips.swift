@@ -13,13 +13,14 @@ public class Tips: Endpoint {
         return "tips"
     }
     
+    /* https://developer.foursquare.com/docs/tips/tips */
     public func get(tipId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         return self.getWithPath(tipId, parameters: nil, completionHandler)
     }
     
     // MARK: - General
     
-    // add
+    /* https://developer.foursquare.com/docs/tips/add */
     public func add(venueId: String, text: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "add"
         var allParameters = [Parameter.venueId:venueId, Parameter.text:text]
@@ -29,19 +30,19 @@ public class Tips: Endpoint {
     
     // MARK: - Aspects
     
-    // likes
+    /* https://developer.foursquare.com/docs/tips/likes */
     public func likes(tipID: String, completionHandler: ResponseClosure? = nil) -> Task {
         let path = tipID + "/likes"
         return self.getWithPath(path, parameters: nil, completionHandler)
     }
     
-    // listed
+    /* https://developer.foursquare.com/docs/tips/listed */
     public func listed(tipId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = tipId + "/listed"
         return self.getWithPath(path, parameters: parameters, completionHandler)
     }
     
-    // saves
+    /* https://developer.foursquare.com/docs/tips/saves */
     public func saves(tipId: String, completionHandler: ResponseClosure? = nil) -> Task {
         let path = tipId + "/saves"
         return self.getWithPath(path, parameters: nil, completionHandler)
@@ -49,7 +50,7 @@ public class Tips: Endpoint {
     
     // MARK: - Actions
     
-    // flag
+    /* https://developer.foursquare.com/docs/tips/flag */
     public func flag(tipId: String, problem: String, parameters: Parameters?,  completionHandler: ResponseClosure? = nil) -> Task {
         let path = tipId + "/flag"
         var allParameters = [Parameter.problem:problem]
@@ -57,14 +58,14 @@ public class Tips: Endpoint {
         return self.postWithPath(path, parameters: allParameters, completionHandler)
     }
     
-    // like
+    /* https://developer.foursquare.com/docs/tips/like */
     public func like(tipId: String, like: Bool, completionHandler: ResponseClosure? = nil) -> Task {
         let path = tipId + "/like"
         let parameters = [Parameter.set: (like) ? "1":"0"]
         return self.postWithPath(path, parameters: parameters, completionHandler)
     }
     
-    // unmark
+    /* https://developer.foursquare.com/docs/tips/unmark */
     public func unmark(tipId: String, completionHandler: ResponseClosure? = nil) -> Task {
         let path = tipId + "/unmark"
         return self.postWithPath(path, parameters: nil, completionHandler)
