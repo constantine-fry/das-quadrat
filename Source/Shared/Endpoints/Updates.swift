@@ -9,7 +9,14 @@
 import Foundation
 
 public class Updates: Endpoint {
-  
+    override var endpoint: String {
+        return "updates"
+    }
+    
+    public func get(updateId: String, completionHandler: ResponseClosure? = nil) -> Task {
+        return self.getWithPath(updateId, parameters: nil, completionHandler)
+    }
+    
     // MARK: - General
     
     // MARK: - Aspects

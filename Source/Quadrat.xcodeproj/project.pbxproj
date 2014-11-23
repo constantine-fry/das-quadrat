@@ -220,13 +220,13 @@
 				476B70AE1A0EBB5C00AFAC33 /* Checkins.swift */,
 				476B70B71A0EBB5C00AFAC33 /* Tips.swift */,
 				476B70B11A0EBB5C00AFAC33 /* Lists.swift */,
-				476B70B01A0EBB5C00AFAC33 /* Events.swift */,
-				476B70B21A0EBB5C00AFAC33 /* Pages.swift */,
-				476B70B31A0EBB5C00AFAC33 /* PageUpdates.swift */,
+				476B70B81A0EBB5C00AFAC33 /* Updates.swift */,
 				476B70B41A0EBB5C00AFAC33 /* Photos.swift */,
 				476B70B51A0EBB5C00AFAC33 /* Settings.swift */,
 				476B70B61A0EBB5C00AFAC33 /* Specials.swift */,
-				476B70B81A0EBB5C00AFAC33 /* Updates.swift */,
+				476B70B01A0EBB5C00AFAC33 /* Events.swift */,
+				476B70B21A0EBB5C00AFAC33 /* Pages.swift */,
+				476B70B31A0EBB5C00AFAC33 /* PageUpdates.swift */,
 				47888BF81A1A9B9800A76E47 /* Multi.swift */,
 			);
 			path = Endpoints;

@@ -32,7 +32,11 @@ public class Photos : Endpoint {
     override var endpoint   : String {
         return "photos"
     }
+    
     // MARK: - Main
+    public func get(photoId: String, completionHandler: ResponseClosure? = nil) -> Task {
+        return self.getWithPath(photoId, parameters: nil, completionHandler)
+    }
     
     // MARK: - General
     

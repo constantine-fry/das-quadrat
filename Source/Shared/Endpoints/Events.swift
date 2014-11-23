@@ -9,6 +9,13 @@
 import Foundation
 
 public class Events: Endpoint {
+    override var endpoint: String {
+        return "events"
+    }
+    
+    public func get(eventId: String, completionHandler: ResponseClosure? = nil) -> Task {
+        return self.getWithPath(eventId, parameters: nil, completionHandler)
+    }
     
     // MARK: - General
     

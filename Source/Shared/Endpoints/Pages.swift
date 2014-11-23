@@ -9,6 +9,9 @@
 import Foundation
 
 public class Pages: Endpoint {
+    override var endpoint: String {
+        return "pages"
+    }
     
     // MARK: - General
     

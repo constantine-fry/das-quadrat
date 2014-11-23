@@ -9,6 +9,13 @@
 import Foundation
 
 public class Settings: Endpoint {
+    override var endpoint: String {
+        return "settings"
+    }
+    
+    public func get(settingId: String, completionHandler: ResponseClosure? = nil) -> Task {
+        return self.getWithPath(settingId, parameters: nil, completionHandler)
+    }
     
     // MARK: - General
     
