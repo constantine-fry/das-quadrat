@@ -14,8 +14,8 @@ public class Users: Endpoint {
     }
     
     /* https://developer.foursquare.com/docs/users/users */
-    public func get(userID: String = UserSelf, completionHandler:  ResponseClosure? = nil) -> Task {
-        return self.getWithPath(userID, parameters: nil, completionHandler)
+    public func get(userId: String = UserSelf, completionHandler:  ResponseClosure? = nil) -> Task {
+        return self.getWithPath(userId, parameters: nil, completionHandler)
     }
     
     // MARK: - General
@@ -35,77 +35,77 @@ public class Users: Endpoint {
     // MARK: - Aspects
     
     /* https://developer.foursquare.com/docs/users/checkins */
-    public func checkins(userID: String = UserSelf, parameters: Parameters?, completionHandler:  ResponseClosure? = nil) -> Task {
-        let path = userID + "/checkins"
+    public func checkins(userId: String = UserSelf, parameters: Parameters?, completionHandler:  ResponseClosure? = nil) -> Task {
+        let path = userId + "/checkins"
         return self.getWithPath(path, parameters: parameters, completionHandler)
     }
     
     /* https://developer.foursquare.com/docs/users/friends */
-    public func friends(userID: String = UserSelf, parameters: Parameters?, completionHandler:  ResponseClosure? = nil) -> Task {
-        let path = userID + "/friends"
+    public func friends(userId: String = UserSelf, parameters: Parameters?, completionHandler:  ResponseClosure? = nil) -> Task {
+        let path = userId + "/friends"
         return self.getWithPath(path, parameters: parameters, completionHandler)
     }
     
     /* https://developer.foursquare.com/docs/users/lists */
-    public func lists(userID: String = UserSelf, parameters: Parameters?, completionHandler:  ResponseClosure? = nil) -> Task {
-        let path = userID + "/lists"
+    public func lists(userId: String = UserSelf, parameters: Parameters?, completionHandler:  ResponseClosure? = nil) -> Task {
+        let path = userId + "/lists"
         return self.getWithPath(path, parameters: parameters, completionHandler)
     }
     
     /* https://developer.foursquare.com/docs/users/mayorships */
-    public func mayorships(userID: String = UserSelf, completionHandler:  ResponseClosure? = nil) -> Task {
-        let path = userID + "/mayorships"
+    public func mayorships(userId: String = UserSelf, completionHandler:  ResponseClosure? = nil) -> Task {
+        let path = userId + "/mayorships"
         return self.getWithPath(path, parameters: nil, completionHandler)
     }
     
     /* https://developer.foursquare.com/docs/users/photos */
-    public func photos(userID: String = UserSelf, parameters: Parameters?, completionHandler:  ResponseClosure? = nil) -> Task {
-        let path = userID + "/photos"
+    public func photos(userId: String = UserSelf, parameters: Parameters?, completionHandler:  ResponseClosure? = nil) -> Task {
+        let path = userId + "/photos"
         return self.getWithPath(path, parameters: parameters, completionHandler)
     }
     
     /* https://developer.foursquare.com/docs/users/tastes */
-    public func tastes(userID: String = UserSelf, parameters: Parameters?, completionHandler:  ResponseClosure? = nil) -> Task {
-        let path = userID + "/tastes"
+    public func tastes(userId: String = UserSelf, parameters: Parameters?, completionHandler:  ResponseClosure? = nil) -> Task {
+        let path = userId + "/tastes"
         return self.getWithPath(path, parameters: parameters, completionHandler)
     }
     
     /* https://developer.foursquare.com/docs/users/venuehistory */
-    public func venuehistory(userID: String = UserSelf, parameters: Parameters?, completionHandler:  ResponseClosure? = nil) -> Task {
-        let path = userID + "/venuehistory"
+    public func venuehistory(userId: String = UserSelf, parameters: Parameters?, completionHandler:  ResponseClosure? = nil) -> Task {
+        let path = userId + "/venuehistory"
         return self.getWithPath(path, parameters: parameters, completionHandler)
     }
     
     /* https://developer.foursquare.com/docs/users/venuelikes */
-    public func venuelikes(userID: String = UserSelf, parameters: Parameters?, completionHandler:  ResponseClosure? = nil) -> Task {
-        let path = userID + "/venuelikes"
+    public func venuelikes(userId: String = UserSelf, parameters: Parameters?, completionHandler:  ResponseClosure? = nil) -> Task {
+        let path = userId + "/venuelikes"
         return self.getWithPath(path, parameters: parameters, completionHandler)
     }
     
     // MARK: - Actions
     
     /* https://developer.foursquare.com/docs/users/approve */
-    public func approve(userID: String, completionHandler:  ResponseClosure? = nil) -> Task {
-        let path = userID + "/approve"
+    public func approve(userId: String, completionHandler:  ResponseClosure? = nil) -> Task {
+        let path = userId + "/approve"
         return self.postWithPath(path, parameters: nil, completionHandler)
     }
     
     /* https://developer.foursquare.com/docs/users/deny */
-    public func deny(userID: String, completionHandler:  ResponseClosure? = nil) -> Task {
-        let path = userID + "/deny"
+    public func deny(userId: String, completionHandler:  ResponseClosure? = nil) -> Task {
+        let path = userId + "/deny"
         return self.postWithPath(path, parameters: nil, completionHandler)
     }
     
     /* https://developer.foursquare.com/docs/users/setpings */
-    public func setpings(userID: String, value: Bool, completionHandler:  ResponseClosure? = nil) -> Task {
-        let path = userID + "/setpings"
+    public func setpings(userId: String, value: Bool, completionHandler:  ResponseClosure? = nil) -> Task {
+        let path = userId + "/setpings"
         let parameters = [Parameter.value: (value) ? "true":"false"]
         return self.postWithPath(path, parameters: parameters, completionHandler)
     }
     
     /* https://developer.foursquare.com/docs/users/unfriend */
-    public func unfriend(userID: String, completionHandler:  ResponseClosure? = nil) -> Task {
-        let path = userID + "/unfriend"
+    public func unfriend(userId: String, completionHandler:  ResponseClosure? = nil) -> Task {
+        let path = userId + "/unfriend"
         return self.postWithPath(path, parameters: nil, completionHandler)
     }
     
