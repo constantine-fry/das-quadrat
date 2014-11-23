@@ -8,42 +8,22 @@
 
 import Foundation
 
-public enum FoursquareId {
-    case CheckinId(String)
-    case TipId(String)
-    case VenueId(String)
-    case PageId(String)
-    
-    func parameter() -> Parameters {
-        switch self {
-        case .CheckinId(let idString):
-            return [Parameter.checkinId: idString]
-        case .TipId(let idString):
-            return [Parameter.tipId: idString]
-        case .VenueId(let idString):
-            return [Parameter.venueId: idString]
-        case .PageId(let idString):
-            return [Parameter.pageId: idString]
-        }
-    }
-}
-
 public class Photos : Endpoint {
     override var endpoint   : String {
         return "photos"
     }
-    // MARK: - Main
+    
+    /* https://developer.foursquare.com/docs/photos/photos */
+    public func get(photoId: String, completionHandler: ResponseClosure? = nil) -> Task {
+        return self.getWithPath(photoId, parameters: nil, completionHandler)
+    }
     
     // MARK: - General
     
-    public func add(fromURL: NSURL, foursquareID: FoursquareId, parameters: Parameters?, completionHandler:  ResponseCompletionHandler? = nil) -> Task {
+    /* https://developer.foursquare.com/docs/photos/add */
+    public func add(fromURL: NSURL, parameters: Parameters?, completionHandler:  ResponseClosure? = nil) -> Task {
         let path = "add"
-        var allParameters = foursquareID.parameter()
-        allParameters += parameters
-        return self.uploadTaskFromURL(fromURL, path: path, parameters: allParameters, completionHandler)
+        return self.uploadTaskFromURL(fromURL, path: path, parameters: parameters, completionHandler)
     }
-    
-    // MARK: - Aspects
-    
-    // MARK: - Actions
+
 }

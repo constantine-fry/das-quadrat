@@ -13,16 +13,16 @@ public enum FoursquareResponse {
     case Error(NSError)
 }
 
-public typealias ResponseCompletionHandler = (response: Response) -> Void
+public typealias ResponseClosure = (response: Response) -> Void
 
 public class Task {
     private var         task               : NSURLSessionTask?
     private weak var    session            : Session?
-    private let         completionHandler  : ResponseCompletionHandler?
+    private let         completionHandler  : ResponseClosure?
     
     var                 request            : Request
     
-    init (session: Session, request: Request, completionHandler: ResponseCompletionHandler?) {
+    init (session: Session, request: Request, completionHandler: ResponseClosure?) {
         self.session = session
         self.request = request
         self.completionHandler = completionHandler
