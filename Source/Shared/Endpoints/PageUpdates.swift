@@ -28,7 +28,7 @@ public class PageUpdates: Endpoint {
     // list
     public func list(completionHandler: ResponseClosure? = nil) -> Task {
         let path = "list"
-        return self.postWithPath(path, parameters: nil, completionHandler)
+        return self.getWithPath(path, parameters: nil, completionHandler)
     }
     
     // MARK: - Actions
