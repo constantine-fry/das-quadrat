@@ -1,4 +1,4 @@
-das-quadrat
+Das Quadrat
 ===========
 
 Foursquare API wrapper in Swift for iOS and OSX
