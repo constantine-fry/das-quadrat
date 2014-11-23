@@ -13,22 +13,16 @@ Work in progress!
 
 3. Storing access token in Keychain.
 
-4. `multi` endpoint.
-
-5. `users` endpoints.
+4. Covered all endopoints.
 
 
 ####To do:
 
-1. Make variables for all API parameters.
+1. Make documentation and how-to.
 
-2. Cover all endpoints.
+2. Demo projects.
 
-3. Make documentation and how-to.
+3. Tests. Yep, it's not TDD :)
 
-4. Demo projects.
-
-5. Tests. Yep, it's not TDD :)
-
-6. Podspec.
+4. Podspec.
 
