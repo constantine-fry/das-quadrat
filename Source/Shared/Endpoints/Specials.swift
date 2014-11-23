@@ -21,7 +21,33 @@ public class Specials: Endpoint {
     
     // MARK: - General
     
-    // MARK: - Aspects
+    // add
+    public func add(parameters: Parameters, completionHandler: ResponseClosure? = nil) -> Task {
+        let path = "add"
+        return self.postWithPath(path, parameters: parameters, completionHandler)
+    }
     
+    // list
+    public func all(parameters: Parameters, completionHandler: ResponseClosure? = nil) -> Task {
+        let path = "list"
+        return self.getWithPath(path, parameters: parameters, completionHandler)
+    }
+    
+    // search
+    public func search(ll: String, parameters: Parameters, completionHandler: ResponseClosure? = nil) -> Task {
+        let path = "search"
+        var allParameters = [Parameter.ll:ll]
+        allParameters += parameters
+        return self.getWithPath(path, parameters: allParameters, completionHandler)
+    }
+
     // MARK: - Actions
+    
+    // flag
+    public func flag(specialId:String, venueId: String, problem: String, parameters: Parameters, completionHandler: ResponseClosure? = nil) -> Task {
+        let path = "add"
+        var allParameters = ["ID": specialId, Parameter.venueId:venueId, Parameter.problem:problem]
+        allParameters += allParameters
+        return self.postWithPath(path, parameters: allParameters, completionHandler)
+    }
 }
