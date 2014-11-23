@@ -54,6 +54,7 @@ public class Parameter {
     // MARK: - D
     public class var day                    : String { return __FUNCTION__ }
     public class var description            : String { return __FUNCTION__ }
+    public class var domain                 : String { return __FUNCTION__ }
     
     // MARK: - E
     public class var email                  : String { return __FUNCTION__ }

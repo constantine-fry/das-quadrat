@@ -19,7 +19,26 @@ public class Events: Endpoint {
     
     // MARK: - General
     
-    // MARK: - Aspects
+    // categories
+    public func categories(completionHandler: ResponseClosure? = nil) -> Task {
+        let path = "categories"
+        return self.getWithPath(path, parameters: nil, completionHandler)
+    }
+    
+    // search
+    public func search(domain: String, parameters: Parameters, completionHandler: ResponseClosure? = nil) -> Task {
+        let path = "search"
+        var allParameters = [Parameter.domain: domain]
+        allParameters += parameters
+        return self.getWithPath(path, parameters: allParameters, completionHandler)
+    }
     
     // MARK: - Actions
+    
+    // add
+    public func add(parameters: Parameters, completionHandler: ResponseClosure? = nil) -> Task {
+        let path = "add"
+        return self.getWithPath(path, parameters: parameters, completionHandler)
+    }
+    
 }
