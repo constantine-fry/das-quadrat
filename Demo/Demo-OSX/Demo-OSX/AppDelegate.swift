@@ -37,7 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             println(response)
         })
 
-        let task3 = self.quadratSession.users.friends("self", parameters: nil)
+        let task3 = self.quadratSession.users.friends(userID: "self", parameters: nil)
 
         let multiTask = self.quadratSession.multi.get([task2, task3]){
                 (responses) -> Void in
