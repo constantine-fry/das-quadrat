@@ -36,7 +36,7 @@ public class Photos : Endpoint {
     
     // MARK: - General
     
-    public func add(fromURL: NSURL, foursquareID: FoursquareId, parameters: Parameters?, completionHandler:  ResponseCompletionHandler? = nil) -> Task {
+    public func add(fromURL: NSURL, foursquareID: FoursquareId, parameters: Parameters?, completionHandler:  ResponseClosure? = nil) -> Task {
         let path = "add"
         var allParameters = foursquareID.parameter()
         allParameters += parameters

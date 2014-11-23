@@ -34,15 +34,15 @@ public class Endpoint  {
         self.keychain = Keychain(configuration: configuration)
     }
     
-    func getWithPath(path: String, parameters: Parameters?, completionHandler:  ResponseCompletionHandler?) -> Task {
+    func getWithPath(path: String, parameters: Parameters?, completionHandler:  ResponseClosure?) -> Task {
         return self.taskWithPath(path, parameters: parameters, HTTPMethod: "GET", completionHandler: completionHandler)
     }
     
-    func postWithPath(path: String, parameters: Parameters?, completionHandler:  ResponseCompletionHandler?) -> Task {
+    func postWithPath(path: String, parameters: Parameters?, completionHandler:  ResponseClosure?) -> Task {
         return self.taskWithPath(path, parameters: parameters, HTTPMethod: "POST", completionHandler: completionHandler)
     }
     
-    func uploadTaskFromURL(fromURL: NSURL, path: String, parameters: Parameters?, completionHandler:  ResponseCompletionHandler?) -> Task {
+    func uploadTaskFromURL(fromURL: NSURL, path: String, parameters: Parameters?, completionHandler:  ResponseClosure?) -> Task {
         
         let request = self.requestWithPath(path, parameters: parameters, HTTPMethod: "POST")
         let task = UploadTask(session: self.session!, request: request, completionHandler)
@@ -50,7 +50,7 @@ public class Endpoint  {
         return task
     }
     
-    private func taskWithPath(path: String, parameters: Parameters?, HTTPMethod: String, completionHandler:  ResponseCompletionHandler?) -> Task {
+    private func taskWithPath(path: String, parameters: Parameters?, HTTPMethod: String, completionHandler:  ResponseClosure?) -> Task {
         let request = self.requestWithPath(path, parameters: parameters, HTTPMethod: HTTPMethod)
         return DataTask(session: self.session!, request: request, completionHandler: completionHandler)
     }
