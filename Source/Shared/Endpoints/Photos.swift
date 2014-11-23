@@ -33,7 +33,6 @@ public class Photos : Endpoint {
         return "photos"
     }
     
-    // MARK: - Main
     public func get(photoId: String, completionHandler: ResponseClosure? = nil) -> Task {
         return self.getWithPath(photoId, parameters: nil, completionHandler)
     }
@@ -46,8 +45,5 @@ public class Photos : Endpoint {
         allParameters += parameters
         return self.uploadTaskFromURL(fromURL, path: path, parameters: allParameters, completionHandler)
     }
-    
-    // MARK: - Aspects
-    
-    // MARK: - Actions
+
 }

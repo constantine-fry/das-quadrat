@@ -13,8 +13,6 @@ public class Users: Endpoint {
         return "users"
     }
     
-    // MARK: - Main
-    
     public func get(userID: String = UserSelf, completionHandler:  ResponseClosure? = nil) -> Task {
         return self.getWithPath(userID, parameters: nil, completionHandler)
     }
