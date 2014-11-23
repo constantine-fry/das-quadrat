@@ -22,19 +22,19 @@ public class Specials: Endpoint {
     // MARK: - General
     
     // add
-    public func add(parameters: Parameters, completionHandler: ResponseClosure? = nil) -> Task {
+    public func add(parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "add"
         return self.postWithPath(path, parameters: parameters, completionHandler)
     }
     
     // list
-    public func all(parameters: Parameters, completionHandler: ResponseClosure? = nil) -> Task {
+    public func all(parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "list"
         return self.getWithPath(path, parameters: parameters, completionHandler)
     }
     
     // search
-    public func search(ll: String, parameters: Parameters, completionHandler: ResponseClosure? = nil) -> Task {
+    public func search(ll: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "search"
         var allParameters = [Parameter.ll:ll]
         allParameters += parameters
@@ -44,7 +44,7 @@ public class Specials: Endpoint {
     // MARK: - Actions
     
     // flag
-    public func flag(specialId:String, venueId: String, problem: String, parameters: Parameters, completionHandler: ResponseClosure? = nil) -> Task {
+    public func flag(specialId:String, venueId: String, problem: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "add"
         var allParameters = ["ID": specialId, Parameter.venueId:venueId, Parameter.problem:problem]
         allParameters += allParameters

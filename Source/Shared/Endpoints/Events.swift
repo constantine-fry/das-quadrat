@@ -26,7 +26,7 @@ public class Events: Endpoint {
     }
     
     // search
-    public func search(domain: String, parameters: Parameters, completionHandler: ResponseClosure? = nil) -> Task {
+    public func search(domain: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "search"
         var allParameters = [Parameter.domain: domain]
         allParameters += parameters
@@ -36,7 +36,7 @@ public class Events: Endpoint {
     // MARK: - Actions
     
     // add
-    public func add(parameters: Parameters, completionHandler: ResponseClosure? = nil) -> Task {
+    public func add(parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "add"
         return self.getWithPath(path, parameters: parameters, completionHandler)
     }

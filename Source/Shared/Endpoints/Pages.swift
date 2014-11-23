@@ -37,19 +37,19 @@ public class Pages: Endpoint {
     }
     
     // similar
-    public func similar(userId: String, parameters: Parameters, completionHandler: ResponseClosure? = nil) -> Task {
+    public func similar(userId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = userId + "/similar"
         return self.getWithPath(path, parameters: parameters, completionHandler)
     }
     
     // timeseries
-    public func timeseries(pageId: String, parameters: Parameters, completionHandler: ResponseClosure? = nil) -> Task {
+    public func timeseries(pageId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = pageId + "/timeseries"
         return self.getWithPath(path, parameters: parameters, completionHandler)
     }
     
     // venues
-    public func venues(pageId: String, parameters: Parameters, completionHandler: ResponseClosure? = nil) -> Task {
+    public func venues(pageId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = pageId + "/venues"
         return self.getWithPath(path, parameters: parameters, completionHandler)
     }
