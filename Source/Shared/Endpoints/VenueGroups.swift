@@ -9,7 +9,7 @@
 import Foundation
 
 public class VenueGroups: Endpoint {
-    override var endpoint   : String {
+    override var endpoint: String {
         return "venuegroups"
     }
     

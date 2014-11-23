@@ -9,7 +9,7 @@
 import Foundation
 
 public class Tips: Endpoint {
-    override var endpoint   : String {
+    override var endpoint: String {
         return "tips"
     }
     

@@ -9,8 +9,7 @@
 import Foundation
 
 public class Checkins: Endpoint {
-    
-    override var endpoint   : String {
+    override var endpoint: String {
         return "checkins"
     }
     

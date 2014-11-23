@@ -1,5 +1,5 @@
 //
-//  UserTaskFactory.swift
+//  Users.swift
 //  Quadrat
 //
 //  Created by Constantine Fry on 26/10/14.
@@ -9,7 +9,7 @@
 import Foundation
 
 public class Users: Endpoint {
-    override var endpoint   : String {
+    override var endpoint: String {
         return "users"
     }
     
