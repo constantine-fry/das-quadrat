@@ -13,7 +13,7 @@ public enum FoursquareResponse {
     case Error(NSError)
 }
 
-public typealias ResponseClosure = (response: Response) -> Void
+
 
 public class Task {
     private var         task               : NSURLSessionTask?
@@ -57,6 +57,7 @@ class DataTask: Task {
         self.task = URLsession?.dataTaskWithRequest(request.URLRequest()) {
             (data, response, error) -> Void in
             let quatratResponse = Response.responseFromURLSessionResponse(response, data: data, error: error)
+            self.session?.processResponse(quatratResponse)
             self.completionHandler?(response: quatratResponse)
         }
     }
@@ -93,6 +94,7 @@ class UploadTask: Task {
         self.task = self.session?.URLSession.uploadTaskWithRequest(mutableRequest, fromData: body) {
             (data, response, error) -> Void in
             let quatratResponse = Response.responseFromURLSessionResponse(response, data: data, error: error)
+            self.session?.processResponse(quatratResponse)
             self.completionHandler?(response: quatratResponse)
         }
     }

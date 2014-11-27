@@ -10,6 +10,8 @@ import Foundation
 
 public typealias AuthorizationHandler = (Bool, NSError?) -> Void
 
+public typealias ResponseClosure = (response: Response) -> Void
+
 public let UserSelf = "self"
 
 public typealias Parameters = [String:String]
@@ -20,6 +22,8 @@ public class Session {
     let configuration       : Configuration
     let URLSession          : NSURLSession
     var authorizer          : Authorizer?
+    
+    public var logger       : Logger?
     
     public lazy var users : Users = {
         return Users(configuration: self.configuration, session: self)
@@ -112,4 +116,21 @@ public class Session {
         keychain.deleteAccessToken()
     }
     
+    func processResponse(response: Response) {
+        if response.HTTPSTatusCode == 401 && self.isAuthorized() {
+            self.deathorizeAndNotify()
+        }
+        self.logger?.session(self, didReceiveResponse: response)
+    }
+
+    private func deathorizeAndNotify() {
+        self.deauthorize()
+    }
+    
+}
+
+public protocol Logger {
+    func session(session: Session, didReceiveResponse response: Response)
+    func session(session: Session, oauthDidFailWithError error: NSError)
+    func session(session: Session, keychainDidFailWithError error: NSError)
 }

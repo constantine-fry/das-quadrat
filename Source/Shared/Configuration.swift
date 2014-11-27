@@ -80,13 +80,13 @@ public struct Configuration {
         Timeout interval for network request, in seconds.
         Default value is 60 seconds.
     */
-    public var timeoutInterval  :NSTimeInterval = 60.0
+    public var timeoutInterval  : NSTimeInterval = 60.0
     
     /** 
         Creates Configuration with specified client.
-        `Mode`      is swarm.
-        `Locale`    is system language. (NSLocale.preferredLanguages().first)
-        `Version`   is 20141102.
+        `Mode`      set `swarm`.
+        `Locale`    set to system language. (NSLocale.preferredLanguages().first)
+        `Version`   set to 20141102.
     */
     public init(client: Client) {
         self.init(client: client, version: nil, accessToken: nil)
