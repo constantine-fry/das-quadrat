@@ -107,5 +107,9 @@ public class Session {
         return keychain.accessToken() != nil
     }
     
+    public func deauthorize() {
+        let keychain = Keychain(configuration: self.configuration)
+        keychain.deleteAccessToken()
+    }
     
 }
