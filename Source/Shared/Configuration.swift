@@ -76,6 +76,12 @@ public struct Configuration {
     /** The user tag. */
     public var userTag         : String?
     
+    /**
+        Timeout interval for network request, in seconds.
+        Default value is 60 seconds.
+    */
+    public var timeoutInterval  :NSTimeInterval = 60.0
+    
     /** 
         Creates Configuration with specified client.
         `Mode`      is swarm.

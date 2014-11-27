@@ -63,6 +63,7 @@ public class Endpoint  {
             }
         }
         let request = Request(baseURL: self.baseURL, path: (self.endpoint + "/" + path), parameters: parameters, sessionParameters: sessionParameters, HTTPMethod: HTTPMethod)
+        request.timeoutInterval = self.configuration.timeoutInterval
         return request
     }
 }
