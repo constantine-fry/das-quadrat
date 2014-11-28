@@ -23,6 +23,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                             redirectURL:    "testapp123://foursquare")
         let configuration = Configuration(client:client)
         self.quadratSession = Session(configuration: configuration)
+        
         let authorized = self.quadratSession.isAuthorized()
         println("authorized: ", authorized)
         let URL = NSBundle.mainBundle().URLForResource("Apple_Swift_Logo", withExtension: "png")
@@ -41,7 +42,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let multiTask = self.quadratSession.multi.get([task2, task3]){
                 (responses) -> Void in
-                println(responses)
+//                println(responses)
         }
         multiTask.start()
     }

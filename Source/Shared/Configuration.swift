@@ -83,6 +83,12 @@ public struct Configuration {
     public var timeoutInterval  : NSTimeInterval = 60.0
     
     /** 
+        Makes session print all errors and responses.
+        For advance logging see `Logger` protocol and `logger` property on `Session`.
+    */
+    public var debugEnabled     : Bool = false
+    
+    /** 
         Creates Configuration with specified client.
         `Mode`      set `swarm`.
         `Locale`    set to system language. (NSLocale.preferredLanguages().first)

@@ -23,6 +23,10 @@ public class Session {
     let URLSession          : NSURLSession
     var authorizer          : Authorizer?
     
+    /**
+        One can create custom logger to process all errors and responses in one place.
+        Main purpose is to debug or track all the errors accured in framework via some analytic tool.
+    */
     public var logger       : Logger?
     
     public lazy var users : Users = {
@@ -83,8 +87,11 @@ public class Session {
     
     public init(configuration: Configuration, completionQueue: NSOperationQueue) {
         self.configuration = configuration
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        self.URLSession = NSURLSession(configuration: configuration, delegate: nil, delegateQueue: completionQueue)
+        let URLConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        self.URLSession = NSURLSession(configuration: URLConfiguration, delegate: nil, delegateQueue: completionQueue)
+        if configuration.debugEnabled {
+            self.logger = ConsoleLogger()
+        }
     }
     
     public convenience init(configuration: Configuration) {
@@ -108,7 +115,8 @@ public class Session {
     
     public func isAuthorized() -> Bool {
         let keychain = Keychain(configuration: self.configuration)
-        return keychain.accessToken() != nil
+        let (accessToken, _) = keychain.accessToken()
+        return accessToken != nil
     }
     
     public func deauthorize() {
@@ -122,6 +130,10 @@ public class Session {
         }
         self.logger?.session(self, didReceiveResponse: response)
     }
+    
+    func processError(error: NSError) {
+        self.logger?.session(self, didGetError: error)
+    }
 
     private func deathorizeAndNotify() {
         self.deauthorize()
@@ -129,8 +141,5 @@ public class Session {
     
 }
 
-public protocol Logger {
-    func session(session: Session, didReceiveResponse response: Response)
-    func session(session: Session, oauthDidFailWithError error: NSError)
-    func session(session: Session, keychainDidFailWithError error: NSError)
-}
+
+
