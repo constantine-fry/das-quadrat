@@ -62,7 +62,7 @@ public class Response {
     /** 
         A notifications. Extracted from JSON `notifications` field.
     */
-    public var notifications   : [String:AnyObject]?
+    public var notifications   : [[String:AnyObject]]?
     
     init() {
         
@@ -90,7 +90,7 @@ extension Response {
                     }
                 }
             }
-            response.notifications   = JSON!["notifications"]   as [String:AnyObject]?
+            response.notifications   = JSON!["notifications"]   as [[String:AnyObject]]?
             response.response        = JSON!["response"]        as [String:AnyObject]?
             
             if response.response != nil {
