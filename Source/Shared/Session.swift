@@ -16,6 +16,12 @@ public let UserSelf = "self"
 
 public typealias Parameters = [String:String]
 
+/**
+    Posted when session have access token, but server returs response with 401 HTTP code.
+    Guaranteed to be posted an main thread.
+*/
+public let QuadratSessionDidBecomeUnauthorizedNotification = "QuadratSessionDidBecomeUnauthorizedNotification"
+
 private var _sharedSession : Session?
 
 public class Session {
@@ -25,7 +31,7 @@ public class Session {
     
     /**
         One can create custom logger to process all errors and responses in one place.
-        Main purpose is to debug or track all the errors accured in framework via some analytic tool.
+        Main purpose is to debug or to track all the errors accured in framework via some analytic tool.
     */
     public var logger       : Logger?
     
@@ -113,12 +119,17 @@ public class Session {
         return _sharedSession!
     }
     
+    /** Whether session is authorized or not. */
     public func isAuthorized() -> Bool {
         let keychain = Keychain(configuration: self.configuration)
         let (accessToken, _) = keychain.accessToken()
         return accessToken != nil
     }
     
+    /** 
+        Removes access token from keychain.
+        This method Doesn't post `QuadratSessionDidBecomeUnauthorizedNotification`. 
+    */
     public func deauthorize() {
         let keychain = Keychain(configuration: self.configuration)
         keychain.deleteAccessToken()
@@ -137,6 +148,10 @@ public class Session {
 
     private func deathorizeAndNotify() {
         self.deauthorize()
+        dispatch_async(dispatch_get_main_queue()) {
+            let name = QuadratSessionDidBecomeUnauthorizedNotification
+            NSNotificationCenter.defaultCenter().postNotificationName(name, object: self)
+        }
     }
     
 }
