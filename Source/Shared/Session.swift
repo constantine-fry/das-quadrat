@@ -21,7 +21,7 @@ public typealias DownloadImageClosure = (imageData: NSData?, error: NSError?) ->
 public typealias Parameters = [String:String]
 
 /**
-    Posted when session have access token, but server returs response with 401 HTTP code.
+    Posted when session have access token, but server returns response with 401 HTTP code.
     Guaranteed to be posted an main thread.
 */
 public let QuadratSessionDidBecomeUnauthorizedNotification = "QuadratSessionDidBecomeUnauthorizedNotification"
@@ -132,7 +132,7 @@ public class Session {
     
     /** 
         Removes access token from keychain.
-        This method Doesn't post `QuadratSessionDidBecomeUnauthorizedNotification`. 
+        This method doesn't post `QuadratSessionDidBecomeUnauthorizedNotification`.
     */
     public func deauthorize() {
         let keychain = Keychain(configuration: self.configuration)
