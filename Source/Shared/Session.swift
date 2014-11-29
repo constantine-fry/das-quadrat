@@ -8,12 +8,16 @@
 
 import Foundation
 
+/** A handler used for authorization. */
 public typealias AuthorizationHandler = (Bool, NSError?) -> Void
 
+/** A nandler used by all endpoints. */
 public typealias ResponseClosure = (response: Response) -> Void
 
-public let UserSelf = "self"
+/** A nandler for downloading images. */
+public typealias DownloadImageClosure = (imageData: NSData?, error: NSError?) -> Void
 
+/** Typealias for parameters dictionary. */
 public typealias Parameters = [String:String]
 
 /**
@@ -133,6 +137,15 @@ public class Session {
     public func deauthorize() {
         let keychain = Keychain(configuration: self.configuration)
         keychain.deleteAccessToken()
+    }
+    
+    public func downloadImageAtURL(URL: NSURL, completionHandler: DownloadImageClosure) {
+        let request = NSURLRequest(URL: URL)
+        let task = self.URLSession.downloadTaskWithRequest(request) {
+            (url, response, error) -> Void in
+            let data = NSData(contentsOfURL: url)
+            completionHandler(imageData: data, error: error)
+        }
     }
     
     func processResponse(response: Response) {
