@@ -24,6 +24,8 @@ class Request {
     /** Should be like this "https://api.foursquare.com/v2". Specified in `Configuration` */
     let baseURL             : NSURL
     
+    /** The timeout interval in seconds. */
+    var timeoutInterval     : NSTimeInterval = 60
     
     init(baseURL:NSURL, path: String, parameters: Parameters?, sessionParameters:Parameters, HTTPMethod: String) {
         self.baseURL = baseURL

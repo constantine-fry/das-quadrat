@@ -17,7 +17,7 @@ class Authorizer: AuthorizationDelegate {
     var redirectURL : NSURL
     var authorizationURL : NSURL
     var completionHandler: ((String?, NSError?) -> Void)?
-    let keychain : Keychain
+    let keychain: Keychain
     
     convenience init(configuration: Configuration) {
         let baseURL = configuration.server.oauthBaseURL
@@ -69,13 +69,14 @@ class Authorizer: AuthorizationDelegate {
     }
     
     func finilizeAuthorization(accessToken: String?, error: NSError?) {
+        var resultError = error
         if accessToken != nil {
-            self.keychain.saveAccessToken(accessToken!)
-            println("access token: " + accessToken!)
-        } else {
-            println("acces token error: ", error)
+            let (saved, keychainError) = self.keychain.saveAccessToken(accessToken!)
+            if !saved {
+                resultError = keychainError
+            }
         }
-        self.completionHandler?(accessToken, error)
+        self.completionHandler?(accessToken, resultError)
         self.completionHandler = nil
     }
     

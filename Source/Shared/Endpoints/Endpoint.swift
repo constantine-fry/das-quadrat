@@ -58,11 +58,15 @@ public class Endpoint  {
     private func requestWithPath(path: String, parameters: Parameters?, HTTPMethod: String) -> Request {
         var sessionParameters = self.configuration.parameters()
         if sessionParameters[Parameter.oauth_token] == nil {
-            if let accessToken = self.keychain.accessToken() {
-                sessionParameters[Parameter.oauth_token] = accessToken
+            let (accessToken, error) = self.keychain.accessToken()
+            if accessToken != nil  {
+                sessionParameters[Parameter.oauth_token] = accessToken!
+            } else if error != nil {
+                self.session?.processError(error!)
             }
         }
         let request = Request(baseURL: self.baseURL, path: (self.endpoint + "/" + path), parameters: parameters, sessionParameters: sessionParameters, HTTPMethod: HTTPMethod)
+        request.timeoutInterval = self.configuration.timeoutInterval
         return request
     }
 }

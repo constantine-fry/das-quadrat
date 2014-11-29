@@ -8,11 +8,23 @@
 
 import Foundation
 
+/** A handler used for authorization. */
 public typealias AuthorizationHandler = (Bool, NSError?) -> Void
 
-public let UserSelf = "self"
+/** A nandler used by all endpoints. */
+public typealias ResponseClosure = (response: Response) -> Void
 
+/** A nandler for downloading images. */
+public typealias DownloadImageClosure = (imageData: NSData?, error: NSError?) -> Void
+
+/** Typealias for parameters dictionary. */
 public typealias Parameters = [String:String]
+
+/**
+    Posted when session have access token, but server returns response with 401 HTTP code.
+    Guaranteed to be posted an main thread.
+*/
+public let QuadratSessionDidBecomeUnauthorizedNotification = "QuadratSessionDidBecomeUnauthorizedNotification"
 
 private var _sharedSession : Session?
 
@@ -20,6 +32,12 @@ public class Session {
     let configuration       : Configuration
     let URLSession          : NSURLSession
     var authorizer          : Authorizer?
+    
+    /**
+        One can create custom logger to process all errors and responses in one place.
+        Main purpose is to debug or to track all the errors accured in framework via some analytic tool.
+    */
+    public var logger       : Logger?
     
     public lazy var users : Users = {
         return Users(configuration: self.configuration, session: self)
@@ -79,8 +97,11 @@ public class Session {
     
     public init(configuration: Configuration, completionQueue: NSOperationQueue) {
         self.configuration = configuration
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        self.URLSession = NSURLSession(configuration: configuration, delegate: nil, delegateQueue: completionQueue)
+        let URLConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        self.URLSession = NSURLSession(configuration: URLConfiguration, delegate: nil, delegateQueue: completionQueue)
+        if configuration.debugEnabled {
+            self.logger = ConsoleLogger()
+        }
     }
     
     public convenience init(configuration: Configuration) {
@@ -102,10 +123,51 @@ public class Session {
         return _sharedSession!
     }
     
+    /** Whether session is authorized or not. */
     public func isAuthorized() -> Bool {
         let keychain = Keychain(configuration: self.configuration)
-        return keychain.accessToken() != nil
+        let (accessToken, _) = keychain.accessToken()
+        return accessToken != nil
     }
     
+    /** 
+        Removes access token from keychain.
+        This method doesn't post `QuadratSessionDidBecomeUnauthorizedNotification`.
+    */
+    public func deauthorize() {
+        let keychain = Keychain(configuration: self.configuration)
+        keychain.deleteAccessToken()
+    }
+    
+    public func downloadImageAtURL(URL: NSURL, completionHandler: DownloadImageClosure) {
+        let request = NSURLRequest(URL: URL)
+        let task = self.URLSession.downloadTaskWithRequest(request) {
+            (url, response, error) -> Void in
+            let data = NSData(contentsOfURL: url)
+            completionHandler(imageData: data, error: error)
+        }
+    }
+    
+    func processResponse(response: Response) {
+        if response.HTTPSTatusCode == 401 && self.isAuthorized() {
+            self.deathorizeAndNotify()
+        }
+        self.logger?.session(self, didReceiveResponse: response)
+    }
+    
+    func processError(error: NSError) {
+        self.logger?.session(self, didGetError: error)
+    }
+
+    private func deathorizeAndNotify() {
+        self.deauthorize()
+        dispatch_async(dispatch_get_main_queue()) {
+            let name = QuadratSessionDidBecomeUnauthorizedNotification
+            NSNotificationCenter.defaultCenter().postNotificationName(name, object: self)
+        }
+    }
     
 }
+
+
+

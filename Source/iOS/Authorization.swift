@@ -32,6 +32,9 @@ extension Session {
         }
         
         let block = { (accessToken, error) -> Void in
+            if error != nil {
+                self.processError(error!)
+            }
             self.authorizer = nil
             completionHandler(accessToken != nil, error)
         } as (String?, NSError?) -> Void

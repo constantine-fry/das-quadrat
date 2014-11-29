@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		470955C51A291DD600BDCDC0 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470955C41A291DD600BDCDC0 /* Logger.swift */; };
+		470955C61A291EB300BDCDC0 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470955C41A291DD600BDCDC0 /* Logger.swift */; };
 		473597901A0F8DF500CD6EA3 /* Authorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4735978F1A0F8DF500CD6EA3 /* Authorizer.swift */; };
 		473597911A0F8E3000CD6EA3 /* Authorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4735978F1A0F8DF500CD6EA3 /* Authorizer.swift */; };
 		476B708F1A0EBAE700AFAC33 /* Quadrat.h in Headers */ = {isa = PBXBuildFile; fileRef = 476B708E1A0EBAE700AFAC33 /* Quadrat.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -70,6 +72,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		470955C41A291DD600BDCDC0 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		4735978F1A0F8DF500CD6EA3 /* Authorizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authorizer.swift; sourceTree = "<group>"; };
 		476B70891A0EBAE700AFAC33 /* Quadrat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Quadrat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		476B708D1A0EBAE700AFAC33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -201,6 +204,7 @@
 				4773F8781A13DBF70001603F /* Parameters.swift */,
 				476B70BC1A0EBB5C00AFAC33 /* Keychain.swift */,
 				476B70BD1A0EBB5C00AFAC33 /* Session.swift */,
+				470955C41A291DD600BDCDC0 /* Logger.swift */,
 				476B70BE1A0EBB5C00AFAC33 /* Task.swift */,
 				47888BF21A1A8DD500A76E47 /* Request.swift */,
 				4735978F1A0F8DF500CD6EA3 /* Authorizer.swift */,
@@ -378,6 +382,7 @@
 				476B70C31A0EBB5C00AFAC33 /* Configuration.swift in Sources */,
 				476B70D21A0EBB5C00AFAC33 /* Keychain.swift in Sources */,
 				476B70C71A0EBB5C00AFAC33 /* Lists.swift in Sources */,
+				470955C51A291DD600BDCDC0 /* Logger.swift in Sources */,
 				476B70C41A0EBB5C00AFAC33 /* Checkins.swift in Sources */,
 				476B70CF1A0EBB5C00AFAC33 /* Users.swift in Sources */,
 				476B70D31A0EBB5C00AFAC33 /* Session.swift in Sources */,
@@ -406,6 +411,7 @@
 				4773F8751A13DB280001603F /* TouchAuthorizer.swift in Sources */,
 				473597911A0F8E3000CD6EA3 /* Authorizer.swift in Sources */,
 				476B71051A0EBBC500AFAC33 /* Venues.swift in Sources */,
+				470955C61A291EB300BDCDC0 /* Logger.swift in Sources */,
 				476B70F31A0EBBBB00AFAC33 /* AuthorizationViewController.swift in Sources */,
 				47888BEF1A18A92200A76E47 /* Response.swift in Sources */,
 				476B70F51A0EBBC200AFAC33 /* Keychain.swift in Sources */,

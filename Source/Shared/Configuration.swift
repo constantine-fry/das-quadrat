@@ -76,11 +76,23 @@ public struct Configuration {
     /** The user tag. */
     public var userTag         : String?
     
+    /**
+        Timeout interval for network request, in seconds.
+        Default value is 60 seconds.
+    */
+    public var timeoutInterval  : NSTimeInterval = 60.0
+    
+    /** 
+        Makes session print all errors and responses.
+        For advance logging see `Logger` protocol and `logger` property on `Session`.
+    */
+    public var debugEnabled     : Bool = false
+    
     /** 
         Creates Configuration with specified client.
-        `Mode`      is swarm.
-        `Locale`    is system language. (NSLocale.preferredLanguages().first)
-        `Version`   is 20141102.
+        `Mode`      set `swarm`.
+        `Locale`    set to system language. (NSLocale.preferredLanguages().first)
+        `Version`   set to 20141102.
     */
     public init(client: Client) {
         self.init(client: client, version: nil, accessToken: nil)
