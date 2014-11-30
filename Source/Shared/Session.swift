@@ -142,17 +142,22 @@ public class Session {
     public func downloadImageAtURL(URL: NSURL, completionHandler: DownloadImageClosure) {
         let request = NSURLRequest(URL: URL)
         let task = self.URLSession.downloadTaskWithRequest(request) {
-            (url, response, error) -> Void in
-            let data = NSData(contentsOfURL: url)
-            completionHandler(imageData: data, error: error)
+            (fileURL, response, error) -> Void in
+            if fileURL != nil {
+                let data = NSData(contentsOfURL: fileURL)
+                completionHandler(imageData: data, error: error)
+            } else {
+                completionHandler(imageData: nil, error: error)
+            }
         }
+        task.resume()
     }
     
     func processResponse(response: Response) {
         if response.HTTPSTatusCode == 401 && self.isAuthorized() {
             self.deathorizeAndNotify()
         }
-        self.logger?.session(self, didReceiveResponse: response)
+       self.logger?.session(self, didReceiveResponse: response)
     }
     
     func processError(error: NSError) {
