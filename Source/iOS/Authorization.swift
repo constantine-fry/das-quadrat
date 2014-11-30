@@ -19,7 +19,7 @@ extension Session {
     
     public func handleURL(URL: NSURL) -> Bool {
         if let nativeAuthorizer = self.authorizer as? NativeTouchAuthorizer {
-            nativeAuthorizer.handleURL(URL) as Bool!
+           return nativeAuthorizer.handleURL(URL) as Bool!
         }
         let nativeAuthorizer = NativeTouchAuthorizer(configuration: self.configuration)
         return nativeAuthorizer.handleURL(URL) as Bool!
