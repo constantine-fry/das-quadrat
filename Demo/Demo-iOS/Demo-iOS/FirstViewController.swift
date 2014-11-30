@@ -178,13 +178,10 @@ class FirstViewController: UITableViewController, CLLocationManagerDelegate, Sea
                 if let user = tip["user"] as JSONParameters? {
                     self.downloadPhoto(user["photo"] as JSONParameters? ) {
                         (imageData) -> Void in
-                        if  let cell = tableView.cellForRowAtIndexPath(indexPath) as VenueTableViewCell? {
-                            if imageData != nil {
-                                let image = UIImage(data: imageData!)
-                                cell.userPhotoImageView.image = image
-                            } else {
-                                cell.userPhotoImageView.image = nil
-                            }
+                        let cell = tableView.cellForRowAtIndexPath(indexPath) as VenueTableViewCell?
+                        if cell != nil && imageData != nil {
+                            let image = UIImage(data: imageData!)
+                            cell!.userPhotoImageView.image = image
                         }
                     }
                 }
