@@ -59,19 +59,19 @@ public struct Configuration {
         The `v` parameter of API. Global parameter for session.
         Date in format YYYYMMDD.
     */
-    public let version         : String = "20140503"
+    public var version         : String = "20140503"
     
     /** 
         The `m` parameter of API. Global parameter for session.
     */
-    public let mode            : String = "swarm"
+    public var mode            : String = "swarm"
     
     /** 
         The `locale` parameter of API. Global parameter for session.
         Two-letters language code. For example: "en" or "de"
         Default value is system language.
     */
-    public let locale          : String
+    public var locale          : String
     
     /** The user tag. */
     public var userTag         : String?
