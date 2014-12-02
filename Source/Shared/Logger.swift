@@ -31,6 +31,16 @@ public class ConsoleLogger: Logger {
     }
     
     public func session(session: Session, didReceiveResponse response: Response) {
+        println("")
         println("Session did receive response:  \(response.HTTPSTatusCode), \(response.URL)")
+        if let warning = response.response?["warning"] as [String: AnyObject]? {
+            if let text = warning["text"] as String? {
+                println("Warning: \(text)")
+            }
+        }
+        if let error = response.error {
+            println("Error: \(error)")
+        }
+        println("")
     }
 }

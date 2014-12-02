@@ -38,7 +38,7 @@ public class Task {
         if (self.task == nil) {
             self.constructURLSessionTask()
         }
-        self.task!.resume()
+        self.task?.resume()
     }
     
     /** 
@@ -47,7 +47,8 @@ public class Task {
         Hint: use `isCancelled()` on `Response` object.
     */
     public func cancel() {
-        self.task!.cancel()
+        self.task?.cancel()
+        self.task = nil
     }
 }
 

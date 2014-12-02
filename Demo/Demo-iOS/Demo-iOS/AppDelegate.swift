@@ -20,12 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let client = Client(clientID:       "5P1OVCFK0CCVCQ5GBBCWRFGUVNX5R4WGKHL2DGJGZ32FDFKT",
                             clientSecret:   "UPZJO0A0XL44IHCD1KQBMAYGCZ45Z03BORJZZJXELPWHPSAR",
                             redirectURL:    "testapp123://foursquare")
-        let configuration = Configuration(client:client)
+        var configuration = Configuration(client:client)
+        configuration.mode = "foursquare"
         Session.setupSharedSessionWithConfiguration(configuration)
-        let task = Session.sharedSession().users.get(userId: "self") { (response) -> Void in
-            //
-        }
-        task .start()
         return true
     }
     

@@ -17,68 +17,76 @@ import Security
 public let QuadratKeychainOSSatusErrorDomain = "QuadratKeychainOSSatusErrorDomain"
 
 class Keychain {
-    
-    #if os(iOS)
-        let serviceAttribute = "Foursquare2API-FSKeychain"
-    #else
-        let serviceAttribute = "Foursquare Access Token"
-    #endif
-    
-    let account: String
     let keychainQuery: [String:AnyObject]
     
     init(configuration: Configuration) {
+        #if os(iOS)
+            let serviceAttribute = "Foursquare2API-FSKeychain"
+        #else
+            let serviceAttribute = "Foursquare Access Token"
+        #endif
+        
+        var accountAttribute: String
         if let userTag = configuration.userTag {
-            self.account = configuration.client.id + "_" + configuration.userTag!
+            accountAttribute = configuration.client.id + "_" + configuration.userTag!
         } else {
-            self.account = configuration.client.id
+            accountAttribute = configuration.client.id
         }
-        self.keychainQuery = [
+        keychainQuery = [
             kSecClass           : kSecClassGenericPassword,
             kSecAttrAccessible  : kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
-            kSecAttrService     : self.serviceAttribute,
-            kSecAttrAccount     : self.account
+            kSecAttrService     : serviceAttribute,
+            kSecAttrAccount     : accountAttribute
         ]
     }
     
     func accessToken() -> (String?, NSError?) {
-        var query = self.keychainQuery
+        var query = keychainQuery
         query[kSecReturnData] = kCFBooleanTrue
         query[kSecMatchLimit] = kSecMatchLimitOne
-        var dataTypeRef: Unmanaged<AnyObject>?
-        let status = SecItemCopyMatching(query, &dataTypeRef)
-        var accessToken: String?
-        if status == noErr {
-            if let opaque = dataTypeRef?.toOpaque() {
-                let accessTokenData = Unmanaged<NSData>.fromOpaque(opaque).takeUnretainedValue()
-                accessToken = NSString(data: accessTokenData, encoding: NSUTF8StringEncoding) as String?
+        
+        /** 
+            Fixes the issue with Keychain access in release mode.
+            https://devforums.apple.com/message/1070614#1070614
+        */
+        var dataTypeRef: AnyObject? = nil
+        let status = withUnsafeMutablePointer(&dataTypeRef) {cfPointer -> OSStatus in
+            SecItemCopyMatching(query, UnsafeMutablePointer(cfPointer))
+        }
+        var accessToken: String? = nil
+        if status == errSecSuccess {
+            if let retrievedData = dataTypeRef as NSData? {
+                if retrievedData.length != 0 {
+                    accessToken = NSString(data: retrievedData, encoding: NSUTF8StringEncoding)
+                }
             }
         }
-        dataTypeRef?.release()
-        return (accessToken, self.errorWithStatus(status))
+        return (accessToken, errorWithStatus(status))
     }
     
     func deleteAccessToken() -> (Bool, NSError?) {
-        let query = self.keychainQuery
+        let query = keychainQuery
         let status = SecItemDelete(query)
-        return (status != noErr, self.errorWithStatus(status))
+        return (status != errSecSuccess, errorWithStatus(status))
     }
     
     func saveAccessToken(accessToken: String) -> (Bool, NSError?) {
-        var query = self.keychainQuery
+        var query = keychainQuery
+        
         let (existingAccessToken, _ ) = self.accessToken()
-        if existingAccessToken != nil  {
-            self.deleteAccessToken()
+        if existingAccessToken  != nil {
+            deleteAccessToken()
         }
+        
         let accessTokenData = accessToken.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
         query[kSecValueData] =  accessTokenData
         let status = SecItemAdd(query, nil)
-        return (status == noErr, self.errorWithStatus(status))
+        return (status == errSecSuccess, errorWithStatus(status))
     }
     
     private func errorWithStatus(status: OSStatus) -> NSError? {
         var error: NSError?
-        if status != noErr {
+        if status != errSecSuccess && status != errSecItemNotFound {
             error = NSError(domain: QuadratKeychainOSSatusErrorDomain, code: Int(status), userInfo: nil)
         }
         return error

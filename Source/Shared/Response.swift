@@ -18,7 +18,7 @@ public let QuadratResponseErrorDetailKey = "errorDetail"
     Read `Responses & Errors`:
     https://developer.foursquare.com/overview/responses
 */
-public class Response {
+public class Response: Printable {
     
     /** 
         HTTP response status code.
@@ -66,6 +66,10 @@ public class Response {
     
     init() {
         
+    }
+    
+    public var description: String {
+        return "Status code: \(HTTPSTatusCode)\nResponse: \(response)\nError: \(error)"
     }
     
 }
