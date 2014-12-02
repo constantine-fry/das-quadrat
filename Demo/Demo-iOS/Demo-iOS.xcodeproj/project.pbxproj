@@ -11,7 +11,7 @@
 		4731827E1A2A609F00304BC9 /* VenueTipsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4731827D1A2A609F00304BC9 /* VenueTipsViewController.swift */; };
 		473182801A2A9AD300304BC9 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4731827F1A2A9AD300304BC9 /* SearchTableViewController.swift */; };
 		475D105F1A0E35AB000F699A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475D105E1A0E35AB000F699A /* AppDelegate.swift */; };
-		475D10611A0E35AB000F699A /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475D10601A0E35AB000F699A /* FirstViewController.swift */; };
+		475D10611A0E35AB000F699A /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475D10601A0E35AB000F699A /* ExploreViewController.swift */; };
 		475D10631A0E35AB000F699A /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475D10621A0E35AB000F699A /* FriendsViewController.swift */; };
 		475D10661A0E35AB000F699A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 475D10641A0E35AB000F699A /* Main.storyboard */; };
 		475D10681A0E35AB000F699A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 475D10671A0E35AB000F699A /* Images.xcassets */; };
@@ -65,7 +65,7 @@
 		475D10591A0E35AB000F699A /* Demo-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Demo-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		475D105D1A0E35AB000F699A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		475D105E1A0E35AB000F699A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		475D10601A0E35AB000F699A /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		475D10601A0E35AB000F699A /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		475D10621A0E35AB000F699A /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
 		475D10651A0E35AB000F699A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		475D10671A0E35AB000F699A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 			children = (
 				475D105E1A0E35AB000F699A /* AppDelegate.swift */,
 				4731827A1A2A3C3000304BC9 /* Cells.swift */,
-				475D10601A0E35AB000F699A /* FirstViewController.swift */,
+				475D10601A0E35AB000F699A /* ExploreViewController.swift */,
 				4731827F1A2A9AD300304BC9 /* SearchTableViewController.swift */,
 				4731827D1A2A609F00304BC9 /* VenueTipsViewController.swift */,
 				475D10621A0E35AB000F699A /* FriendsViewController.swift */,
@@ -237,7 +237,7 @@
 				4731827E1A2A609F00304BC9 /* VenueTipsViewController.swift in Sources */,
 				4731827B1A2A3C3000304BC9 /* Cells.swift in Sources */,
 				475D105F1A0E35AB000F699A /* AppDelegate.swift in Sources */,
-				475D10611A0E35AB000F699A /* FirstViewController.swift in Sources */,
+				475D10611A0E35AB000F699A /* ExploreViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,6 +10,7 @@ import UIKit
 
 import QuadratTouch
 
+/** Shows list of friends. */
 class FriendsViewController: UITableViewController {
 
     var session: Session?

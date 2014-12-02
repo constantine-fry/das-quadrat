@@ -13,7 +13,8 @@ import QuadratTouch
 
 typealias JSONParameters = [String: AnyObject]
 
-class FirstViewController: UITableViewController, CLLocationManagerDelegate, SearchTableViewControllerDelegate {
+/** Shows result from `explore` endpoint. And has search controller to search in nearby venues. */
+class ExploreViewController: UITableViewController, CLLocationManagerDelegate, SearchTableViewControllerDelegate {
     var searchController: UISearchController!
     var resultsTableViewController: SearchTableViewController!
     

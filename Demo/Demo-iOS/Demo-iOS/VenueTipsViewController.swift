@@ -11,6 +11,7 @@ import UIKit
 
 import QuadratTouch
 
+/** Shows tips related to a venue. */
 class VenueTipsViewController: UITableViewController {
     var venueId: String?
     var session: Session!

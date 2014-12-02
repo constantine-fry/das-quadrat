@@ -22,7 +22,7 @@ class Keychain {
     init(configuration: Configuration) {
         #if os(iOS)
             let serviceAttribute = "Foursquare2API-FSKeychain"
-            #else
+        #else
             let serviceAttribute = "Foursquare Access Token"
         #endif
         
@@ -44,11 +44,12 @@ class Keychain {
         var query = keychainQuery
         query[kSecReturnData] = kCFBooleanTrue
         query[kSecMatchLimit] = kSecMatchLimitOne
-        var dataTypeRef: AnyObject? = nil
+        
         /** 
             Fixes the issue with Keychain access in release mode.
             https://devforums.apple.com/message/1070614#1070614
         */
+        var dataTypeRef: AnyObject? = nil
         let status = withUnsafeMutablePointer(&dataTypeRef) {cfPointer -> OSStatus in
             SecItemCopyMatching(query, UnsafeMutablePointer(cfPointer))
         }

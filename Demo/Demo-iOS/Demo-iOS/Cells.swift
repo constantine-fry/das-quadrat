@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+
+/** A cell to display venue name, rating and user tip. */
 class VenueTableViewCell: UITableViewCell {
     
     @IBOutlet weak var userPhotoImageView: UIImageView!
@@ -31,7 +33,7 @@ class VenueTableViewCell: UITableViewCell {
     }
 }
 
-
+/** A cell to display user. */
 class FriendTableViewCell: UITableViewCell {
     
     @IBOutlet weak var nameLabel: UILabel!
