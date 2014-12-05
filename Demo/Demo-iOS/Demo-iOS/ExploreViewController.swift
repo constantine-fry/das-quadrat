@@ -177,14 +177,24 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
         if tips != nil  {
             if let tip = tips!.first {
                 if let user = tip["user"] as JSONParameters? {
-                    self.downloadPhoto(user["photo"] as JSONParameters? ) {
-                        (imageData) -> Void in
-                        let cell = tableView.cellForRowAtIndexPath(indexPath) as VenueTableViewCell?
-                        if cell != nil && imageData != nil {
-                            let image = UIImage(data: imageData!)
-                            cell!.userPhotoImageView.image = image
+                    if let photo = user["photo"] as JSONParameters?  {
+                        let URL = photoURLFromJSONObject(photo)
+                        if let imageData = session.cachedImageDataForURL(URL)  {
+                            cell.userPhotoImageView.image = UIImage(data: imageData)
+                        } else {
+                            session.downloadImageAtURL(URL) {
+                                (imageData, error) -> Void in
+                                let cell = tableView.cellForRowAtIndexPath(indexPath) as VenueTableViewCell?
+                                if cell != nil && imageData != nil {
+                                    let image = UIImage(data: imageData!)
+                                    cell!.userPhotoImageView.image = image
+                                }
+                            }
+                            
                         }
-                    }
+                        
+                    } // let photo
+                    
                 }
             }
         }
@@ -208,24 +218,14 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func downloadPhoto(photo: JSONParameters?, completionHandler: (imageData: NSData?) -> Void) {
-        if photo != nil {
-            let prefix = photo!["prefix"] as String
-            let suffix = photo!["suffix"] as String
-            let URLString = prefix + "100x100" + suffix
-            let URL = NSURL(string: URLString)
-            session.downloadImageAtURL(URL!) {
-                (imageData, error) -> Void in
-                if !NSThread.isMainThread() {
-                    fatalError("!!!")
-                }
-                completionHandler(imageData: imageData)
-            }
-        } else {
-            completionHandler(imageData: nil)
-        }
-
+    func photoURLFromJSONObject(photo: JSONParameters!) -> NSURL {
+        let prefix = photo!["prefix"] as String
+        let suffix = photo!["suffix"] as String
+        let URLString = prefix + "100x100" + suffix
+        let URL = NSURL(string: URLString)
+        return URL!
     }
+    
 }
 
 extension CLLocation {
