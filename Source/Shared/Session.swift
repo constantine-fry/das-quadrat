@@ -40,59 +40,59 @@ public class Session {
     public var logger       : Logger?
     
     public lazy var users : Users = {
-        return Users(configuration: self.configuration, session: self)
+        return Users(session: self)
         }()
     
     public lazy var venues : Venues = {
-        return Venues(configuration: self.configuration, session: self)
+        return Venues(session: self)
         }()
     
     public lazy var venueGroups : VenueGroups = {
-        return VenueGroups(configuration: self.configuration, session: self)
+        return VenueGroups(session: self)
         }()
     
     public lazy var checkins : Checkins = {
-        return Checkins(configuration: self.configuration, session: self)
+        return Checkins(session: self)
         }()
     
     public lazy var tips : Tips = {
-        return Tips(configuration: self.configuration, session: self)
+        return Tips(session: self)
         }()
     
     public lazy var lists : Lists = {
-        return Lists(configuration: self.configuration, session: self)
+        return Lists(session: self)
         }()
     
     public lazy var updates : Updates = {
-        return Updates(configuration: self.configuration, session: self)
+        return Updates(session: self)
         }()
     
     public lazy var photos : Photos = {
-        return Photos(configuration: self.configuration, session: self)
+        return Photos(session: self)
         }()
     
     public lazy var settings : Settings = {
-        return Settings(configuration: self.configuration, session: self)
+        return Settings(session: self)
         }()
     
     public lazy var specials : Specials = {
-        return Specials(configuration: self.configuration, session: self)
+        return Specials(session: self)
         }()
     
     public lazy var events : Events = {
-        return Events(configuration: self.configuration, session: self)
+        return Events(session: self)
         }()
     
     public lazy var pages : Pages = {
-        return Pages(configuration: self.configuration, session: self)
+        return Pages(session: self)
         }()
     
     public lazy var pageUpdates : PageUpdates = {
-        return PageUpdates(configuration: self.configuration, session: self)
+        return PageUpdates(session: self)
         }()
     
     public lazy var multi : Multi = {
-        return Multi(configuration: self.configuration, session: self)
+        return Multi(session: self)
         }()
     
     public init(configuration: Configuration, completionQueue: NSOperationQueue) {
