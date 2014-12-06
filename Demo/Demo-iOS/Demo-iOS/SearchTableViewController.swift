@@ -44,8 +44,8 @@ class SearchTableViewController: UITableViewController, UISearchResultsUpdating 
         var parameters = [Parameter.query:strippedString]
         parameters += self.location.parameters()
         currentTask = session.venues.search(parameters) {
-            (response) -> Void in
-            if let response = response.response {
+            (result) -> Void in
+            if let response = result.response {
                 self.venues = response["venues"] as [JSONParameters]?
                 self.tableView.reloadData()
             }

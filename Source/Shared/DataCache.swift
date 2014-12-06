@@ -8,7 +8,9 @@
 
 import Foundation
 
+#if os(iOS)
 import UIKit
+#endif
 
 /** Configs for data cache. */
 struct DataCacheConfiguration {

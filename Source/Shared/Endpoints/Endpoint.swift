@@ -18,7 +18,6 @@ public func +=<K, V> (inout left: Dictionary<K, V>, right: Dictionary<K, V>?) ->
 }
 
 public class Endpoint  {
-    private let configuration   : Configuration
     weak    var session         : Session?
     private let baseURL         : NSURL
     private let keychain        : Keychain
@@ -27,11 +26,10 @@ public class Endpoint  {
         return ""
     }
     
-    init(configuration: Configuration, session: Session) {
-        self.configuration = configuration
+    init(session: Session) {
         self.session = session
-        self.baseURL = NSURL(string:configuration.server.apiBaseURL) as NSURL!
-        self.keychain = Keychain(configuration: configuration)
+        self.baseURL = NSURL(string:session.configuration.server.apiBaseURL) as NSURL!
+        self.keychain = Keychain(configuration: session.configuration)
     }
     
     func getWithPath(path: String, parameters: Parameters?, completionHandler:  ResponseClosure?) -> Task {
@@ -43,7 +41,6 @@ public class Endpoint  {
     }
     
     func uploadTaskFromURL(fromURL: NSURL, path: String, parameters: Parameters?, completionHandler:  ResponseClosure?) -> Task {
-        
         let request = self.requestWithPath(path, parameters: parameters, HTTPMethod: "POST")
         let task = UploadTask(session: self.session!, request: request, completionHandler)
         task.fileURL = fromURL
@@ -56,7 +53,7 @@ public class Endpoint  {
     }
     
     private func requestWithPath(path: String, parameters: Parameters?, HTTPMethod: String) -> Request {
-        var sessionParameters = self.configuration.parameters()
+        var sessionParameters = session!.configuration.parameters()
         if sessionParameters[Parameter.oauth_token] == nil {
             let (accessToken, error) = self.keychain.accessToken()
             if accessToken != nil  {
@@ -66,7 +63,7 @@ public class Endpoint  {
             }
         }
         let request = Request(baseURL: self.baseURL, path: (self.endpoint + "/" + path), parameters: parameters, sessionParameters: sessionParameters, HTTPMethod: HTTPMethod)
-        request.timeoutInterval = self.configuration.timeoutInterval
+        request.timeoutInterval = session!.configuration.timeoutInterval
         return request
     }
 }

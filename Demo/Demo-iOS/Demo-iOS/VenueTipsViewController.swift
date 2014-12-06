@@ -22,9 +22,9 @@ class VenueTipsViewController: UITableViewController {
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 44
         let task = self.session.venues.get(self.venueId!) {
-            (response) -> Void in
-            if response.response != nil {
-                if let venue = response.response!["venue"] as JSONParameters? {
+            (result) -> Void in
+            if result.response != nil {
+                if let venue = result.response!["venue"] as JSONParameters? {
                     if let tips = venue["tips"] as JSONParameters? {
                         var tipItems = [JSONParameters]()
                         for group in tips["groups"] as [JSONParameters]! {

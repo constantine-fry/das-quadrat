@@ -15,7 +15,7 @@ import Foundation
 public protocol Logger {
     
     /** All pesponses which session receive will be passed into this method. Can be called on any thread. */
-    func session(session: Session, didReceiveResponse response: Response)
+    func session(session: Session, didReceiveResult result: Result)
     
     /** All errors will be passed in this method. Can be called on any thread. */
     func session(session: Session, didGetError error: NSError)
@@ -30,15 +30,15 @@ public class ConsoleLogger: Logger {
         println("Session error: \(error)")
     }
     
-    public func session(session: Session, didReceiveResponse response: Response) {
+    public func session(session: Session, didReceiveResult result: Result) {
         println("")
-        println("Session did receive response:  \(response.HTTPSTatusCode), \(response.URL)")
-        if let warning = response.response?["warning"] as [String: AnyObject]? {
+        println("Session did receive response:  \(result.HTTPSTatusCode), \(result.URL)")
+        if let warning = result.response?["warning"] as [String: AnyObject]? {
             if let text = warning["text"] as String? {
                 println("Warning: \(text)")
             }
         }
-        if let error = response.error {
+        if let error = result.error {
             println("Error: \(error)")
         }
         println("")

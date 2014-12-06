@@ -57,9 +57,9 @@ class DataTask: Task {
         let URLsession = self.session?.URLSession
         self.task = URLsession?.dataTaskWithRequest(request.URLRequest()) {
             (data, response, error) -> Void in
-            let quatratResponse = Response.responseFromURLSessionResponse(response, data: data, error: error)
-            self.session?.processResponse(quatratResponse)
-            self.completionHandler?(response: quatratResponse)
+            let result = Result.resultFromURLSessionResponse(response, data: data, error: error)
+            self.session?.processResult(result)
+            self.completionHandler?(result: result)
         }
     }
 }
@@ -94,9 +94,9 @@ class UploadTask: Task {
         
         self.task = self.session?.URLSession.uploadTaskWithRequest(mutableRequest, fromData: body) {
             (data, response, error) -> Void in
-            let quatratResponse = Response.responseFromURLSessionResponse(response, data: data, error: error)
-            self.session?.processResponse(quatratResponse)
-            self.completionHandler?(response: quatratResponse)
+            let result = Result.resultFromURLSessionResponse(response, data: data, error: error)
+            self.session?.processResult(result)
+            self.completionHandler?(result: result)
         }
     }
 }
