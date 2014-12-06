@@ -20,14 +20,13 @@ class NativeTouchAuthorizer : Authorizer {
             Parameter.v            : "20130509"
         ]
         
-        let URLString = baseURL + "?" + Parameter.makeQuery(parameters)
-        let authorizationURL = NSURL(string: URLString)
+        let authorizationURL = Parameter.buildURL(NSURL(string: baseURL)!, parameters: parameters)
         let redirectURL = NSURL(string: configuration.client.redirectURL)
-        if authorizationURL == nil || redirectURL == nil {
-            fatalError("Can't build auhorization URL. Check your clientId and redirectURL")
+        if redirectURL == nil {
+            fatalError("Check your redirectURL")
         }
         let keychain = Keychain(configuration: configuration)
-        self.init(authorizationURL: authorizationURL!, redirectURL: redirectURL!, keychain:keychain)
+        self.init(authorizationURL: authorizationURL, redirectURL: redirectURL!, keychain:keychain)
         self.configuration = configuration
     }
     
@@ -57,7 +56,7 @@ class NativeTouchAuthorizer : Authorizer {
     }
     
     func requestAccessTokenWithCode(code: String) {
-        let path = self.configuration.server.nativeOauthAccessTokenBaseURL
+        let accessTokenURL = self.configuration.server.nativeOauthAccessTokenBaseURL
         
         let client = self.configuration.client
         let parameters = [
@@ -68,8 +67,7 @@ class NativeTouchAuthorizer : Authorizer {
             Parameter.grant_type    : "authorization_code"
         ]
         
-        let URLString = path + "?" + Parameter.makeQuery(parameters)
-        let URL = NSURL(string: URLString) as NSURL!
+        let URL = Parameter.buildURL(NSURL(string: accessTokenURL)!, parameters: parameters)
         let request = NSURLRequest(URL: URL)
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {
             (response, data, error) -> Void in
