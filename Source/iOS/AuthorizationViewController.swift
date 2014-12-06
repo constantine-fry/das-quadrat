@@ -56,6 +56,7 @@ public class AuthorizationViewController : UIViewController, UIWebViewDelegate {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        webView.scrollView.showsVerticalScrollIndicator = false
         
         let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: Selector("cancelButtonTapped"))
         self.navigationItem.leftBarButtonItem = cancelButton
@@ -91,6 +92,10 @@ public class AuthorizationViewController : UIViewController, UIWebViewDelegate {
     }
     
     public func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
+        if error.domain == "WebKitErrorDomain" && error.code == 102 {
+            // URL loading was interrupted. It happens when one taps on "download Foursquare to sign up!".
+            return
+        }
         self.status = .Failed(error)
     }
     
@@ -123,10 +128,9 @@ public class AuthorizationViewController : UIViewController, UIWebViewDelegate {
             self.navigationItem.rightBarButtonItem = nil
             self.statusLabel.hidden = true
             if self.webView.alpha == 0.0 {
-                UIView.animateWithDuration(0.2)
-                    {   () -> Void in
-                        self.webView.alpha = 1.0
-                    }
+                UIView.animateWithDuration(0.2) {
+                    self.webView.alpha = 1.0
+                }
             }
             
         case .Failed(let error):
