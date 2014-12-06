@@ -56,7 +56,7 @@ public struct Configuration {
     var accessToken     : String?
     
     /**
-        Whether session should control network activity indicator or not. Defalts to false.
+        Whether session should control network activity indicator or not. Defaults to false.
         If you set it to `true` you can use `NetworkActivityIndicatorController` 
         to control activity indicator in other parts of you application.
     */
