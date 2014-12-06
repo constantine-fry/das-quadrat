@@ -59,7 +59,10 @@ class DataTask: Task {
             (data, response, error) -> Void in
             let result = Result.resultFromURLSessionResponse(response, data: data, error: error)
             self.session?.processResult(result)
-            self.completionHandler?(result: result)
+            self.session?.completionQueue.addOperationWithBlock {
+                self.completionHandler?(result: result)
+                return Void()
+            }
         }
     }
 }
@@ -96,7 +99,10 @@ class UploadTask: Task {
             (data, response, error) -> Void in
             let result = Result.resultFromURLSessionResponse(response, data: data, error: error)
             self.session?.processResult(result)
-            self.completionHandler?(result: result)
+            self.session?.completionQueue.addOperationWithBlock {
+                self.completionHandler?(result: result)
+                return Void()
+            }
         }
     }
 }

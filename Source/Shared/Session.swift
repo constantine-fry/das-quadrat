@@ -33,6 +33,10 @@ public class Session {
     let URLSession          : NSURLSession
     var authorizer          : Authorizer?
     let dataCache           : DataCache
+    
+    /** The queue on which tasks have to call completion handlers. */
+    let completionQueue     : NSOperationQueue
+    
     /**
         One can create custom logger to process all errors and responses in one place.
         Main purpose is to debug or to track all the errors accured in framework via some analytic tool.
@@ -97,8 +101,11 @@ public class Session {
     
     public init(configuration: Configuration, completionQueue: NSOperationQueue) {
         self.configuration = configuration
+        self.completionQueue = completionQueue
         let URLConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        self.URLSession = NSURLSession(configuration: URLConfiguration, delegate: nil, delegateQueue: completionQueue)
+        let delegateQueue = NSOperationQueue()
+        delegateQueue.maxConcurrentOperationCount = 1
+        self.URLSession = NSURLSession(configuration: URLConfiguration, delegate: nil, delegateQueue: delegateQueue)
         dataCache = DataCache(name: configuration.userTag)
         if configuration.debugEnabled {
             self.logger = ConsoleLogger()
@@ -151,12 +158,13 @@ public class Session {
         let request = NSURLRequest(URL: URL)
         let task = self.URLSession.downloadTaskWithRequest(request) {
             (fileURL, response, error) -> Void in
+            var data: NSData?
             if fileURL != nil {
                 let data = NSData(contentsOfURL: fileURL)
                 self.dataCache.addFileAtURL(fileURL, withKey: "\(URL.hash)")
+            }
+            self.completionQueue.addOperationWithBlock {
                 completionHandler(imageData: data, error: error)
-            } else {
-                completionHandler(imageData: nil, error: error)
             }
         }
         task.resume()
