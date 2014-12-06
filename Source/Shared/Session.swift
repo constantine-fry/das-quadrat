@@ -29,14 +29,25 @@ public let QuadratSessionDidBecomeUnauthorizedNotification = "QuadratSessionDidB
 private var _sharedSession : Session?
 
 public class Session {
+    
+    /** The coniguration. */
     let configuration       : Configuration
+    
+    /** The session which perform all network requests. */
     let URLSession          : NSURLSession
+    
+    /** The current authorizer. */
     var authorizer          : Authorizer?
+    
+    /** Used as image cache for downloaded files. */
     let dataCache           : DataCache
     
     /** The queue on which tasks have to call completion handlers. */
     let completionQueue     : NSOperationQueue
     
+    /** Manages network activity indicator. */
+    var networkActivityController : NetworkActivityIndicatorController?
+
     /**
         One can create custom logger to process all errors and responses in one place.
         Main purpose is to debug or to track all the errors accured in framework via some analytic tool.
@@ -100,6 +111,9 @@ public class Session {
         }()
     
     public init(configuration: Configuration, completionQueue: NSOperationQueue) {
+        if configuration.shouldControllNetworkActivityIndicator {
+            networkActivityController = NetworkActivityIndicatorController()
+        }
         self.configuration = configuration
         self.completionQueue = completionQueue
         let URLConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
@@ -156,11 +170,13 @@ public class Session {
     /** Downloads image at URL and puts in cache. */
     public func downloadImageAtURL(URL: NSURL, completionHandler: DownloadImageClosure) {
         let request = NSURLRequest(URL: URL)
+        let identifier = networkActivityController?.beginNetworkActivity()
         let task = self.URLSession.downloadTaskWithRequest(request) {
             (fileURL, response, error) -> Void in
+            self.networkActivityController?.endNetworkActivity(identifier)
             var data: NSData?
             if fileURL != nil {
-                let data = NSData(contentsOfURL: fileURL)
+                data = NSData(contentsOfURL: fileURL)
                 self.dataCache.addFileAtURL(fileURL, withKey: "\(URL.hash)")
             }
             self.completionQueue.addOperationWithBlock {
@@ -188,7 +204,7 @@ public class Session {
             NSNotificationCenter.defaultCenter().postNotificationName(name, object: self)
         }
     }
-    
+
 }
 
 

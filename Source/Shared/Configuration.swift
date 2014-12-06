@@ -55,6 +55,13 @@ public struct Configuration {
     /** The access token. May be set for some tests. */
     var accessToken     : String?
     
+    /**
+        Whether session should control network activity indicator or not. Defalts to false.
+        If you set it to `true` you can use `NetworkActivityIndicatorController` 
+        to control activity indicator in other parts of you application.
+    */
+    public var shouldControllNetworkActivityIndicator = false
+    
     /** 
         The `v` parameter of API. Global parameter for session.
         Date in format YYYYMMDD.

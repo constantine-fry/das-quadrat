@@ -22,6 +22,9 @@ public class Task {
     
     var                 request            : Request
     
+    /** The identifier of network activity. */
+    var                 networkActivityId  : Int?
+    
     init (session: Session, request: Request, completionHandler: ResponseClosure?) {
         self.session = session
         self.request = request
@@ -38,7 +41,10 @@ public class Task {
         if (self.task == nil) {
             self.constructURLSessionTask()
         }
-        self.task?.resume()
+        if self.task != nil {
+            self.task?.resume()
+            networkActivityId = session!.networkActivityController?.beginNetworkActivity()
+        }
     }
     
     /** 
@@ -57,6 +63,8 @@ class DataTask: Task {
         let URLsession = self.session?.URLSession
         self.task = URLsession?.dataTaskWithRequest(request.URLRequest()) {
             (data, response, error) -> Void in
+            self.session?.networkActivityController?.endNetworkActivity(self.networkActivityId)
+            
             let result = Result.resultFromURLSessionResponse(response, data: data, error: error)
             self.session?.processResult(result)
             self.session?.completionQueue.addOperationWithBlock {
@@ -97,6 +105,8 @@ class UploadTask: Task {
         
         self.task = self.session?.URLSession.uploadTaskWithRequest(mutableRequest, fromData: body) {
             (data, response, error) -> Void in
+            self.session?.networkActivityController?.endNetworkActivity(self.networkActivityId)
+            
             let result = Result.resultFromURLSessionResponse(response, data: data, error: error)
             self.session?.processResult(result)
             self.session?.completionQueue.addOperationWithBlock {

@@ -182,6 +182,7 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
                         if let imageData = session.cachedImageDataForURL(URL)  {
                             cell.userPhotoImageView.image = UIImage(data: imageData)
                         } else {
+                            cell.userPhotoImageView.image = nil
                             session.downloadImageAtURL(URL) {
                                 (imageData, error) -> Void in
                                 let cell = tableView.cellForRowAtIndexPath(indexPath) as VenueTableViewCell?
