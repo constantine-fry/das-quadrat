@@ -12,6 +12,9 @@ import UIKit
 class NativeTouchAuthorizer : Authorizer {
     private var configuration : Configuration!
     
+    /** Network activity controller. */
+    private var networkActivityController: NetworkActivityIndicatorController?
+    
     convenience init(configuration: Configuration) {
         let baseURL = configuration.server.nativeOauthBaseURL
         let parameters = [
@@ -28,6 +31,9 @@ class NativeTouchAuthorizer : Authorizer {
         let keychain = Keychain(configuration: configuration)
         self.init(authorizationURL: authorizationURL, redirectURL: redirectURL!, keychain:keychain)
         self.configuration = configuration
+        if configuration.shouldControllNetworkActivityIndicator {
+            networkActivityController = NetworkActivityIndicatorController()
+        }
     }
     
     func authorize(completionHandler: (String?, NSError?) -> Void) {
@@ -66,11 +72,12 @@ class NativeTouchAuthorizer : Authorizer {
             Parameter.code          : code,
             Parameter.grant_type    : "authorization_code"
         ]
-        
+        let identifier = networkActivityController?.beginNetworkActivity()
         let URL = Parameter.buildURL(NSURL(string: accessTokenURL)!, parameters: parameters)
         let request = NSURLRequest(URL: URL)
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {
             (response, data, error) -> Void in
+            self.networkActivityController?.endNetworkActivity(identifier)
             if data != nil {
                 var parseError: NSError?
                 var jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &parseError)

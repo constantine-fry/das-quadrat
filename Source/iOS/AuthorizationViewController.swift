@@ -17,8 +17,17 @@ enum AuthorizationViewControllerRequestStatus  {
 }
 
 public class AuthorizationViewController : UIViewController, UIWebViewDelegate {
-    let authorizationURL: NSURL
-    let redirectURL : NSURL
+    private let authorizationURL: NSURL
+    private let redirectURL : NSURL
+    
+    /**
+        Whether view controller should controll network activity indicator or not.
+        Should be set before presenting view controller.
+    */
+    var shouldControllNetworkActivityIndicator = false
+    
+    private var networkActivityIndicator : NetworkActivityIndicatorController?
+    private var activityIdentifier : Int?
     
     weak var delegate : AuthorizationDelegate?
     
@@ -47,10 +56,13 @@ public class AuthorizationViewController : UIViewController, UIWebViewDelegate {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Foursquare"
+        webView.scrollView.showsVerticalScrollIndicator = false
         
         let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: Selector("cancelButtonTapped"))
         self.navigationItem.leftBarButtonItem = cancelButton
+        if shouldControllNetworkActivityIndicator {
+            networkActivityIndicator = NetworkActivityIndicatorController()
+        }
         self.loadAuthorizationPage()
     }
     
@@ -80,6 +92,10 @@ public class AuthorizationViewController : UIViewController, UIWebViewDelegate {
     }
     
     public func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
+        if error.domain == "WebKitErrorDomain" && error.code == 102 {
+            // URL loading was interrupted. It happens when one taps "download Foursquare to sign up!".
+            return
+        }
         self.status = .Failed(error)
     }
     
@@ -95,6 +111,9 @@ public class AuthorizationViewController : UIViewController, UIWebViewDelegate {
             
         case .Loading:
             // Show activity indicator in rightBarButtonItem, hide web view and status label.
+            networkActivityIndicator?.endNetworkActivity(activityIdentifier)
+            activityIdentifier = networkActivityIndicator?.beginNetworkActivity()
+            
             let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
             self.webView.alpha = 0.0
             self.statusLabel.hidden = true
@@ -105,25 +124,28 @@ public class AuthorizationViewController : UIViewController, UIWebViewDelegate {
             
         case .Loaded:
             // Show web view, hide rightBarButtonItem and status label.
+            networkActivityIndicator?.endNetworkActivity(activityIdentifier)
             self.navigationItem.rightBarButtonItem = nil
             self.statusLabel.hidden = true
             if self.webView.alpha == 0.0 {
-                UIView.animateWithDuration(0.2)
-                    {   () -> Void in
-                        self.webView.alpha = 1.0
-                    }
+                UIView.animateWithDuration(0.2) {
+                    self.webView.alpha = 1.0
+                }
             }
             
         case .Failed(let error):
             // Show refresh button and status label. Hide web view.
+            networkActivityIndicator?.endNetworkActivity(activityIdentifier)
             let refreshButton = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: Selector("loadAuthorizationPage"))
             self.statusLabel.text = error.localizedDescription
             self.navigationItem.rightBarButtonItem = refreshButton
             self.webView.alpha = 0.0
             self.statusLabel.hidden = false
             
+            
         case .None:
             // Hide everynthing.
+            networkActivityIndicator?.endNetworkActivity(activityIdentifier)
             self.navigationItem.rightBarButtonItem = nil
             self.webView.alpha = 0.0
             self.statusLabel.hidden = true

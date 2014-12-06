@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		470955C51A291DD600BDCDC0 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470955C41A291DD600BDCDC0 /* Logger.swift */; };
 		470955C61A291EB300BDCDC0 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470955C41A291DD600BDCDC0 /* Logger.swift */; };
+		472A59D91A3378840053F4A2 /* NetworkActivityIndicatorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472A59D81A3378840053F4A2 /* NetworkActivityIndicatorController.swift */; };
+		472A59DA1A337A700053F4A2 /* NetworkActivityIndicatorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472A59D81A3378840053F4A2 /* NetworkActivityIndicatorController.swift */; };
 		473597901A0F8DF500CD6EA3 /* Authorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4735978F1A0F8DF500CD6EA3 /* Authorizer.swift */; };
 		473597911A0F8E3000CD6EA3 /* Authorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4735978F1A0F8DF500CD6EA3 /* Authorizer.swift */; };
 		476B708F1A0EBAE700AFAC33 /* Quadrat.h in Headers */ = {isa = PBXBuildFile; fileRef = 476B708E1A0EBAE700AFAC33 /* Quadrat.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -75,6 +77,7 @@
 
 /* Begin PBXFileReference section */
 		470955C41A291DD600BDCDC0 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		472A59D81A3378840053F4A2 /* NetworkActivityIndicatorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkActivityIndicatorController.swift; sourceTree = "<group>"; };
 		4735978F1A0F8DF500CD6EA3 /* Authorizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authorizer.swift; sourceTree = "<group>"; };
 		476B70891A0EBAE700AFAC33 /* Quadrat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Quadrat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		476B708D1A0EBAE700AFAC33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -214,6 +217,7 @@
 				4773F87A1A13DC5A0001603F /* OauthErrors.swift */,
 				47888BED1A18A3E900A76E47 /* Result.swift */,
 				47C2164E1A2CF3A70009BB02 /* DataCache.swift */,
+				472A59D81A3378840053F4A2 /* NetworkActivityIndicatorController.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -391,6 +395,7 @@
 				476B70CF1A0EBB5C00AFAC33 /* Users.swift in Sources */,
 				476B70D31A0EBB5C00AFAC33 /* Session.swift in Sources */,
 				476B70D41A0EBB5C00AFAC33 /* Task.swift in Sources */,
+				472A59D91A3378840053F4A2 /* NetworkActivityIndicatorController.swift in Sources */,
 				476B70C81A0EBB5C00AFAC33 /* Pages.swift in Sources */,
 				47888BF91A1A9B9900A76E47 /* Multi.swift in Sources */,
 				476B70CA1A0EBB5C00AFAC33 /* Photos.swift in Sources */,
@@ -427,6 +432,7 @@
 				47888BFA1A1A9C0400A76E47 /* Multi.swift in Sources */,
 				476B70FF1A0EBBC500AFAC33 /* Settings.swift in Sources */,
 				476B71001A0EBBC500AFAC33 /* Specials.swift in Sources */,
+				472A59DA1A337A700053F4A2 /* NetworkActivityIndicatorController.swift in Sources */,
 				476B71031A0EBBC500AFAC33 /* Users.swift in Sources */,
 				476B70FB1A0EBBC500AFAC33 /* Lists.swift in Sources */,
 				47888BF41A1A8DEE00A76E47 /* Request.swift in Sources */,

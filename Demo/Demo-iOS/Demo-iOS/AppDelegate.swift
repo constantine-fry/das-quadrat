@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             redirectURL:    "testapp123://foursquare")
         var configuration = Configuration(client:client)
         configuration.mode = "foursquare"
+        configuration.shouldControllNetworkActivityIndicator = true
         Session.setupSharedSessionWithConfiguration(configuration)
         return true
     }
