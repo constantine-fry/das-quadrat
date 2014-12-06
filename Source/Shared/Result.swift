@@ -1,5 +1,5 @@
 //
-//  Response.swift
+//  Result.swift
 //  Quadrat
 //
 //  Created by Constantine Fry on 16/11/14.
@@ -18,24 +18,24 @@ public let QuadratResponseErrorDetailKey = "errorDetail"
     Read `Responses & Errors`:
     https://developer.foursquare.com/overview/responses
 */
-public class Response: Printable {
+public class Result: Printable {
     
     /** 
         HTTP response status code.
     */
-    public var HTTPSTatusCode : Int?
+    public var HTTPSTatusCode   : Int?
     
     /** 
         HTTP response headers.
         Can contain `RateLimit-Remaining` and `X-RateLimit-Limit`.
         Read about `Rate Limits` <https://developer.foursquare.com/overview/ratelimits>.
     */
-    public var HTTPHeaders    : [NSObject:AnyObject]?
+    public var HTTPHeaders      : [NSObject:AnyObject]?
     
     /** 
         The URL which has been requested. 
     */
-    public var URL    : NSURL?
+    public var URL              : NSURL?
     
     
     /*
@@ -44,25 +44,25 @@ public class Response: Printable {
             NSURLErrorDomain            - in case of some networking problem.
             NSCocoaErrorDomain          - in case of error during JSON parsing.
     */
-    public var error          : NSError?
+    public var error            : NSError?
     
     /** 
         A response. Extracted from JSON `response` field.
         Can be empty in case of error or `multi` request. 
         If you are doung `multi` request use `subresponses` property
     */
-    public var response       : [String:AnyObject]?
+    public var response         : [String:AnyObject]?
     
     /** 
         Responses returned from `multi` endpoint. Subresponses never have HTTP headers and status code.
         Extracted from JSON `responses` field.
     */
-    public var subresponses   : [Response]?
+    public var results          : [Result]?
     
     /** 
         A notifications. Extracted from JSON `notifications` field.
     */
-    public var notifications   : [[String:AnyObject]]?
+    public var notifications    : [[String:AnyObject]]?
     
     init() {
         
@@ -76,47 +76,47 @@ public class Response: Printable {
 
 
 /** Response creation from HTTP response. */
-extension Response {
+extension Result {
     
-    class func createResponse(HTTPResponse: NSHTTPURLResponse?, JSON: [String:AnyObject]?, error: NSError? ) -> Response {
-        let response = Response()
+    class func createResult(HTTPResponse: NSHTTPURLResponse?, JSON: [String:AnyObject]?, error: NSError? ) -> Result {
+        let result = Result()
         if HTTPResponse != nil {
-            response.HTTPHeaders     = HTTPResponse!.allHeaderFields
-            response.HTTPSTatusCode  = HTTPResponse!.statusCode
-            response.URL             = HTTPResponse!.URL
+            result.HTTPHeaders     = HTTPResponse!.allHeaderFields
+            result.HTTPSTatusCode  = HTTPResponse!.statusCode
+            result.URL             = HTTPResponse!.URL
         }
         
         if JSON != nil {
             if let meta = JSON!["meta"] as [String:AnyObject]? {
                 if let code = meta["code"] as Int? {
                     if code < 200 || code > 299 {
-                        response.error = NSError(domain: QuadratResponseErrorDomain, code: code, userInfo: meta)
+                        result.error = NSError(domain: QuadratResponseErrorDomain, code: code, userInfo: meta)
                     }
                 }
             }
-            response.notifications   = JSON!["notifications"]   as [[String:AnyObject]]?
-            response.response        = JSON!["response"]        as [String:AnyObject]?
+            result.notifications   = JSON!["notifications"]   as [[String:AnyObject]]?
+            result.response        = JSON!["response"]        as [String:AnyObject]?
             
-            if response.response != nil {
-                if let responses = response.response!["responses"] as [[String:AnyObject]]?{
-                    var subResponses = [Response]()
+            if result.response != nil {
+                if let responses = result.response!["responses"] as [[String:AnyObject]]?{
+                    var subResults = [Result]()
                     for aJSONResponse in responses {
-                        let quatratResponse = Response.createResponse(nil, JSON: aJSONResponse, error: nil)
-                        subResponses.append(quatratResponse)
+                        let quatratResponse = Result.createResult(nil, JSON: aJSONResponse, error: nil)
+                        subResults.append(quatratResponse)
                     }
-                    response.subresponses = subResponses
-                    response.response = nil
+                    result.results = subResults
+                    result.response = nil
                 }
             }
         }
         
         if error != nil {
-            response.error = error
+            result.error = error
         }
-        return response
+        return result
     }
     
-    class func responseFromURLSessionResponse(response:NSURLResponse?, data: NSData?, error: NSError?) -> Response {
+    class func resultFromURLSessionResponse(response:NSURLResponse?, data: NSData?, error: NSError?) -> Result {
         let HTTPResponse = response as NSHTTPURLResponse?
         var JSONResult: [String: AnyObject]?
         var JSONError = error
@@ -127,13 +127,13 @@ extension Response {
                 JSONResult = object as [String: AnyObject]?
             }
         }
-        let quatratResponse = Response.createResponse(HTTPResponse, JSON: JSONResult, error: JSONError)
-        return quatratResponse
+        let result = Result.createResult(HTTPResponse, JSON: JSONResult, error: JSONError)
+        return result
     }
 }
 
-/** Same helpers methods. */
-extension Response {
+/** Some helpers methods. */
+extension Result {
     
     /** Returns `RateLimit-Remaining` parameter, if there is one in `HTTPHeaders`. */
     public func rateLimitRemaining() -> Int? {

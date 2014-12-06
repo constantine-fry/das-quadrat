@@ -107,7 +107,7 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
         let location = self.locationManager.location
         var parameters = location.parameters()
         let task = self.session.venues.explore(parameters) {
-            (response) -> Void in
+            (result) -> Void in
             if self.venueItems != nil {
                 return
             }
@@ -115,8 +115,8 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
                 fatalError("!!!")
             }
             
-            if response.response != nil {
-                if let groups = response.response!["groups"] as [[String: AnyObject]]?  {
+            if result.response != nil {
+                if let groups = result.response!["groups"] as [[String: AnyObject]]?  {
                     var venues = [[String: AnyObject]]()
                     for group in groups {
                         let items = group["items"] as [[String: AnyObject]]!
@@ -126,8 +126,8 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
                     self.venueItems = venues
                 }
                 self.tableView.reloadData()
-            } else if response.error != nil && !response.isCancelled() {
-                self.showErrorAlert(response.error!)
+            } else if result.error != nil && !result.isCancelled() {
+                self.showErrorAlert(result.error!)
             }
         }
         task.start()

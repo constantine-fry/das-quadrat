@@ -12,7 +12,7 @@ import Foundation
 public typealias AuthorizationHandler = (Bool, NSError?) -> Void
 
 /** A nandler used by all endpoints. */
-public typealias ResponseClosure = (response: Response) -> Void
+public typealias ResponseClosure = (result: Result) -> Void
 
 /** A nandler for downloading images. */
 public typealias DownloadImageClosure = (imageData: NSData?, error: NSError?) -> Void
@@ -162,11 +162,11 @@ public class Session {
         task.resume()
     }
     
-    func processResponse(response: Response) {
-        if response.HTTPSTatusCode == 401 && self.isAuthorized() {
+    func processResult(result: Result) {
+        if result.HTTPSTatusCode == 401 && self.isAuthorized() {
             self.deathorizeAndNotify()
         }
-       self.logger?.session(self, didReceiveResponse: response)
+       self.logger?.session(self, didReceiveResult: result)
     }
     
     func processError(error: NSError) {
