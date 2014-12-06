@@ -36,15 +36,12 @@ class Request {
     }
     
     func URLRequest() -> NSURLRequest {
-        let URL = self.baseURL.URLByAppendingPathComponent(self.path)
-        let components = NSURLComponents(URL: URL, resolvingAgainstBaseURL: false) as NSURLComponents!
-        
         var allParameters = self.sessionParameters
         if parameters != nil {
             allParameters += parameters!
         }
-        components.query = Parameter.makeQuery(allParameters)
-        let requestURL = components.URL as NSURL!
+        let URL = self.baseURL.URLByAppendingPathComponent(self.path)
+        let requestURL = Parameter.buildURL(URL, parameters: allParameters)
         let request = NSMutableURLRequest(URL: requestURL)
         request.HTTPMethod = HTTPMethod
         return request

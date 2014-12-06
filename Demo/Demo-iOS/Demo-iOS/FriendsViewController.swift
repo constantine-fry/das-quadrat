@@ -55,12 +55,13 @@ class FriendsViewController: UITableViewController {
             if let imageData = session?.cachedImageDataForURL(URL)  {
                 cell.photoImageView.image = UIImage(data: imageData)
             } else {
+                cell.photoImageView.image = nil
                 session?.downloadImageAtURL(URL) {
                     (imageData, error) -> Void in
-                    let cell = tableView.cellForRowAtIndexPath(indexPath) as VenueTableViewCell?
+                    let cell = tableView.cellForRowAtIndexPath(indexPath) as FriendTableViewCell?
                     if cell != nil && imageData != nil {
                         let image = UIImage(data: imageData!)
-                        cell!.userPhotoImageView.image = image
+                        cell!.photoImageView.image = image
                     }
                 }
                 

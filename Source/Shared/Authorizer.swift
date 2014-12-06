@@ -28,15 +28,14 @@ class Authorizer: AuthorizationDelegate {
             Parameter.response_type    : "token"
         ]
         
-        let URLString = baseURL + "?" + Parameter.makeQuery(parameters)
-        let authorizationURL = NSURL(string: URLString)
+        let authorizationURL = Parameter.buildURL(NSURL(string: baseURL)!, parameters: parameters)
         let redirectURL = NSURL(string: configuration.client.redirectURL)
-        if authorizationURL == nil || redirectURL == nil {
-            fatalError("Can't build auhorization URL. Check your clientId and redirectURL")
+        if redirectURL == nil {
+            fatalError("There is no redirect URL.")
         }
         let keychain = Keychain(configuration: configuration)
-        self.init(authorizationURL: authorizationURL!, redirectURL: redirectURL!, keychain: keychain)
-        self.cleanupCookiesForURL(authorizationURL!)
+        self.init(authorizationURL: authorizationURL, redirectURL: redirectURL!, keychain: keychain)
+        self.cleanupCookiesForURL(authorizationURL)
     }
     
     init(authorizationURL: NSURL, redirectURL: NSURL, keychain:Keychain) {
@@ -98,10 +97,11 @@ class Authorizer: AuthorizationDelegate {
     
     func extractParametersFromURL(fromURL: NSURL) -> Parameters {
         var queryString: String?
-        if fromURL.absoluteString!.hasPrefix((self.redirectURL.absoluteString! + "#")) {
+        let components = NSURLComponents(URL: fromURL, resolvingAgainstBaseURL: false)
+        if components?.query == nil {
             // If we are here it's was web authorization and we have redirect URL like this:
             // testapp123://foursquare#access_token=ACCESS_TOKEN
-            queryString = (fromURL.absoluteString!.componentsSeparatedByString("#"))[1]
+            queryString = components?.fragment
         } else {
             // If we are here it's was native iOS authorization and we have redirect URL like this:
             // testapp123://foursquare?access_token=ACCESS_TOKEN
