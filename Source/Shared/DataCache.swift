@@ -34,15 +34,15 @@ class DataCache {
     
     /** In memory cache for NSData. */
     private let cache           = NSCache()
-
+    
+    /** Obsever objects from NSNotificationCenter. */
+    private var observers       = [AnyObject]()
+    
     /** The file manager to use for all file operations. */
     private let fileManager     = NSFileManager.defaultManager()
     
     /** The configuration for cache. */
-    private let cacheConfiguration = DataCacheConfiguration()
-    
-    /** Obsevers object from NSNotificationCenter. */
-    private var observers = [AnyObject]()
+    private let cacheConfiguration  = DataCacheConfiguration()
     
     init(name: String?) {
         cache.totalCostLimit = Int(cacheConfiguration.maxMemoryCacheSize);
@@ -97,7 +97,7 @@ class DataCache {
         }
     }
     
-    /** Subcribes for iOS specific notifications to perform some actions. */
+    /** Subcribes for iOS specific notifications to perform cache cleaning. */
     private func subscribeForNotifications() {
         #if os(iOS)
             
@@ -135,7 +135,7 @@ class DataCache {
         }
     }
     
-    /** Removes expired files. In addition removes 1/4 of files if total size exceeds `maxDiskCacheSize` */
+    /** Removes expired files. In addition removes 1/4 of files if total size exceeds `maxDiskCacheSize`. */
     private func cleanupCache() {
         privateQueue.addOperationWithBlock {
             let expirationDate = NSDate(timeIntervalSinceNow: -self.cacheConfiguration.maxCacheAge)
