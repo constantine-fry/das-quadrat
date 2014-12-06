@@ -23,9 +23,9 @@ public class Multi: Endpoint {
         var queries = [String]()
         for task in tasks {
             let request = task.request
-            let path = "/" + request.path.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+            let path = "/" + request.path.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!
             if request.parameters != nil {
-                let query = path + Parameter.makeQuery(request.parameters!)
+                let query = path + makeQuery(request.parameters!)
                 queries.append(query)
             } else {
                 queries.append(path)
@@ -42,6 +42,16 @@ public class Multi: Endpoint {
         
         let multiTask = DataTask(session: self.session!, request: request, completionHandler: completionHandler)
         return multiTask
+    }
+    
+    func makeQuery(parameters: Parameters) -> String {
+        var query = String()
+        for (key,value) in parameters {
+            let encodedValue = value.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())
+            query += key + "=" + encodedValue! + "&"
+        }
+        query.removeAtIndex(query.endIndex.predecessor())
+        return query
     }
     
 }

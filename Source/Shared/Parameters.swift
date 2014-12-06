@@ -164,12 +164,19 @@ public class Parameter {
     class var m               : String { return "m" }
     class var requests        : String { return "requests" }
     
-    class func makeQuery(parameters: Parameters) -> String {
-        var query = String()
+    class func URLQueryItems(parameters: Parameters) -> [NSURLQueryItem] {
+        var items = [NSURLQueryItem]()
         for (key,value) in parameters {
-            query += key + "=" + value + "&"
+            let encodedValue = value.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())
+            let item = NSURLQueryItem(name: key, value: value)
+            items.append(item)
         }
-        query.removeAtIndex(query.endIndex.predecessor())
-        return query.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        return items
+    }
+    
+    class func buildURL(baseURL: NSURL, parameters: Parameters) -> NSURL {
+        let components = NSURLComponents(URL: baseURL, resolvingAgainstBaseURL: false)!
+        components.queryItems = URLQueryItems(parameters)
+        return components.URL!
     }
 }
