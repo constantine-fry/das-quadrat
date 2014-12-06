@@ -69,6 +69,8 @@
 		47A96E4F1A0F73CE00C38E9A /* AuthorizationWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47A96E4E1A0F73CE00C38E9A /* AuthorizationWindowController.xib */; };
 		47A96E511A0F741B00C38E9A /* AuthorizationWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A96E501A0F741B00C38E9A /* AuthorizationWindowController.swift */; };
 		47A96E551A0F80E100C38E9A /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47A96E541A0F80E100C38E9A /* WebKit.framework */; };
+		47C2164F1A2CF3A70009BB02 /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C2164E1A2CF3A70009BB02 /* DataCache.swift */; };
+		47C216511A2F83700009BB02 /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C2164E1A2CF3A70009BB02 /* DataCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,6 +115,7 @@
 		47A96E4E1A0F73CE00C38E9A /* AuthorizationWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthorizationWindowController.xib; sourceTree = "<group>"; };
 		47A96E501A0F741B00C38E9A /* AuthorizationWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationWindowController.swift; sourceTree = "<group>"; };
 		47A96E541A0F80E100C38E9A /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		47C2164E1A2CF3A70009BB02 /* DataCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +213,7 @@
 				4735978F1A0F8DF500CD6EA3 /* Authorizer.swift */,
 				4773F87A1A13DC5A0001603F /* OauthErrors.swift */,
 				47888BED1A18A3E900A76E47 /* Response.swift */,
+				47C2164E1A2CF3A70009BB02 /* DataCache.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -399,6 +403,7 @@
 				476B70D01A0EBB5C00AFAC33 /* VenueGroups.swift in Sources */,
 				476B710E1A0EBCC000AFAC33 /* Authorization.swift in Sources */,
 				4773F87E1A13E10D0001603F /* Parameters.swift in Sources */,
+				47C2164F1A2CF3A70009BB02 /* DataCache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +437,7 @@
 				476B70F91A0EBBC500AFAC33 /* Endpoint.swift in Sources */,
 				4773F87B1A13DC5A0001603F /* OauthErrors.swift in Sources */,
 				476B71011A0EBBC500AFAC33 /* Tips.swift in Sources */,
+				47C216511A2F83700009BB02 /* DataCache.swift in Sources */,
 				476B70F81A0EBBC500AFAC33 /* Checkins.swift in Sources */,
 				476B70FD1A0EBBC500AFAC33 /* PageUpdates.swift in Sources */,
 				476B71021A0EBBC500AFAC33 /* Updates.swift in Sources */,
@@ -480,6 +486,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -519,6 +526,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				SWIFT_INCLUDE_PATHS = "";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};

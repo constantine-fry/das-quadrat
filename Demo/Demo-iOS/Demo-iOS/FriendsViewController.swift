@@ -49,37 +49,35 @@ class FriendsViewController: UITableViewController {
         let lastName = friendInfo["lastName"] as String?
         let fullName = ((firstName != nil) ? firstName! : "") + " " + ((lastName != nil) ? lastName! : "")
         cell.nameLabel?.text = fullName
-        cell.photoImageView.image = nil
-        downloadPhoto(friendInfo["photo"] as JSONParameters?) {
-            (imageData) -> Void in
-            let cell = tableView.cellForRowAtIndexPath(indexPath) as FriendTableViewCell?
-            if cell != nil && imageData != nil {
-                let image = UIImage(data: imageData!)
-                cell!.photoImageView.image = image
+        
+        if let photo = friendInfo["photo"] as JSONParameters?  {
+            let URL = photoURLFromJSONObject(photo)
+            if let imageData = session?.cachedImageDataForURL(URL)  {
+                cell.photoImageView.image = UIImage(data: imageData)
+            } else {
+                session?.downloadImageAtURL(URL) {
+                    (imageData, error) -> Void in
+                    let cell = tableView.cellForRowAtIndexPath(indexPath) as VenueTableViewCell?
+                    if cell != nil && imageData != nil {
+                        let image = UIImage(data: imageData!)
+                        cell!.userPhotoImageView.image = image
+                    }
+                }
+                
             }
-        }
+            
+        } // let photo
+        
         return cell
     }
     
-    func downloadPhoto(photo: JSONParameters?, completionHandler: (imageData: NSData?) -> Void) {
-        if photo != nil {
-            let prefix = photo!["prefix"] as String
-            let suffix = photo!["suffix"] as String
-            let URLString = prefix + "100x100" + suffix
-            let URL = NSURL(string: URLString)
-            session?.downloadImageAtURL(URL!) {
-                (imageData, error) -> Void in
-                if !NSThread.isMainThread() {
-                    fatalError("!!!")
-                }
-                completionHandler(imageData: imageData)
-            }
-        } else {
-            completionHandler(imageData: nil)
-        }
-        
+    func photoURLFromJSONObject(photo: JSONParameters!) -> NSURL {
+        let prefix = photo!["prefix"] as String
+        let suffix = photo!["suffix"] as String
+        let URLString = prefix + "100x100" + suffix
+        let URL = NSURL(string: URLString)
+        return URL!
     }
-    
     
 }
 

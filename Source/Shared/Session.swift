@@ -32,7 +32,7 @@ public class Session {
     let configuration       : Configuration
     let URLSession          : NSURLSession
     var authorizer          : Authorizer?
-    
+    let dataCache           : DataCache
     /**
         One can create custom logger to process all errors and responses in one place.
         Main purpose is to debug or to track all the errors accured in framework via some analytic tool.
@@ -99,6 +99,7 @@ public class Session {
         self.configuration = configuration
         let URLConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
         self.URLSession = NSURLSession(configuration: URLConfiguration, delegate: nil, delegateQueue: completionQueue)
+        dataCache = DataCache(name: configuration.userTag)
         if configuration.debugEnabled {
             self.logger = ConsoleLogger()
         }
@@ -137,14 +138,22 @@ public class Session {
     public func deauthorize() {
         let keychain = Keychain(configuration: self.configuration)
         keychain.deleteAccessToken()
+        dataCache.clearCache()
     }
     
+    /** Returns cached image data. */
+    public func cachedImageDataForURL(URL: NSURL) -> NSData? {
+        return dataCache.dataForKey("\(URL.hash)")
+    }
+    
+    /** Downloads image at URL and puts in cache. */
     public func downloadImageAtURL(URL: NSURL, completionHandler: DownloadImageClosure) {
         let request = NSURLRequest(URL: URL)
         let task = self.URLSession.downloadTaskWithRequest(request) {
             (fileURL, response, error) -> Void in
             if fileURL != nil {
                 let data = NSData(contentsOfURL: fileURL)
+                self.dataCache.addFileAtURL(fileURL, withKey: "\(URL.hash)")
                 completionHandler(imageData: data, error: error)
             } else {
                 completionHandler(imageData: nil, error: error)
