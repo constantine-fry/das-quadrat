@@ -18,7 +18,7 @@ public protocol Logger {
     func session(session: Session, didReceiveResult result: Result)
     
     /** All errors will be passed in this method. Can be called on any thread. */
-    func session(session: Session, didGetError error: NSError)
+    func logError(error: NSError, withMessage message: String)
 }
 
 /** A simple logger which prints result in console. */
@@ -26,8 +26,8 @@ public class ConsoleLogger: Logger {
     
     public init() {}
     
-    public func session(session: Session, didGetError error: NSError) {
-        println("Session error: \(error)")
+    public func logError(error: NSError, withMessage message: String) {
+        println("\(message): \(error)")
     }
     
     public func session(session: Session, didReceiveResult result: Result) {

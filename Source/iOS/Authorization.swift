@@ -31,13 +31,11 @@ extension Session {
             return
         }
         
-        let block = { (accessToken, error) -> Void in
-            if error != nil {
-                self.processError(error!)
-            }
+        let block = {
+            (accessToken: String?, error: NSError?) -> Void in
             self.authorizer = nil
             completionHandler(accessToken != nil, error)
-        } as (String?, NSError?) -> Void
+        }
         
         if (self.canUseNativeOAuth()) {
             let nativeAuthorizer = NativeTouchAuthorizer(configuration: self.configuration)

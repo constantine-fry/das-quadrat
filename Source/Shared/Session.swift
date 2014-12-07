@@ -44,6 +44,9 @@ public class Session {
     
     /** The queue on which tasks have to call completion handlers. */
     let completionQueue     : NSOperationQueue
+   
+    /** The keychain. */
+    let keychain            : Keychain
     
     /** Manages network activity indicator. */
     var networkActivityController : NetworkActivityIndicatorController?
@@ -124,6 +127,8 @@ public class Session {
         if configuration.debugEnabled {
             self.logger = ConsoleLogger()
         }
+        keychain = Keychain(configuration: self.configuration)
+        keychain.logger = self.logger
     }
     
     public convenience init(configuration: Configuration) {
@@ -157,7 +162,6 @@ public class Session {
         This method doesn't post `QuadratSessionDidBecomeUnauthorizedNotification`.
     */
     public func deauthorize() {
-        let keychain = Keychain(configuration: self.configuration)
         keychain.deleteAccessToken()
         dataCache.clearCache()
     }
@@ -191,10 +195,6 @@ public class Session {
             self.deathorizeAndNotify()
         }
        self.logger?.session(self, didReceiveResult: result)
-    }
-    
-    func processError(error: NSError) {
-        self.logger?.session(self, didGetError: error)
     }
 
     private func deathorizeAndNotify() {

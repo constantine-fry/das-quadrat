@@ -17,7 +17,12 @@ import Security
 public let QuadratKeychainOSSatusErrorDomain = "QuadratKeychainOSSatusErrorDomain"
 
 class Keychain {
-    let keychainQuery: [String:AnyObject]
+    
+    /** Logger to log all errors. */
+    var logger : Logger?
+    
+    /** Query to get keychain items. */
+    private let keychainQuery: [String:AnyObject]
     
     init(configuration: Configuration) {
         #if os(iOS)
@@ -61,13 +66,23 @@ class Keychain {
                 }
             }
         }
-        return (accessToken, errorWithStatus(status))
+        let error = errorWithStatus(status)
+        if status != errSecSuccess {
+            if status != errSecSuccess && status != errSecItemNotFound {
+                logger?.logError(error!, withMessage: "Keychain can't read access token.")
+            }
+        }
+        return (accessToken, error)
     }
     
     func deleteAccessToken() -> (Bool, NSError?) {
         let query = keychainQuery
         let status = SecItemDelete(query)
-        return (status != errSecSuccess, errorWithStatus(status))
+        let error = errorWithStatus(status)
+        if status != errSecSuccess {
+            logger?.logError(error!, withMessage: "Keychain can't delete access token .")
+        }
+        return (status != errSecSuccess, error)
     }
     
     func saveAccessToken(accessToken: String) -> (Bool, NSError?) {
@@ -81,14 +96,16 @@ class Keychain {
         let accessTokenData = accessToken.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
         query[kSecValueData] =  accessTokenData
         let status = SecItemAdd(query, nil)
-        return (status == errSecSuccess, errorWithStatus(status))
+        let error = errorWithStatus(status)
+        if status != errSecSuccess {
+            logger?.logError(error!, withMessage: "Keychain can't add access token.")
+        }
+        return (status == errSecSuccess, error)
     }
     
     private func errorWithStatus(status: OSStatus) -> NSError? {
         var error: NSError?
-        if status != errSecSuccess && status != errSecItemNotFound {
-            error = NSError(domain: QuadratKeychainOSSatusErrorDomain, code: Int(status), userInfo: nil)
-        }
+        error = NSError(domain: QuadratKeychainOSSatusErrorDomain, code: Int(status), userInfo: nil)
         return error
     }
     

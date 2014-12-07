@@ -31,6 +31,9 @@ private let privateQueue    = NSOperationQueue()
 /** Responsible for caching data on disk and memory. Thread safe. */
 class DataCache {
     
+    /** Logger to log all errors. */
+    var logger : Logger?
+    
     /** The URL to directory where we put all the files. */
     private let directoryURL: NSURL
     
@@ -85,7 +88,10 @@ class DataCache {
         privateQueue.addOperationWithBlock { () -> Void in
             let targetURL = self.directoryURL.URLByAppendingPathComponent(key)
             var error: NSError?
-            self.fileManager.copyItemAtURL(URL, toURL: targetURL, error: &error)
+            let copied = self.fileManager.copyItemAtURL(URL, toURL: targetURL, error: &error)
+            if !copied {
+                self.logger?.logError(error!, withMessage: "Cache can't copy file into cache directory.")
+            }
         }
         privateQueue.waitUntilAllOperationsAreFinished()
     }
@@ -95,7 +101,10 @@ class DataCache {
         privateQueue.addOperationWithBlock { () -> Void in
             let targetURL = self.directoryURL.URLByAppendingPathComponent(key)
             var error: NSError?
-            data.writeToURL(targetURL, options: .DataWritingAtomic, error: &error)
+            let written = data.writeToURL(targetURL, options: .DataWritingAtomic, error: &error)
+            if !written {
+                self.logger?.logError(error!, withMessage: "Cache can't save file into cache directory.")
+            }
         }
     }
     
@@ -122,17 +131,21 @@ class DataCache {
     /** Creates base directory. */
     private func createBaseDirectory() {
         var error: NSError?
-        fileManager.createDirectoryAtURL(directoryURL, withIntermediateDirectories: true, attributes: nil, error: &error)
+        let created = fileManager.createDirectoryAtURL(directoryURL, withIntermediateDirectories: true, attributes: nil, error: &error)
+        if !created {
+            self.logger?.logError(error!, withMessage: "Cacho can't create base directory.")
+        }
     }
     
     /** Removes all cached files. */
     func clearCache() {
         privateQueue.addOperationWithBlock {
             self.cache.removeAllObjects()
-            
-            // We should process this error.
             var error: NSError?
-            self.fileManager.removeItemAtURL(self.directoryURL, error: &error)
+            let removed = self.fileManager.removeItemAtURL(self.directoryURL, error: &error)
+            if !removed {
+                self.logger?.logError(error!, withMessage: "Cache can't remove base directory.")
+            }
             self.createBaseDirectory()
         }
     }
@@ -147,6 +160,7 @@ class DataCache {
             var fileURLs = self.fileManager.contentsOfDirectoryAtURL(self.directoryURL, includingPropertiesForKeys: properties, options: NSDirectoryEnumerationOptions.SkipsHiddenFiles, error:&error) as [NSURL]?
             
             if fileURLs == nil {
+                self.logger?.logError(error!, withMessage: "Cache can't get properties of files in base directory.")
                 return
             }
             
@@ -189,7 +203,11 @@ class DataCache {
             }
 
             for URL in expiredFiles {
-                self.fileManager.removeItemAtURL(URL as NSURL, error: nil)
+                var removeError: NSError?
+                let removed = self.fileManager.removeItemAtURL(URL as NSURL, error: &removeError)
+                if !removed {
+                    self.logger?.logError(removeError!, withMessage: "Cache can't remove file.")
+                }
             }
         }
     }

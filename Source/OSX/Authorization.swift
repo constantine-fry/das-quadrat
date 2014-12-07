@@ -21,9 +21,6 @@ extension Session {
         let authorizer = MacAuthorizer(configuration: self.configuration)
         authorizer.authorize(window) {
             (accessToken, error) -> Void in
-            if error != nil {
-                self.processError(error!)
-            }
             completionHandler(accessToken != nil, error)
             
             // Fixes the crash.
