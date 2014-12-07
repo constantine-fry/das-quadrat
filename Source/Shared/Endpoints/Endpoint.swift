@@ -20,7 +20,6 @@ public func +=<K, V> (inout left: Dictionary<K, V>, right: Dictionary<K, V>?) ->
 public class Endpoint  {
     weak    var session         : Session?
     private let baseURL         : NSURL
-    private let keychain        : Keychain
     
     var endpoint: String {
         return ""
@@ -29,7 +28,6 @@ public class Endpoint  {
     init(session: Session) {
         self.session = session
         self.baseURL = NSURL(string:session.configuration.server.apiBaseURL) as NSURL!
-        self.keychain = Keychain(configuration: session.configuration)
     }
     
     func getWithPath(path: String, parameters: Parameters?, completionHandler:  ResponseClosure?) -> Task {
@@ -55,11 +53,9 @@ public class Endpoint  {
     private func requestWithPath(path: String, parameters: Parameters?, HTTPMethod: String) -> Request {
         var sessionParameters = session!.configuration.parameters()
         if sessionParameters[Parameter.oauth_token] == nil {
-            let (accessToken, error) = self.keychain.accessToken()
+            let (accessToken, error) = session!.keychain.accessToken()
             if accessToken != nil  {
                 sessionParameters[Parameter.oauth_token] = accessToken!
-            } else if error != nil {
-                self.session?.processError(error!)
             }
         }
         let request = Request(baseURL: self.baseURL, path: (self.endpoint + "/" + path), parameters: parameters, sessionParameters: sessionParameters, HTTPMethod: HTTPMethod)
