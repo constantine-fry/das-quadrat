@@ -17,7 +17,7 @@ Das Quadrat is Foursquare API wrapper written in Swift.
 
 ###Installation
 
-#####Embedded framework.
+#####Embedded framework
 
 1. Add Das Quadrat as a submodule.
 	`git submodule add git@github.com:Constantine-Fry/das-quadrat.git`
@@ -29,9 +29,42 @@ Das Quadrat is Foursquare API wrapper written in Swift.
 5. Add Quadrat framework to this phase.
 6. Here is the [image](https://cloud.githubusercontent.com/assets/239692/5367193/367f8640-7ffa-11e4-8b9b-88cef33bcd79.png) to visualise the result.
 
-#####Source code.
+#####Source code
 + Yet to be written.
 
+###Usage
+
+#####Setup session
+
+```swift
+        let client = Client(clientID:       "FOO.................FOO",
+                            clientSecret:   "BAR.................BAR",
+                            redirectURL:    "testapp123://foursquare")
+        var configuration = Configuration(client:client)
+        Session.setupSharedSessionWithConfiguration(configuration)
+        
+        let session = Session.sharedSession()
+```
+
+#####Make request
+
+```swift
+        var parameters = [Parameter.query:"Burgers"]
+        parameters += self.location.parameters()
+        let searchTask = session.venues.search(parameters) {
+            (result) -> Void in
+            if let response = result.response {
+                self.venues = response["venues"] as [JSONParameters]?
+                self.tableView.reloadData()
+            }
+        }
+        searchTask.start()
+```
+
+
+
+
+iOS 7.0+ / Mac OS X 10.9+
 
 ===========
 Bonn, December 2014.
