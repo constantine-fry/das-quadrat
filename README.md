@@ -32,7 +32,8 @@ Das Quadrat is Foursquare API wrapper written in Swift.
 6. Here is the [image](https://cloud.githubusercontent.com/assets/239692/5366551/0b451332-7ff5-11e4-8738-2a7c266176e6.png) to visualise the result.
 
 #####As source code.
-Yet to be written.
++ Yet to be written.
 
 
+===========
 Bonn, December 2014.
