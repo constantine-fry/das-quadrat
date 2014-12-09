@@ -33,15 +33,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         task.start()
         
-        let task2 = self.quadratSession.users.get(completionHandler: {
-            (response) -> Void in
-            println(response)
-        })
-
+        let task2 = self.quadratSession.users.get()
         let task3 = self.quadratSession.users.friends(userId: "self", parameters: nil)
 
         let multiTask = self.quadratSession.multi.get([task2, task3]){
-                (responses) -> Void in
+            (responses) -> Void in
             println(responses)
         }
         multiTask.start()
