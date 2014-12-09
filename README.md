@@ -25,7 +25,7 @@ Das Quadrat is Foursquare API wrapper written in Swift.
 	
 2. Drag-and-drop `Quadrat.xcodeproj` into your project.
 3. Add new target in **Build Phases** -> **Target Dependencies**.
-4. Add *new copy files phase* by clicking on the `+` button at the top left of the panel.
+4. Click the `+` button at the top left of the panel and choose *New copy files phase*.
   * Rename the new phase to "Copy Frameworks".
   * Set the "Destination" to "Frameworks".
 5. Add `Quadrat.framework` or `QuadratTouch.framework` to this phase.
