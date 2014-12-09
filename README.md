@@ -29,8 +29,8 @@ Das Quadrat is Foursquare API wrapper written in Swift.
   * Rename the new phase to "Copy Frameworks".
   * Set the "Destination" to "Frameworks".
 5. Add `Quadrat.framework` or `QuadratTouch.framework` to this phase.
-6. Here is an image to visualise the result:
+6. Here is the [image](https://cloud.githubusercontent.com/assets/239692/5366551/0b451332-7ff5-11e4-8738-2a7c266176e6.png) to visualise the result.
 
-![FooBarr](https://cloud.githubusercontent.com/assets/239692/5366551/0b451332-7ff5-11e4-8738-2a7c266176e6.png)
+
 
 Bonn, December 2014.
