@@ -37,32 +37,33 @@ Das Quadrat is Foursquare API wrapper written in Swift.
 #####Setup session
 
 ```swift
-        let client = Client(clientID:       "FOO.................FOO",
-                            clientSecret:   "BAR.................BAR",
-                            redirectURL:    "testapp123://foursquare")
-        var configuration = Configuration(client:client)
-        Session.setupSharedSessionWithConfiguration(configuration)
-        
-        let session = Session.sharedSession()
+let client = Client(clientID:       "FOO.................FOO",
+   					clientSecret:   "BAR.................BAR",
+    				redirectURL:    "testapp123://foursquare")
+var configuration = Configuration(client:client)
+Session.setupSharedSessionWithConfiguration(configuration)
+
+let session = Session.sharedSession()
 ```
 
 #####Make request
 
 ```swift
-        var parameters = [Parameter.query:"Burgers"]
-        parameters += self.location.parameters()
-        let searchTask = session.venues.search(parameters) {
-            (result) -> Void in
-            if let response = result.response {
-                self.venues = response["venues"] as [JSONParameters]?
-                self.tableView.reloadData()
-            }
-        }
-        searchTask.start()
+var parameters = [Parameter.query:"Burgers"]
+parameters += self.location.parameters()
+let searchTask = session.venues.search(parameters) {
+    (result) -> Void in
+    if let response = result.response {
+		self.venues = response["venues"] as [JSONParameters]?
+		self.tableView.reloadData()
+    }
+}
+searchTask.start()
 ```
 
 
 
+###Requirements
 
 iOS 7.0+ / Mac OS X 10.9+
 
