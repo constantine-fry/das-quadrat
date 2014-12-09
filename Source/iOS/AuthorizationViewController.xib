@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6246"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AuthorizationViewController" customModule="QuadratTouch" customModuleProvider="target">
             <connections>
+                <outlet property="indicator" destination="avT-sm-448" id="SoB-83-uMa"/>
                 <outlet property="statusLabel" destination="5lh-m2-DIa" id="HRH-Q1-AG3"/>
                 <outlet property="view" destination="iN0-l3-epB" id="HYd-pB-n9f"/>
                 <outlet property="webView" destination="AlV-6I-rVx" id="fss-iA-euR"/>
@@ -23,7 +25,7 @@
                         <outlet property="delegate" destination="-1" id="Nf8-id-YtV"/>
                     </connections>
                 </webView>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lh-m2-DIa">
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="290" translatesAutoresizingMaskIntoConstraints="NO" id="5lh-m2-DIa">
                     <rect key="frame" x="15" y="234" width="290" height="100"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -33,6 +35,9 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="avT-sm-448">
+                    <rect key="frame" x="150" y="274" width="20" height="20"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" red="0.87058830259999997" green="0.87450987099999999" blue="0.87843143940000001" alpha="1" colorSpace="deviceRGB"/>
             <constraints>
@@ -43,6 +48,8 @@
                 <constraint firstItem="AlV-6I-rVx" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="TFf-86-bPc"/>
                 <constraint firstAttribute="centerY" secondItem="5lh-m2-DIa" secondAttribute="centerY" id="bCH-2s-lFl"/>
                 <constraint firstAttribute="trailing" secondItem="5lh-m2-DIa" secondAttribute="trailing" constant="15" id="cBo-fB-6zn"/>
+                <constraint firstAttribute="centerY" secondItem="avT-sm-448" secondAttribute="centerY" id="i19-mF-9tS"/>
+                <constraint firstAttribute="centerX" secondItem="avT-sm-448" secondAttribute="centerX" id="oBa-l2-hLv"/>
                 <constraint firstItem="5lh-m2-DIa" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="yWa-2g-Qlp"/>
             </constraints>
             <point key="canvasLocation" x="208" y="108"/>

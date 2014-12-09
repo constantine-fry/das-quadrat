@@ -8,7 +8,7 @@
 
 import Foundation
 
-func +=<K, V> (inout left: Dictionary<K, V>, right: Dictionary<K, V>?) -> Dictionary<K, V> {
+public func +=<K, V> (inout left: Dictionary<K, V>, right: Dictionary<K, V>?) -> Dictionary<K, V> {
     if right != nil {
         for (k, v) in right! {
             left.updateValue(v, forKey: k)
@@ -18,20 +18,16 @@ func +=<K, V> (inout left: Dictionary<K, V>, right: Dictionary<K, V>?) -> Dictio
 }
 
 public class Endpoint  {
-    private let configuration   : Configuration
     weak    var session         : Session?
     private let baseURL         : NSURL
-    private let keychain        : Keychain
     
     var endpoint: String {
         return ""
     }
     
-    init(configuration: Configuration, session: Session) {
-        self.configuration = configuration
+    init(session: Session) {
         self.session = session
-        self.baseURL = NSURL(string:configuration.server.apiBaseURL) as NSURL!
-        self.keychain = Keychain(configuration: configuration)
+        self.baseURL = NSURL(string:session.configuration.server.apiBaseURL) as NSURL!
     }
     
     func getWithPath(path: String, parameters: Parameters?, completionHandler:  ResponseClosure?) -> Task {
@@ -43,7 +39,6 @@ public class Endpoint  {
     }
     
     func uploadTaskFromURL(fromURL: NSURL, path: String, parameters: Parameters?, completionHandler:  ResponseClosure?) -> Task {
-        
         let request = self.requestWithPath(path, parameters: parameters, HTTPMethod: "POST")
         let task = UploadTask(session: self.session!, request: request, completionHandler)
         task.fileURL = fromURL
@@ -56,13 +51,15 @@ public class Endpoint  {
     }
     
     private func requestWithPath(path: String, parameters: Parameters?, HTTPMethod: String) -> Request {
-        var sessionParameters = self.configuration.parameters()
+        var sessionParameters = session!.configuration.parameters()
         if sessionParameters[Parameter.oauth_token] == nil {
-            if let accessToken = self.keychain.accessToken() {
-                sessionParameters[Parameter.oauth_token] = accessToken
+            let (accessToken, error) = session!.keychain.accessToken()
+            if accessToken != nil  {
+                sessionParameters[Parameter.oauth_token] = accessToken!
             }
         }
         let request = Request(baseURL: self.baseURL, path: (self.endpoint + "/" + path), parameters: parameters, sessionParameters: sessionParameters, HTTPMethod: HTTPMethod)
+        request.timeoutInterval = session!.configuration.timeoutInterval
         return request
     }
 }

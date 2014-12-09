@@ -12,6 +12,9 @@ import UIKit
 class NativeTouchAuthorizer : Authorizer {
     private var configuration : Configuration!
     
+    /** Network activity controller. */
+    private var networkActivityController: NetworkActivityIndicatorController?
+    
     convenience init(configuration: Configuration) {
         let baseURL = configuration.server.nativeOauthBaseURL
         let parameters = [
@@ -20,15 +23,17 @@ class NativeTouchAuthorizer : Authorizer {
             Parameter.v            : "20130509"
         ]
         
-        let URLString = baseURL + "?" + Parameter.makeQuery(parameters)
-        let authorizationURL = NSURL(string: URLString)
+        let authorizationURL = Parameter.buildURL(NSURL(string: baseURL)!, parameters: parameters)
         let redirectURL = NSURL(string: configuration.client.redirectURL)
-        if authorizationURL == nil || redirectURL == nil {
-            fatalError("Can't build auhorization URL. Check your clientId and redirectURL")
+        if redirectURL == nil {
+            fatalError("Check your redirectURL")
         }
         let keychain = Keychain(configuration: configuration)
-        self.init(authorizationURL: authorizationURL!, redirectURL: redirectURL!, keychain:keychain)
+        self.init(authorizationURL: authorizationURL, redirectURL: redirectURL!, keychain:keychain)
         self.configuration = configuration
+        if configuration.shouldControllNetworkActivityIndicator {
+            networkActivityController = NetworkActivityIndicatorController()
+        }
     }
     
     func authorize(completionHandler: (String?, NSError?) -> Void) {
@@ -57,7 +62,7 @@ class NativeTouchAuthorizer : Authorizer {
     }
     
     func requestAccessTokenWithCode(code: String) {
-        let path = self.configuration.server.nativeOauthAccessTokenBaseURL
+        let accessTokenURL = self.configuration.server.nativeOauthAccessTokenBaseURL
         
         let client = self.configuration.client
         let parameters = [
@@ -67,12 +72,12 @@ class NativeTouchAuthorizer : Authorizer {
             Parameter.code          : code,
             Parameter.grant_type    : "authorization_code"
         ]
-        
-        let URLString = path + "?" + Parameter.makeQuery(parameters)
-        let URL = NSURL(string: URLString) as NSURL!
+        let identifier = networkActivityController?.beginNetworkActivity()
+        let URL = Parameter.buildURL(NSURL(string: accessTokenURL)!, parameters: parameters)
         let request = NSURLRequest(URL: URL)
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {
             (response, data, error) -> Void in
+            self.networkActivityController?.endNetworkActivity(identifier)
             if data != nil {
                 var parseError: NSError?
                 var jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &parseError)

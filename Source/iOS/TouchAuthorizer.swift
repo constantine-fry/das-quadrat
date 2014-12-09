@@ -15,7 +15,9 @@ class TouchAuthorizer : Authorizer {
     func authorize(viewController: UIViewController, completionHandler: (String?, NSError?) -> Void) {
         
         let authorizationViewController = AuthorizationViewController(authorizationURL: authorizationURL, redirectURL: redirectURL, delegate: self)
-        
+        authorizationViewController.shouldControllNetworkActivityIndicator = shouldControllNetworkActivityIndicator
+        authorizationViewController.delegate = viewController as? AuthorizationViewControllerDelegate
+
         let navigationController = UINavigationController(rootViewController: authorizationViewController)
         navigationController.modalPresentationStyle = .FormSheet
         viewController.presentViewController(navigationController, animated: true, completion: nil)
@@ -26,9 +28,12 @@ class TouchAuthorizer : Authorizer {
     
     override func finilizeAuthorization(accessToken: String?, error: NSError?) {
         presentingViewController?.dismissViewControllerAnimated(true) {
-                self.completionHandler?(accessToken, error)
-                self.completionHandler = nil
-                self.presentingViewController = nil
+            self.didDismissViewController(accessToken, error: error)
         }
     }
+    
+    func didDismissViewController(accessToken: String?, error: NSError?) {
+        super.finilizeAuthorization(accessToken, error: error)
+    }
+    
 }

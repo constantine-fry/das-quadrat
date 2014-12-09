@@ -17,7 +17,8 @@ class Authorizer: AuthorizationDelegate {
     var redirectURL : NSURL
     var authorizationURL : NSURL
     var completionHandler: ((String?, NSError?) -> Void)?
-    let keychain : Keychain
+    let keychain: Keychain
+    var shouldControllNetworkActivityIndicator = false
     
     convenience init(configuration: Configuration) {
         let baseURL = configuration.server.oauthBaseURL
@@ -28,15 +29,15 @@ class Authorizer: AuthorizationDelegate {
             Parameter.response_type    : "token"
         ]
         
-        let URLString = baseURL + "?" + Parameter.makeQuery(parameters)
-        let authorizationURL = NSURL(string: URLString)
+        let authorizationURL = Parameter.buildURL(NSURL(string: baseURL)!, parameters: parameters)
         let redirectURL = NSURL(string: configuration.client.redirectURL)
-        if authorizationURL == nil || redirectURL == nil {
-            fatalError("Can't build auhorization URL. Check your clientId and redirectURL")
+        if redirectURL == nil {
+            fatalError("There is no redirect URL.")
         }
         let keychain = Keychain(configuration: configuration)
-        self.init(authorizationURL: authorizationURL!, redirectURL: redirectURL!, keychain: keychain)
-        self.cleanupCookiesForURL(authorizationURL!)
+        self.init(authorizationURL: authorizationURL, redirectURL: redirectURL!, keychain: keychain)
+        self.shouldControllNetworkActivityIndicator = configuration.shouldControllNetworkActivityIndicator
+        self.cleanupCookiesForURL(authorizationURL)
     }
     
     init(authorizationURL: NSURL, redirectURL: NSURL, keychain:Keychain) {
@@ -69,13 +70,16 @@ class Authorizer: AuthorizationDelegate {
     }
     
     func finilizeAuthorization(accessToken: String?, error: NSError?) {
+        var resultError = error
+        var result = accessToken
         if accessToken != nil {
-            self.keychain.saveAccessToken(accessToken!)
-            println("access token: " + accessToken!)
-        } else {
-            println("acces token error: ", error)
+            let (saved, keychainError) = self.keychain.saveAccessToken(accessToken!)
+            if !saved {
+                result = nil
+                resultError = keychainError
+            }
         }
-        self.completionHandler?(accessToken, error)
+        self.completionHandler?(result, resultError)
         self.completionHandler = nil
     }
     
@@ -95,10 +99,11 @@ class Authorizer: AuthorizationDelegate {
     
     func extractParametersFromURL(fromURL: NSURL) -> Parameters {
         var queryString: String?
-        if fromURL.absoluteString!.hasPrefix((self.redirectURL.absoluteString! + "#")) {
+        let components = NSURLComponents(URL: fromURL, resolvingAgainstBaseURL: false)
+        if components?.query == nil {
             // If we are here it's was web authorization and we have redirect URL like this:
             // testapp123://foursquare#access_token=ACCESS_TOKEN
-            queryString = (fromURL.absoluteString!.componentsSeparatedByString("#"))[1]
+            queryString = components?.fragment
         } else {
             // If we are here it's was native iOS authorization and we have redirect URL like this:
             // testapp123://foursquare?access_token=ACCESS_TOKEN

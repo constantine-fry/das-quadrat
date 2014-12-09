@@ -55,32 +55,51 @@ public struct Configuration {
     /** The access token. May be set for some tests. */
     var accessToken     : String?
     
+    /**
+        Whether session should control network activity indicator or not. Defaults to false.
+        If you set it to `true` you can use `NetworkActivityIndicatorController` 
+        to control activity indicator in other parts of you application.
+    */
+    public var shouldControllNetworkActivityIndicator = false
+    
     /** 
         The `v` parameter of API. Global parameter for session.
         Date in format YYYYMMDD.
     */
-    public let version         : String = "20140503"
+    public var version         : String = "20140503"
     
     /** 
         The `m` parameter of API. Global parameter for session.
     */
-    public let mode            : String = "swarm"
+    public var mode            : String = "swarm"
     
     /** 
         The `locale` parameter of API. Global parameter for session.
         Two-letters language code. For example: "en" or "de"
         Default value is system language.
     */
-    public let locale          : String
+    public var locale          : String
     
     /** The user tag. */
     public var userTag         : String?
     
+    /**
+        Timeout interval for network request, in seconds.
+        Default value is 60 seconds.
+    */
+    public var timeoutInterval  : NSTimeInterval = 60.0
+    
+    /** 
+        Makes session print all errors and responses.
+        For advance logging see `Logger` protocol and `logger` property on `Session`.
+    */
+    public var debugEnabled     : Bool = false
+    
     /** 
         Creates Configuration with specified client.
-        `Mode`      is swarm.
-        `Locale`    is system language. (NSLocale.preferredLanguages().first)
-        `Version`   is 20141102.
+        `Mode`      set `swarm`.
+        `Locale`    set to system language. (NSLocale.preferredLanguages().first)
+        `Version`   set to 20141102.
     */
     public init(client: Client) {
         self.init(client: client, version: nil, accessToken: nil)

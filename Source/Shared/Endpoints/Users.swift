@@ -8,6 +8,8 @@
 
 import Foundation
 
+public let UserSelf = "self"
+
 public class Users: Endpoint {
     override var endpoint: String {
         return "users"

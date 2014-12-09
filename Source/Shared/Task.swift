@@ -13,7 +13,7 @@ public enum FoursquareResponse {
     case Error(NSError)
 }
 
-public typealias ResponseClosure = (response: Response) -> Void
+
 
 public class Task {
     private var         task               : NSURLSessionTask?
@@ -21,6 +21,9 @@ public class Task {
     private let         completionHandler  : ResponseClosure?
     
     var                 request            : Request
+    
+    /** The identifier of network activity. */
+    var                 networkActivityId  : Int?
     
     init (session: Session, request: Request, completionHandler: ResponseClosure?) {
         self.session = session
@@ -38,7 +41,10 @@ public class Task {
         if (self.task == nil) {
             self.constructURLSessionTask()
         }
-        self.task!.resume()
+        if self.task != nil {
+            self.task?.resume()
+            networkActivityId = session!.networkActivityController?.beginNetworkActivity()
+        }
     }
     
     /** 
@@ -47,7 +53,8 @@ public class Task {
         Hint: use `isCancelled()` on `Response` object.
     */
     public func cancel() {
-        self.task!.cancel()
+        self.task?.cancel()
+        self.task = nil
     }
 }
 
@@ -56,8 +63,14 @@ class DataTask: Task {
         let URLsession = self.session?.URLSession
         self.task = URLsession?.dataTaskWithRequest(request.URLRequest()) {
             (data, response, error) -> Void in
-            let quatratResponse = Response.responseFromURLSessionResponse(response, data: data, error: error)
-            self.completionHandler?(response: quatratResponse)
+            self.session?.networkActivityController?.endNetworkActivity(self.networkActivityId)
+            
+            let result = Result.resultFromURLSessionResponse(response, data: data, error: error)
+            self.session?.processResult(result)
+            self.session?.completionQueue.addOperationWithBlock {
+                self.completionHandler?(result: result)
+                return Void()
+            }
         }
     }
 }
@@ -92,8 +105,14 @@ class UploadTask: Task {
         
         self.task = self.session?.URLSession.uploadTaskWithRequest(mutableRequest, fromData: body) {
             (data, response, error) -> Void in
-            let quatratResponse = Response.responseFromURLSessionResponse(response, data: data, error: error)
-            self.completionHandler?(response: quatratResponse)
+            self.session?.networkActivityController?.endNetworkActivity(self.networkActivityId)
+            
+            let result = Result.resultFromURLSessionResponse(response, data: data, error: error)
+            self.session?.processResult(result)
+            self.session?.completionQueue.addOperationWithBlock {
+                self.completionHandler?(result: result)
+                return Void()
+            }
         }
     }
 }

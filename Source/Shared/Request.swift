@@ -24,6 +24,8 @@ class Request {
     /** Should be like this "https://api.foursquare.com/v2". Specified in `Configuration` */
     let baseURL             : NSURL
     
+    /** The timeout interval in seconds. */
+    var timeoutInterval     : NSTimeInterval = 60
     
     init(baseURL:NSURL, path: String, parameters: Parameters?, sessionParameters:Parameters, HTTPMethod: String) {
         self.baseURL = baseURL
@@ -34,15 +36,12 @@ class Request {
     }
     
     func URLRequest() -> NSURLRequest {
-        let URL = self.baseURL.URLByAppendingPathComponent(self.path)
-        let components = NSURLComponents(URL: URL, resolvingAgainstBaseURL: false) as NSURLComponents!
-        
         var allParameters = self.sessionParameters
         if parameters != nil {
             allParameters += parameters!
         }
-        components.query = Parameter.makeQuery(allParameters)
-        let requestURL = components.URL as NSURL!
+        let URL = self.baseURL.URLByAppendingPathComponent(self.path)
+        let requestURL = Parameter.buildURL(URL, parameters: allParameters)
         let request = NSMutableURLRequest(URL: requestURL)
         request.HTTPMethod = HTTPMethod
         return request
