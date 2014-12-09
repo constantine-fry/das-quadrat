@@ -7,15 +7,10 @@ Das Quadrat is Foursquare API wrapper written in Swift.
 ####Features
 
 + Supports iOS and OSX.
-
 + Covers all API endpoints.
-
 + Authorization process implemented for both platforms.
-
 + Native authorization on iOS.
-
 + Image downloader/uploader.
-
 + Image cache.
 
 
