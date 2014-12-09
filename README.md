@@ -67,5 +67,9 @@ searchTask.start()
 
 iOS 7.0+ / Mac OS X 10.9+
 
+###License
+
+The BSD 2-Clause License. See License.txt for details.
+
 ===========
 Bonn, December 2014.
