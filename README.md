@@ -46,7 +46,7 @@ Session.setupSharedSessionWithConfiguration(configuration)
 let session = Session.sharedSession()
 ```
 
-#####Make request
+#####Search request
 
 ```swift
 var parameters = [Parameter.query:"Burgers"]
@@ -60,6 +60,18 @@ let searchTask = session.venues.search(parameters) {
 }
 searchTask.start()
 ```
+
+#####Multi request
+
+```swift
+let task1 = self.quadratSession.users.get()
+let task2 = self.quadratSession.users.friends(userId: "self", parameters: nil)
+
+let multiTask = self.quadratSession.multi.get([task2, task3]){
+	(responses) -> Void in
+		println(responses)
+	}
+multiTask.start()
 
 
 
