@@ -72,7 +72,7 @@ let multiTask = self.quadratSession.multi.get([task2, task3]){
 		println(responses)
 	}
 multiTask.start()
-
+```
 
 
 ###Requirements
