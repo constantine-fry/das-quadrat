@@ -1,7 +1,6 @@
 # osx noise
 .DS_Store
 profile
-
 # xcode noise
 build/*
 *.mode1
@@ -12,7 +11,7 @@ build/*
 *.pbxuser
 #*.xcworkspace
 xcuserdata
-
 # svn & cvs
 .svn
 CVS
+*.xccheckout
