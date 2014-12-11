@@ -78,7 +78,7 @@ class NativeTouchAuthorizer : Authorizer {
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {
             (response, data, error) -> Void in
             self.networkActivityController?.endNetworkActivity(identifier)
-            if data != nil {
+            if data != nil && response?.MIMEType == "application/json" {
                 var parseError: NSError?
                 var jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &parseError)
                 if jsonObject != nil && jsonObject!.isKindOfClass(NSDictionary) {
