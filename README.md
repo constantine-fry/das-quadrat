@@ -67,7 +67,7 @@ searchTask.start()
 let task1 = self.quadratSession.users.get()
 let task2 = self.quadratSession.users.friends(userId: "self", parameters: nil)
 
-let multiTask = self.quadratSession.multi.get([task2, task3]){
+let multiTask = self.quadratSession.multi.get([task1, task2]){
 	(responses) -> Void in
 	println(responses)
 }
