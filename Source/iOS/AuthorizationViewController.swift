@@ -29,9 +29,9 @@ public class AuthorizationViewController : UIViewController, UIWebViewDelegate {
     private var networkActivityIndicator    : NetworkActivityIndicatorController?
     private var activityIdentifier          : Int?
     
-    weak var authorizationDelegate  : AuthorizationDelegate?
+    weak internal var authorizationDelegate : AuthorizationDelegate?
     
-    @IBOutlet public weak var webView      : UIWebView!
+    @IBOutlet public weak var webView       : UIWebView!
     
     @IBOutlet private weak var statusLabel  : UILabel!
     @IBOutlet private weak var indicator    : UIActivityIndicatorView!
