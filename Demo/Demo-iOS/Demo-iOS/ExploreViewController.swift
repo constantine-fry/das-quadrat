@@ -14,7 +14,7 @@ import QuadratTouch
 typealias JSONParameters = [String: AnyObject]
 
 /** Shows result from `explore` endpoint. And has search controller to search in nearby venues. */
-class ExploreViewController: UITableViewController, CLLocationManagerDelegate, SearchTableViewControllerDelegate {
+class ExploreViewController: UITableViewController, CLLocationManagerDelegate, SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
     var searchController: UISearchController!
     var resultsTableViewController: SearchTableViewController!
     
@@ -134,7 +134,7 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
     }
 
     @IBAction func authorizeButtonTapped() {
-        session.authorizeWithViewController(self) {
+        session.authorizeWithViewController(self, delegate: self) {
             (authorized, error) -> Void in
             //
         }
@@ -227,6 +227,13 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
         return URL!
     }
     
+    func sessionWillPresentAuthorizationViewController(controller: AuthorizationViewController) {
+        println("Will present authorization view controller.")
+    }
+    
+    func sessionWillDismissAuthorizationViewController(controller: AuthorizationViewController) {
+        println("Will disimiss authorization view controller.")
+    }
 }
 
 extension CLLocation {
