@@ -10,25 +10,32 @@ import Foundation
 import UIKit
 
 class TouchAuthorizer : Authorizer {
-    var presentingViewController: UIViewController?
+    weak var presentingViewController: UIViewController?
+    weak var delegate: SessionAuthorizationDelegate?
+    var authorizationViewController: AuthorizationViewController?
     
-    func authorize(viewController: UIViewController, completionHandler: (String?, NSError?) -> Void) {
+    func authorize(viewController: UIViewController, delegate: SessionAuthorizationDelegate?, completionHandler: (String?, NSError?) -> Void) {
         
-        let authorizationViewController = AuthorizationViewController(authorizationURL: authorizationURL, redirectURL: redirectURL, delegate: self)
-        authorizationViewController.shouldControllNetworkActivityIndicator = shouldControllNetworkActivityIndicator
-        authorizationViewController.delegate = viewController as? AuthorizationViewControllerDelegate
+        authorizationViewController = AuthorizationViewController(authorizationURL: authorizationURL, redirectURL: redirectURL, delegate: self)
+        authorizationViewController!.shouldControllNetworkActivityIndicator = shouldControllNetworkActivityIndicator
 
-        let navigationController = UINavigationController(rootViewController: authorizationViewController)
+        let navigationController = UINavigationController(rootViewController: authorizationViewController!)
         navigationController.modalPresentationStyle = .FormSheet
+        delegate?.sessionWillPresentAuthorizationViewController?(authorizationViewController!)
         viewController.presentViewController(navigationController, animated: true, completion: nil)
         
         self.presentingViewController = viewController
         self.completionHandler = completionHandler
+        self.delegate = delegate
     }
     
     override func finilizeAuthorization(accessToken: String?, error: NSError?) {
+        if authorizationViewController != nil {
+            delegate?.sessionWillDismissAuthorizationViewController?(authorizationViewController!)
+        }
         presentingViewController?.dismissViewControllerAnimated(true) {
             self.didDismissViewController(accessToken, error: error)
+            self.authorizationViewController = nil
         }
     }
     

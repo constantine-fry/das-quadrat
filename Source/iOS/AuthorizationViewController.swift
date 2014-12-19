@@ -16,13 +16,6 @@ enum AuthorizationViewControllerRequestStatus  {
     case Failed(NSError)    // Web view failed to load page with error.
 }
 
-/** The delegate of authorization view controller. */
-@objc public protocol AuthorizationViewControllerDelegate: class {
-    
-    /** Delegate can return custom right button item. It can be useful if one needs 1password integration. */
-    func authorizationViewControllerRightBarButtonItem(controller: AuthorizationViewController) -> UIBarButtonItem?
-}
-
 public class AuthorizationViewController : UIViewController, UIWebViewDelegate {
     private let authorizationURL    : NSURL
     private let redirectURL         : NSURL
@@ -31,18 +24,17 @@ public class AuthorizationViewController : UIViewController, UIWebViewDelegate {
         Whether view controller should controll network activity indicator or not.
         Should be set before presenting view controller.
     */
-    var shouldControllNetworkActivityIndicator = false
+    internal var shouldControllNetworkActivityIndicator = false
     
     private var networkActivityIndicator    : NetworkActivityIndicatorController?
     private var activityIdentifier          : Int?
     
     weak var authorizationDelegate  : AuthorizationDelegate?
-    weak var delegate               : AuthorizationViewControllerDelegate?
     
     @IBOutlet public weak var webView      : UIWebView!
     
-    @IBOutlet weak var statusLabel  : UILabel!
-    @IBOutlet weak var indicator    : UIActivityIndicatorView!
+    @IBOutlet private weak var statusLabel  : UILabel!
+    @IBOutlet private weak var indicator    : UIActivityIndicatorView!
     
     private var status : AuthorizationViewControllerRequestStatus = .None {
         didSet {
@@ -70,7 +62,6 @@ public class AuthorizationViewController : UIViewController, UIWebViewDelegate {
         
         let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: Selector("cancelButtonTapped"))
         self.navigationItem.leftBarButtonItem = cancelButton
-        self.navigationItem.rightBarButtonItem = self.delegate?.authorizationViewControllerRightBarButtonItem(self)
         if shouldControllNetworkActivityIndicator {
             networkActivityIndicator = NetworkActivityIndicatorController()
         }
