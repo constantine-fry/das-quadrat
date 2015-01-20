@@ -53,7 +53,7 @@ public struct Configuration {
     let server          : Server = Server()
     
     /** The access token. May be set for some tests. */
-    var accessToken     : String?
+    public var accessToken     : String?
     
     /**
         Whether session should control network activity indicator or not. Defaults to false.
