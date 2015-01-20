@@ -13,14 +13,14 @@ public class Photos : Endpoint {
         return "photos"
     }
     
-    /* https://developer.foursquare.com/docs/photos/photos */
+    /** https://developer.foursquare.com/docs/photos/photos */
     public func get(photoId: String, completionHandler: ResponseClosure? = nil) -> Task {
         return self.getWithPath(photoId, parameters: nil, completionHandler)
     }
     
     // MARK: - General
     
-    /* https://developer.foursquare.com/docs/photos/add */
+    /** https://developer.foursquare.com/docs/photos/add */
     public func add(fromURL: NSURL, parameters: Parameters?, completionHandler:  ResponseClosure? = nil) -> Task {
         let path = "add"
         return self.uploadTaskFromURL(fromURL, path: path, parameters: parameters, completionHandler)
