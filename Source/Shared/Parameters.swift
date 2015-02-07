@@ -164,19 +164,27 @@ public class Parameter {
     class var m               : String { return "m" }
     class var requests        : String { return "requests" }
     
-    class func URLQueryItems(parameters: Parameters) -> [NSURLQueryItem] {
-        var items = [NSURLQueryItem]()
+    class func URLQuery(parameters: Parameters) -> String {
+        var result = String()
         for (key,value) in parameters {
-            let encodedValue = value.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())
-            let item = NSURLQueryItem(name: key, value: value)
-            items.append(item)
+            let parameters = key + "=" + value
+            if countElements(result) == 0 {
+                result += parameters
+            } else {
+                result += "&" + parameters
+            }
         }
-        return items
+        return result
     }
     
     class func buildURL(baseURL: NSURL, parameters: Parameters) -> NSURL {
         let components = NSURLComponents(URL: baseURL, resolvingAgainstBaseURL: false)!
-        components.queryItems = URLQueryItems(parameters)
+        let query = URLQuery(parameters)
+        if components.query != nil {
+            components.query = components.query! + "&" + query
+        } else {
+            components.query = query
+        }
         return components.URL!
     }
 }
