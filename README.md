@@ -17,7 +17,7 @@ Das Quadrat is Foursquare API wrapper written in Swift.
 
 ###Installation
 
-#####As Embedded framework
+#####As Embedded framework (iOS 8.0+)
 
 1. Add Das Quadrat as a submodule.
 	`git submodule add git@github.com:Constantine-Fry/das-quadrat.git`
@@ -30,8 +30,7 @@ Das Quadrat is Foursquare API wrapper written in Swift.
 6. Here is the [image](https://cloud.githubusercontent.com/assets/239692/5367193/367f8640-7ffa-11e4-8b9b-88cef33bcd79.png) to visualise the result.
 7. Read [wiki](https://github.com/Constantine-Fry/das-quadrat/wiki) for details. 
 
-#####As Source code
-+ Yet to be written.
+You can add source code files directly into your project to support iOS 7.0.
 
 ###Usage
 
@@ -78,7 +77,7 @@ multiTask.start()
 
 ###Requirements
 
-iOS 7.0+ / Mac OS X 10.9+
+iOS 8.0+ / Mac OS X 10.9+
 
 ###License
 
