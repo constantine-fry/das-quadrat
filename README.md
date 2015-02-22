@@ -77,7 +77,9 @@ multiTask.start()
 
 ###Requirements
 
-iOS 8.0+ / Mac OS X 10.9+
+Swift 1.1 / iOS 8.0+ / Mac OS X 10.9+ 
+
+*If you need Swift 1.2 compatibity, check out this [branch](https://github.com/Constantine-Fry/das-quadrat/tree/fry/fix/swift12)*
 
 ###License
 
