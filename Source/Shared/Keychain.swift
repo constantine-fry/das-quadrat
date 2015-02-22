@@ -38,17 +38,17 @@ class Keychain {
             accountAttribute = configuration.client.id
         }
         keychainQuery = [
-            kSecClass           : kSecClassGenericPassword,
-            kSecAttrAccessible  : kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
-            kSecAttrService     : serviceAttribute,
-            kSecAttrAccount     : accountAttribute
+            kSecClass           as! String  : kSecClassGenericPassword,
+            kSecAttrAccessible  as! String  : kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
+            kSecAttrService     as! String  : serviceAttribute,
+            kSecAttrAccount     as! String  : accountAttribute
         ]
     }
     
     func accessToken() -> (String?, NSError?) {
         var query = keychainQuery
-        query[kSecReturnData] = kCFBooleanTrue
-        query[kSecMatchLimit] = kSecMatchLimitOne
+        query[kSecReturnData as! String] = kCFBooleanTrue
+        query[kSecMatchLimit as! String] = kSecMatchLimitOne
         
         /** 
             Fixes the issue with Keychain access in release mode.
@@ -60,9 +60,9 @@ class Keychain {
         }
         var accessToken: String? = nil
         if status == errSecSuccess {
-            if let retrievedData = dataTypeRef as NSData? {
+            if let retrievedData = dataTypeRef as? NSData {
                 if retrievedData.length != 0 {
-                    accessToken = NSString(data: retrievedData, encoding: NSUTF8StringEncoding)
+                    accessToken = NSString(data: retrievedData, encoding: NSUTF8StringEncoding) as? String
                 }
             }
         }
@@ -94,7 +94,7 @@ class Keychain {
         }
         
         let accessTokenData = accessToken.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
-        query[kSecValueData] =  accessTokenData
+        query[kSecValueData as! String] =  accessTokenData
         let status = SecItemAdd(query, nil)
         let error = errorWithStatus(status)
         if status != errSecSuccess {

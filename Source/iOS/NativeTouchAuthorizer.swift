@@ -82,7 +82,7 @@ class NativeTouchAuthorizer : Authorizer {
                 var parseError: NSError?
                 var jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &parseError)
                 if jsonObject != nil && jsonObject!.isKindOfClass(NSDictionary) {
-                    let parameters = jsonObject as Parameters
+                    let parameters = jsonObject as! Parameters
                     self.finilizeAuthorizationWithParameters(parameters)
                 } else {
                     self.finilizeAuthorization(nil, error: parseError)

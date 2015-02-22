@@ -88,7 +88,7 @@ class Authorizer: AuthorizationDelegate {
     func cleanupCookiesForURL(URL: NSURL) {
         let storage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
         if storage.cookies != nil {
-            let cookies = storage.cookies as [NSHTTPCookie]
+            let cookies = storage.cookies as! [NSHTTPCookie]
             for cookie in cookies {
                 if cookie.domain == URL.host {
                     storage.deleteCookie(cookie as NSHTTPCookie)
