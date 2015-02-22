@@ -77,7 +77,7 @@ multiTask.start()
 
 ###Requirements
 
-iOS 8.0+ / Mac OS X 10.9+
+Swift 1.2 / iOS 8.0+ / Mac OS X 10.9+
 
 ###License
 
