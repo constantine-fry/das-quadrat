@@ -15,7 +15,7 @@ public class Photos : Endpoint {
     
     /** https://developer.foursquare.com/docs/photos/photos */
     public func get(photoId: String, completionHandler: ResponseClosure? = nil) -> Task {
-        return self.getWithPath(photoId, parameters: nil, completionHandler)
+        return self.getWithPath(photoId, parameters: nil, completionHandler: completionHandler)
     }
     
     // MARK: - General
@@ -23,7 +23,7 @@ public class Photos : Endpoint {
     /** https://developer.foursquare.com/docs/photos/add */
     public func add(fromURL: NSURL, parameters: Parameters?, completionHandler:  ResponseClosure? = nil) -> Task {
         let path = "add"
-        return self.uploadTaskFromURL(fromURL, path: path, parameters: parameters, completionHandler)
+        return self.uploadTaskFromURL(fromURL, path: path, parameters: parameters, completionHandler: completionHandler)
     }
 
 }
