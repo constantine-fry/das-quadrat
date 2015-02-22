@@ -50,7 +50,8 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
         let status = CLLocationManager.authorizationStatus()
         if status == .NotDetermined {
             locationManager.requestWhenInUseAuthorization()
-        } else if status == .AuthorizedWhenInUse || status == .Authorized {
+        } else if status == CLAuthorizationStatus.AuthorizedWhenInUse
+            || status == CLAuthorizationStatus.AuthorizedAlways {
             locationManager.startUpdatingLocation()
         } else {
             showNoPermissionsAlert()
