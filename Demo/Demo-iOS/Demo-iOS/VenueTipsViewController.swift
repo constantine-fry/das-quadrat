@@ -24,12 +24,14 @@ class VenueTipsViewController: UITableViewController {
         let task = self.session.venues.get(self.venueId!) {
             (result) -> Void in
             if result.response != nil {
-                if let venue = result.response!["venue"] as JSONParameters? {
-                    if let tips = venue["tips"] as JSONParameters? {
+                if let venue = result.response!["venue"] as? JSONParameters {
+                    if let tips = venue["tips"] as? JSONParameters {
                         var tipItems = [JSONParameters]()
-                        for group in tips["groups"] as [JSONParameters]! {
-                            if let item = group["items"] as [JSONParameters]? {
-                                tipItems += item
+                        if let groups = tips["groups"] as? [JSONParameters] {
+                            for group in groups {
+                                if let item = group["items"] as? [JSONParameters] {
+                                    tipItems += item
+                                }
                             }
                         }
                         self.tips = tipItems
@@ -51,9 +53,9 @@ class VenueTipsViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
         let tip = self.tips![indexPath.row]
-        cell.textLabel?.text = tip["text"] as String?
+        cell.textLabel?.text = tip["text"] as? String
         return cell
     }
 }
