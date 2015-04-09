@@ -46,7 +46,7 @@ class SearchTableViewController: UITableViewController, UISearchResultsUpdating 
         currentTask = session.venues.search(parameters) {
             (result) -> Void in
             if let response = result.response {
-                self.venues = response["venues"] as [JSONParameters]?
+                self.venues = response["venues"] as? [JSONParameters]
                 self.tableView.reloadData()
             }
         }
@@ -54,19 +54,19 @@ class SearchTableViewController: UITableViewController, UISearchResultsUpdating 
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
         let venue = venues[indexPath.row]
-        if let venueLocation = venue["location"] as JSONParameters? {
+        if let venueLocation = venue["location"] as? JSONParameters {
             var detailText = ""
-            if let distance = venueLocation["distance"] as CLLocationDistance? {
+            if let distance = venueLocation["distance"] as? CLLocationDistance {
                 detailText = distanceFormatter.stringFromDistance(distance)
             }
-            if let address = venueLocation["address"] as String? {
+            if let address = venueLocation["address"] as? String {
                 detailText = detailText +  " - " + address
             }
             cell.detailTextLabel?.text = detailText
         }
-        cell.textLabel?.text = venue["name"] as String?
+        cell.textLabel?.text = venue["name"] as? String
         return cell
     }
     

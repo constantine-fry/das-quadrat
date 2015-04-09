@@ -79,7 +79,7 @@ class UploadTask: Task {
     var  fileURL: NSURL?
     
     override func constructURLSessionTask() {
-        let mutableRequest = self.request.URLRequest().mutableCopy() as NSMutableURLRequest
+        let mutableRequest = self.request.URLRequest().mutableCopy() as! NSMutableURLRequest
         
         let boundary = NSUUID().UUIDString
         let contentType = "multipart/form-data; boundary=" + boundary

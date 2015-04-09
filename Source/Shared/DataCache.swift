@@ -70,7 +70,7 @@ class DataCache {
     func dataForKey(key: String) -> NSData? {
         var result: NSData?
         privateQueue.addOperationWithBlock {
-            result = self.cache.objectForKey(key) as NSData?
+            result = self.cache.objectForKey(key) as? NSData
             if result == nil {
                 let targetURL = self.directoryURL.URLByAppendingPathComponent(key)
                 result = NSData(contentsOfURL: targetURL)
@@ -157,7 +157,7 @@ class DataCache {
             var error: NSError?
             let properties = [NSURLContentModificationDateKey, NSURLTotalFileAllocatedSizeKey]
             
-            var fileURLs = self.fileManager.contentsOfDirectoryAtURL(self.directoryURL, includingPropertiesForKeys: properties, options: NSDirectoryEnumerationOptions.SkipsHiddenFiles, error:&error) as [NSURL]?
+            var fileURLs = self.fileManager.contentsOfDirectoryAtURL(self.directoryURL, includingPropertiesForKeys: properties, options: NSDirectoryEnumerationOptions.SkipsHiddenFiles, error:&error) as? [NSURL]
             
             if fileURLs == nil {
                 self.logger?.logError(error!, withMessage: "Cache can't get properties of files in base directory.")
@@ -170,11 +170,11 @@ class DataCache {
             
             /** Searching for expired files and calculation total size. */
             for aFileURL in fileURLs! {
-                let values = aFileURL.resourceValuesForKeys(properties, error: nil) as [String: AnyObject]?
-                if let modificationDate = values?[NSURLContentModificationDateKey] as NSDate? {
+                let values = aFileURL.resourceValuesForKeys(properties, error: nil) as? [String: AnyObject]
+                if let modificationDate = values?[NSURLContentModificationDateKey] as? NSDate {
                     if modificationDate.laterDate(expirationDate).isEqualToDate(modificationDate) {
                         validFiles.append(aFileURL)
-                        if let fileSize = values?[NSURLTotalFileAllocatedSizeKey] as UInt? {
+                        if let fileSize = values?[NSURLTotalFileAllocatedSizeKey] as? UInt {
                             cacheSize += fileSize
                         }
                     } else {
@@ -187,8 +187,8 @@ class DataCache {
                 /** Sorting files by modification date. From oldest to newest. */
                 validFiles.sort {
                     (url1: NSURL, url2: NSURL) -> Bool in
-                    let values1 = url1.resourceValuesForKeys([NSURLContentModificationDateKey], error: nil) as [String: NSDate]?
-                    let values2 = url2.resourceValuesForKeys([NSURLContentModificationDateKey], error: nil) as [String: NSDate]?
+                    let values1 = url1.resourceValuesForKeys([NSURLContentModificationDateKey], error: nil) as? [String: NSDate]
+                    let values2 = url2.resourceValuesForKeys([NSURLContentModificationDateKey], error: nil) as? [String: NSDate]
                     if let date1 = values1?[NSURLContentModificationDateKey] {
                         if let date2 = values2?[NSURLContentModificationDateKey] {
                             return date1.compare(date2) == .OrderedAscending

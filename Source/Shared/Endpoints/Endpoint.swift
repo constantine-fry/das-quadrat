@@ -40,7 +40,7 @@ public class Endpoint  {
     
     func uploadTaskFromURL(fromURL: NSURL, path: String, parameters: Parameters?, completionHandler:  ResponseClosure?) -> Task {
         let request = self.requestWithPath(path, parameters: parameters, HTTPMethod: "POST")
-        let task = UploadTask(session: self.session!, request: request, completionHandler)
+        let task = UploadTask(session: self.session!, request: request, completionHandler: completionHandler)
         task.fileURL = fromURL
         return task
     }
