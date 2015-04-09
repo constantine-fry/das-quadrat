@@ -333,7 +333,7 @@
 					};
 					476B70D91A0EBBA500AFAC33 = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = 6E9832W2ZK;
+						DevelopmentTeam = VZ266K5KCR;
 					};
 				};
 			};
