@@ -25,8 +25,8 @@ class FriendsViewController: UITableViewController {
         super.viewWillAppear(animated)
         let task = session?.users.friends(parameters: nil) {
             (response) -> Void in
-            if let items = response.response?["friends"] as JSONParameters? {
-                if let friends = items["items"] as [JSONParameters]? {
+            if let items = response.response?["friends"] as? JSONParameters {
+                if let friends = items["items"] as? [JSONParameters] {
                     self.friends = friends
                 }
             }
@@ -43,14 +43,14 @@ class FriendsViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as FriendTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! FriendTableViewCell
         let friendInfo = friends![indexPath.row]
-        let firstName = friendInfo["firstName"] as String?
-        let lastName = friendInfo["lastName"] as String?
+        let firstName = friendInfo["firstName"] as? String
+        let lastName = friendInfo["lastName"] as? String
         let fullName = ((firstName != nil) ? firstName! : "") + " " + ((lastName != nil) ? lastName! : "")
         cell.nameLabel?.text = fullName
         
-        if let photo = friendInfo["photo"] as JSONParameters?  {
+        if let photo = friendInfo["photo"] as? JSONParameters  {
             let URL = photoURLFromJSONObject(photo)
             if let imageData = session?.cachedImageDataForURL(URL)  {
                 cell.photoImageView.image = UIImage(data: imageData)
@@ -58,7 +58,7 @@ class FriendsViewController: UITableViewController {
                 cell.photoImageView.image = nil
                 session?.downloadImageAtURL(URL) {
                     (imageData, error) -> Void in
-                    let cell = tableView.cellForRowAtIndexPath(indexPath) as FriendTableViewCell?
+                    let cell = tableView.cellForRowAtIndexPath(indexPath) as? FriendTableViewCell
                     if cell != nil && imageData != nil {
                         let image = UIImage(data: imageData!)
                         cell!.photoImageView.image = image
@@ -73,8 +73,8 @@ class FriendsViewController: UITableViewController {
     }
     
     func photoURLFromJSONObject(photo: JSONParameters!) -> NSURL {
-        let prefix = photo!["prefix"] as String
-        let suffix = photo!["suffix"] as String
+        let prefix = photo!["prefix"] as! String
+        let suffix = photo!["suffix"] as! String
         let URLString = prefix + "100x100" + suffix
         let URL = NSURL(string: URLString)
         return URL!

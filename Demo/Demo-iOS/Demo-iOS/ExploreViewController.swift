@@ -32,7 +32,7 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
         session = Session.sharedSession()
         session.logger = ConsoleLogger()
         
-        resultsTableViewController = Storyboard.create("venueSearch") as SearchTableViewController
+        resultsTableViewController = Storyboard.create("venueSearch") as! SearchTableViewController
         resultsTableViewController.session = session
         resultsTableViewController.delegate = self
         searchController = UISearchController(searchResultsController: resultsTableViewController)
@@ -50,7 +50,8 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
         let status = CLLocationManager.authorizationStatus()
         if status == .NotDetermined {
             locationManager.requestWhenInUseAuthorization()
-        } else if status == .AuthorizedWhenInUse || status == .Authorized {
+        } else if status == CLAuthorizationStatus.AuthorizedWhenInUse
+            || status == CLAuthorizationStatus.AuthorizedAlways {
             locationManager.startUpdatingLocation()
         } else {
             showNoPermissionsAlert()
@@ -116,11 +117,12 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
             }
             
             if result.response != nil {
-                if let groups = result.response!["groups"] as [[String: AnyObject]]?  {
+                if let groups = result.response!["groups"] as? [[String: AnyObject]]  {
                     var venues = [[String: AnyObject]]()
                     for group in groups {
-                        let items = group["items"] as [[String: AnyObject]]!
-                        venues += items
+                        if let items = group["items"] as? [[String: AnyObject]] {
+                            venues += items
+                        }
                     }
                     
                     self.venueItems = venues
@@ -148,7 +150,7 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("venueCell", forIndexPath: indexPath) as VenueTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("venueCell", forIndexPath: indexPath) as! VenueTableViewCell
         let item = self.venueItems![indexPath.row] as JSONParameters!
         self.configureCellWithItem(cell, item: item)
         return cell
@@ -156,28 +158,28 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
     
     
     func configureCellWithItem(cell:VenueTableViewCell, item: JSONParameters) {
-        let venueInfo = item["venue"] as JSONParameters?
-        let tips = item["tips"] as [JSONParameters]?
+        let venueInfo = item["venue"] as? JSONParameters
+        let tips = item["tips"] as? [JSONParameters]
         if venueInfo != nil {
-            cell.venueNameLabel.text = venueInfo!["name"] as String?
-            if let rating = venueInfo!["rating"] as CGFloat? {
+            cell.venueNameLabel.text = venueInfo!["name"] as? String
+            if let rating = venueInfo!["rating"] as? CGFloat {
                 cell.venueRatingLabel.text = numberFormatter.stringFromNumber(rating)
             }
         }
         if tips != nil  {
             if let tip = tips!.first {
-                cell.venueCommentLabel.text = tip["text"] as String?
+                cell.venueCommentLabel.text = tip["text"] as? String
             }
         }
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = cell as VenueTableViewCell
-        let tips = self.venueItems![indexPath.row]["tips"] as [JSONParameters]?
+        let cell = cell as! VenueTableViewCell
+        let tips = self.venueItems![indexPath.row]["tips"] as? [JSONParameters]
         if tips != nil  {
             if let tip = tips!.first {
-                if let user = tip["user"] as JSONParameters? {
-                    if let photo = user["photo"] as JSONParameters?  {
+                if let user = tip["user"] as? JSONParameters {
+                    if let photo = user["photo"] as? JSONParameters  {
                         let URL = photoURLFromJSONObject(photo)
                         if let imageData = session.cachedImageDataForURL(URL)  {
                             cell.userPhotoImageView.image = UIImage(data: imageData)
@@ -185,7 +187,7 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
                             cell.userPhotoImageView.image = nil
                             session.downloadImageAtURL(URL) {
                                 (imageData, error) -> Void in
-                                let cell = tableView.cellForRowAtIndexPath(indexPath) as VenueTableViewCell?
+                                let cell = tableView.cellForRowAtIndexPath(indexPath) as? VenueTableViewCell
                                 if cell != nil && imageData != nil {
                                     let image = UIImage(data: imageData!)
                                     cell!.userPhotoImageView.image = image
@@ -203,7 +205,7 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let venue = venueItems![indexPath.row]["venue"] as JSONParameters!
+        let venue = venueItems![indexPath.row]["venue"] as! JSONParameters
         openVenue(venue)
     }
     
@@ -212,16 +214,16 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
     }
     
     func openVenue(venue: JSONParameters) {
-        let viewController = Storyboard.create("venueDetails") as VenueTipsViewController
-        viewController.venueId = venue["id"] as String?
+        let viewController = Storyboard.create("venueDetails") as! VenueTipsViewController
+        viewController.venueId = venue["id"] as? String
         viewController.session = session
-        viewController.title = venue["name"] as String?
+        viewController.title = venue["name"] as? String
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func photoURLFromJSONObject(photo: JSONParameters!) -> NSURL {
-        let prefix = photo!["prefix"] as String
-        let suffix = photo!["suffix"] as String
+        let prefix = photo!["prefix"] as! String
+        let suffix = photo!["suffix"] as! String
         let URLString = prefix + "100x100" + suffix
         let URL = NSURL(string: URLString)
         return URL!
@@ -255,7 +257,7 @@ extension CLLocation {
 
 class Storyboard: UIStoryboard {
     class func create(name: String) -> UIViewController {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(name) as UIViewController
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(name) as! UIViewController
     }
 }
 

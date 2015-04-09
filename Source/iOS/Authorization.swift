@@ -35,25 +35,23 @@ extension Session {
     }
     
     public func authorizeWithViewController(viewController: UIViewController, delegate: SessionAuthorizationDelegate?, completionHandler: AuthorizationHandler) {
-        if (self.authorizer != nil) {
-            fatalError("You are currently authorizing.")
-            return
+        if (self.authorizer == nil) {
+            let block = {
+                (accessToken: String?, error: NSError?) -> Void in
+                self.authorizer = nil
+                completionHandler(accessToken != nil, error)
+            }
+            
+            if (self.canUseNativeOAuth()) {
+                let nativeAuthorizer = NativeTouchAuthorizer(configuration: self.configuration)
+                nativeAuthorizer.authorize(block)
+                self.authorizer = nativeAuthorizer
+            } else {
+                let touchAuthorizer = TouchAuthorizer(configuration: self.configuration)
+                touchAuthorizer.authorize(viewController, delegate: delegate, completionHandler: block)
+                self.authorizer = touchAuthorizer
+            }
         }
-        
-        let block = {
-            (accessToken: String?, error: NSError?) -> Void in
-            self.authorizer = nil
-            completionHandler(accessToken != nil, error)
-        }
-        
-        if (self.canUseNativeOAuth()) {
-            let nativeAuthorizer = NativeTouchAuthorizer(configuration: self.configuration)
-            nativeAuthorizer.authorize(block)
-            self.authorizer = nativeAuthorizer
-        } else {
-            let touchAuthorizer = TouchAuthorizer(configuration: self.configuration)
-            touchAuthorizer.authorize(viewController, delegate: delegate, completionHandler: block)
-            self.authorizer = touchAuthorizer
-        }
+
     }
 }

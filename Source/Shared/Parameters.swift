@@ -168,7 +168,7 @@ public class Parameter {
         var result = String()
         for (key,value) in parameters {
             let parameters = key + "=" + value
-            if countElements(result) == 0 {
+            if count(result) == 0 {
                 result += parameters
             } else {
                 result += "&" + parameters

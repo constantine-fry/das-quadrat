@@ -87,18 +87,18 @@ extension Result {
         }
         
         if JSON != nil {
-            if let meta = JSON!["meta"] as [String:AnyObject]? {
-                if let code = meta["code"] as Int? {
+            if let meta = JSON!["meta"] as? [String:AnyObject] {
+                if let code = meta["code"] as? Int {
                     if code < 200 || code > 299 {
                         result.error = NSError(domain: QuadratResponseErrorDomain, code: code, userInfo: meta)
                     }
                 }
             }
-            result.notifications   = JSON!["notifications"]   as [[String:AnyObject]]?
-            result.response        = JSON!["response"]        as [String:AnyObject]?
+            result.notifications   = JSON!["notifications"]   as? [[String:AnyObject]]
+            result.response        = JSON!["response"]        as? [String:AnyObject]
             
             if result.response != nil {
-                if let responses = result.response!["responses"] as [[String:AnyObject]]?{
+                if let responses = result.response!["responses"] as? [[String:AnyObject]] {
                     var subResults = [Result]()
                     for aJSONResponse in responses {
                         let quatratResponse = Result.createResult(nil, JSON: aJSONResponse, error: nil)
@@ -117,14 +117,14 @@ extension Result {
     }
     
     class func resultFromURLSessionResponse(response:NSURLResponse?, data: NSData?, error: NSError?) -> Result {
-        let HTTPResponse = response as NSHTTPURLResponse?
+        let HTTPResponse = response as? NSHTTPURLResponse
         var JSONResult: [String: AnyObject]?
         var JSONError = error
         
         if data != nil && JSONError == nil && HTTPResponse?.MIMEType == "application/json" {
             let object: AnyObject? = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(0), error: &JSONError)
             if object != nil {
-                JSONResult = object as [String: AnyObject]?
+                JSONResult = object as? [String: AnyObject]
             }
         }
         let result = Result.createResult(HTTPResponse, JSON: JSONResult, error: JSONError)
@@ -137,12 +137,12 @@ extension Result {
     
     /** Returns `RateLimit-Remaining` parameter, if there is one in `HTTPHeaders`. */
     public func rateLimitRemaining() -> Int? {
-        return self.HTTPHeaders?["RateLimit-Remaining"] as Int?
+        return self.HTTPHeaders?["RateLimit-Remaining"] as? Int
     }
     
     /** Returns `X-RateLimit-Limit` parameter, if there is one in `HTTPHeaders`. */
     public func rateLimit() -> Int? {
-        return self.HTTPHeaders?["X-RateLimit-Limit"] as Int?
+        return self.HTTPHeaders?["X-RateLimit-Limit"] as? Int
     }
     
     /** Whether task has been cancelled or not. */

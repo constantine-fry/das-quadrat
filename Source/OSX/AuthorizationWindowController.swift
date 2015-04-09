@@ -70,9 +70,9 @@ class AuthorizationWindowController: NSWindowController {
     }
     
     override func webView(webView: WebView!, decidePolicyForNavigationAction actionInformation: [NSObject : AnyObject]!, request: NSURLRequest!, frame: WebFrame!, decisionListener listener: WebPolicyDecisionListener!) {
-        if let URLString = request.URL.absoluteString {
+        if let URLString = request.URL?.absoluteString {
             if URLString.hasPrefix(self.redirectURL.absoluteString!) {
-                self.delegate?.didReachRedirectURL(request.URL)
+                self.delegate?.didReachRedirectURL(request.URL!)
                 listener.ignore()
             }
         }
