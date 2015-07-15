@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/Tripstr/das-quadrat"
   s.ios.deployment_target = "8.0"
   s.source       = { :git => "https://github.com/Tripstr/das-quadrat.git", :branch => "master" }
-  s.source_files  = ["Source/iOS", "Source/QuadratTouch", "Source/Shared"]
+  s.source_files  = ["Source/iOS", "Source/QuadratTouch", "Source/Shared", "Source/Shared/Endpoints"]
   s.framework     = 'SystemConfiguration'
   s.exclude_files = "Classes/Exclude"
   s.requires_arc = true
