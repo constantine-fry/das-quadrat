@@ -150,7 +150,9 @@
 				476B70DB1A0EBBA500AFAC33 /* QuadratTouch */,
 				476B708A1A0EBAE700AFAC33 /* Products */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		476B708A1A0EBAE700AFAC33 /* Products */ = {
 			isa = PBXGroup;
