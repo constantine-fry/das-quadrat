@@ -30,11 +30,10 @@ public class Multi: Endpoint {
             if let params = request.parameters {
                 path = path + "?" + makeQuery(params)
             }
-            path = encodeURIComponent(path)
           
             queries.append(path)
         }
-        let queryString = ",".join(queries)
+        let queryString = encodeURIComponent(",".join(queries))
         
         let request =
         Request(baseURL: firstTask.request.baseURL,
