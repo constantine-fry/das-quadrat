@@ -38,9 +38,11 @@ public class Multi: Endpoint {
         let request =
         Request(baseURL: firstTask.request.baseURL,
             path: self.endpoint,
-            parameters: [Parameter.requests:queryString],
+            parameters: nil,
             sessionParameters: firstTask.request.sessionParameters,
-            HTTPMethod: "POST")
+            HTTPMethod: "POST",
+            preformattedQueryString: "requests=\(queryString)"
+        )
         
         let multiTask = DataTask(session: self.session!, request: request, completionHandler: completionHandler)
         return multiTask
