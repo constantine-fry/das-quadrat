@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.author       = { "Constantine Fry" => "constantine.fry@posteo.de"}
 
 
-  s.source        = { :git => "git@github.com:Constantine-Fry/das-quadrat.git", :tag => "1.0.0" }
+  s.source        = { :git => "https://github.com/Constantine-Fry/das-quadrat.git", :tag => "1.0.0" }
   s.source_files  = [ "Source/iOS", "Source/QuadratTouch", "Source/Shared", "Source/Shared/Endpoints" ]
   s.framework     = 'SystemConfiguration'
   s.exclude_files = "Classes/Exclude"
