@@ -8,6 +8,9 @@
 
 import Foundation
 
+func encodeURIComponent(string: String) -> String {
+    return string.stringByAddingPercentEncodingWithAllowedCharacters(.alphanumericCharacterSet())!
+}
 
 public class Multi: Endpoint {
     override var endpoint   : String {
@@ -23,22 +26,23 @@ public class Multi: Endpoint {
         var queries = [String]()
         for task in tasks {
             let request = task.request
-            let path = "/" + request.path.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!
-            if request.parameters != nil {
-                let query = path + makeQuery(request.parameters!)
-                queries.append(query)
-            } else {
-                queries.append(path)
+            var path = "/" + request.path
+            if let params = request.parameters {
+                path = path + "?" + makeQuery(params)
             }
+          
+            queries.append(path)
         }
-        let queryString = ",".join(queries)
+        let queryString = encodeURIComponent(",".join(queries))
         
         let request =
         Request(baseURL: firstTask.request.baseURL,
             path: self.endpoint,
-            parameters: [Parameter.requests:queryString],
+            parameters: nil,
             sessionParameters: firstTask.request.sessionParameters,
-            HTTPMethod: "POST")
+            HTTPMethod: "POST",
+            preformattedQueryString: "requests=\(queryString)"
+        )
         
         let multiTask = DataTask(session: self.session!, request: request, completionHandler: completionHandler)
         return multiTask
@@ -47,8 +51,8 @@ public class Multi: Endpoint {
     func makeQuery(parameters: Parameters) -> String {
         var query = String()
         for (key,value) in parameters {
-            let encodedValue = value.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())
-            query += key + "=" + encodedValue! + "&"
+            let encodedValue = encodeURIComponent(value)
+            query += key + "=" + encodedValue + "&"
         }
         query.removeAtIndex(query.endIndex.predecessor())
         return query

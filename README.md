@@ -1,4 +1,4 @@
-Das Quadrat
+Das Quadrat [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 ===========
 
 Das Quadrat is Foursquare API wrapper written in Swift.
@@ -17,18 +17,22 @@ Das Quadrat is Foursquare API wrapper written in Swift.
 
 ###Installation
 
-#####As Embedded framework (iOS 8.0+)
+#### Carthage Installation
+
+Install Das Quadrat using the [Carthage](http://github.com/Carthage/Carthage) dependency manager.
+
+#### As Embedded framework (iOS 8.0+)
 
 1. Add Das Quadrat as a submodule.
 	`git submodule add git@github.com:Constantine-Fry/das-quadrat.git`
-2. Drag-and-drop `Quadrat.xcodeproj` into your project. The project has two targets: Quadrat.framework for OSX project, QuadratTouch.framework for iOS projects. 
+2. Drag-and-drop `Quadrat.xcodeproj` into your project. The project has two targets: Quadrat.framework for OSX project, QuadratTouch.framework for iOS projects.
 3. Add new target in "Build Phases" -> "Target Dependencies".
 4. Click the `+` button at the top left of the panel and choose "New copy files phase".
   * Rename the new phase to "Copy Frameworks".
   * Set the "Destination" to "Frameworks".
 5. Add Quadrat framework to this phase.
 6. Here is the [image](https://cloud.githubusercontent.com/assets/239692/5367193/367f8640-7ffa-11e4-8b9b-88cef33bcd79.png) to visualise the result.
-7. Read [wiki](https://github.com/Constantine-Fry/das-quadrat/wiki) for details. 
+7. Read [wiki](https://github.com/Constantine-Fry/das-quadrat/wiki) for details.
 
 You can add source code files directly into your project to support iOS 7.0.
 
