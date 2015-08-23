@@ -86,5 +86,6 @@ Swift 1.2 / iOS 8.0+ / Mac OS X 10.9+
 ###License
 
 The BSD 2-Clause License. See License.txt for details.
+
 ===========
 Bonn, December 2014.
