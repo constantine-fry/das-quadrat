@@ -36,7 +36,7 @@ class AuthorizationWindowController: NSWindowController {
     deinit {
         self.webView.mainFrame.stopLoading()
     }
-
+    
     override func windowDidLoad() {
         super.windowDidLoad()
         self.loadAuthorizationURL()
@@ -65,18 +65,21 @@ class AuthorizationWindowController: NSWindowController {
         return Int(WebDragSourceAction.None.rawValue)
     }
     
-    override func webView(webView: WebView!, dragDestinationActionMaskForDraggingInfo draggingInfo: NSDraggingInfo!) -> Int {
-        return Int(WebDragDestinationAction.None.rawValue)
+    override func webView(webView: WebView!,
+        dragDestinationActionMaskForDraggingInfo draggingInfo: NSDraggingInfo!) -> Int {
+            return Int(WebDragDestinationAction.None.rawValue)
     }
     
-    override func webView(webView: WebView!, decidePolicyForNavigationAction actionInformation: [NSObject : AnyObject]!, request: NSURLRequest!, frame: WebFrame!, decisionListener listener: WebPolicyDecisionListener!) {
-        if let URLString = request.URL?.absoluteString {
-            if URLString.hasPrefix(self.redirectURL.absoluteString!) {
-                self.delegate?.didReachRedirectURL(request.URL!)
-                listener.ignore()
+    override func webView(webView: WebView!,
+        decidePolicyForNavigationAction actionInformation: [NSObject : AnyObject]!,
+        request: NSURLRequest!, frame: WebFrame!, decisionListener listener: WebPolicyDecisionListener!) {
+            if let URLString = request.URL?.absoluteString {
+                if URLString.hasPrefix(self.redirectURL.absoluteString!) {
+                    self.delegate?.didReachRedirectURL(request.URL!)
+                    listener.ignore()
+                }
             }
-        }
-        listener.use()
+            listener.use()
     }
     
     override func webView(sender: WebView!, didFinishLoadForFrame frame: WebFrame!) {
@@ -87,8 +90,9 @@ class AuthorizationWindowController: NSWindowController {
         self.status = .Failed(error)
     }
     
-    override func webView(sender: WebView!, didFailProvisionalLoadWithError error: NSError!, forFrame frame: WebFrame!) {
-        self.status = .Failed(error)
+    override func webView(sender: WebView!,
+        didFailProvisionalLoadWithError error: NSError!, forFrame frame: WebFrame!) {
+            self.status = .Failed(error)
     }
     
     // MARK: -

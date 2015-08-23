@@ -27,13 +27,13 @@ public class Checkins: Endpoint {
         allParameters += parameters
         return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
-
+    
     /** https://developer.foursquare.com/docs/checkins/recent */
     public func recent(parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "recent"
         return self.getWithPath(path, parameters: parameters, completionHandler: completionHandler)
     }
-
+    
     
     // MARK: - Aspects
     
@@ -46,9 +46,10 @@ public class Checkins: Endpoint {
     // MARK: - Actions
     
     /** https://developer.foursquare.com/docs/checkins/addcomment */
-    public func addcomment(checkinId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
-        let path = checkinId + "/addcomment"
-        return self.postWithPath(path, parameters: parameters, completionHandler: completionHandler)
+    public func addcomment(checkinId: String,
+        parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
+            let path = checkinId + "/addcomment"
+            return self.postWithPath(path, parameters: parameters, completionHandler: completionHandler)
     }
     
     /** https://developer.foursquare.com/docs/checkins/addpost */

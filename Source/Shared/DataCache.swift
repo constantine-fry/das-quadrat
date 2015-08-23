@@ -53,8 +53,9 @@ class DataCache {
         cache.totalCostLimit = Int(cacheConfiguration.maxMemoryCacheSize);
         let directoryName = "net.foursquare.quadrat"
         let subdirectiryName = (name != nil) ? ( "Cache" + name! ) : "DefaultCache"
-        let cacheURL = fileManager.URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true, error: nil)
-        directoryURL = cacheURL!.URLByAppendingPathComponent(directoryName).URLByAppendingPathComponent("DataCache").URLByAppendingPathComponent(subdirectiryName)
+        let cacheURL = fileManager.URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask,
+            appropriateForURL: nil, create: true, error: nil)
+        self.directoryURL = cacheURL!.URLByAppendingPathComponent("\(directoryName)/DataCache/\(subdirectiryName)")
         privateQueue.maxConcurrentOperationCount = 1
         createBaseDirectory()
         subscribeForNotifications()
@@ -113,16 +114,18 @@ class DataCache {
         #if os(iOS)
             
             let center = NSNotificationCenter.defaultCenter()
-            let firstObserver = center.addObserverForName(UIApplicationDidEnterBackgroundNotification, object: nil, queue: nil) {
-                [unowned self] (notification) -> Void in
-                self.cleanupCache()
-                self.cache.removeAllObjects()
+            let didEnterBackground = UIApplicationDidEnterBackgroundNotification
+            let firstObserver = center.addObserverForName(didEnterBackground, object: nil, queue: nil) {
+                [weak self] (notification) -> Void in
+                self?.cleanupCache()
+                self?.cache.removeAllObjects()
             }
             observers.append(firstObserver)
             
-            let secondObserver = center.addObserverForName(UIApplicationDidReceiveMemoryWarningNotification, object: nil, queue: nil) {
-                [unowned self] (notification) -> Void in
-                self.cache.removeAllObjects()
+            let didReceiveMemoryWaring = UIApplicationDidReceiveMemoryWarningNotification
+            let secondObserver = center.addObserverForName(didReceiveMemoryWaring, object: nil, queue: nil) {
+                [weak self] (notification) -> Void in
+                self?.cache.removeAllObjects()
             }
             observers.append(secondObserver)
         #endif
@@ -131,7 +134,8 @@ class DataCache {
     /** Creates base directory. */
     private func createBaseDirectory() {
         var error: NSError?
-        let created = fileManager.createDirectoryAtURL(directoryURL, withIntermediateDirectories: true, attributes: nil, error: &error)
+        let created = fileManager.createDirectoryAtURL(directoryURL,
+            withIntermediateDirectories: true, attributes: nil, error: &error)
         if !created {
             self.logger?.logError(error!, withMessage: "Cacho can't create base directory.")
         }
@@ -157,7 +161,8 @@ class DataCache {
             var error: NSError?
             let properties = [NSURLContentModificationDateKey, NSURLTotalFileAllocatedSizeKey]
             
-            var fileURLs = self.fileManager.contentsOfDirectoryAtURL(self.directoryURL, includingPropertiesForKeys: properties, options: NSDirectoryEnumerationOptions.SkipsHiddenFiles, error:&error) as? [NSURL]
+            var fileURLs = self.fileManager.contentsOfDirectoryAtURL(self.directoryURL,
+                includingPropertiesForKeys: properties, options: .SkipsHiddenFiles, error:&error) as? [NSURL]
             
             if fileURLs == nil {
                 self.logger?.logError(error!, withMessage: "Cache can't get properties of files in base directory.")
@@ -187,8 +192,9 @@ class DataCache {
                 /** Sorting files by modification date. From oldest to newest. */
                 validFiles.sort {
                     (url1: NSURL, url2: NSURL) -> Bool in
-                    let values1 = url1.resourceValuesForKeys([NSURLContentModificationDateKey], error: nil) as? [String: NSDate]
-                    let values2 = url2.resourceValuesForKeys([NSURLContentModificationDateKey], error: nil) as? [String: NSDate]
+                    let dateKey = [NSURLContentModificationDateKey]
+                    let values1 = url1.resourceValuesForKeys(dateKey, error: nil) as? [String: NSDate]
+                    let values2 = url2.resourceValuesForKeys(dateKey, error: nil) as? [String: NSDate]
                     if let date1 = values1?[NSURLContentModificationDateKey] {
                         if let date2 = values2?[NSURLContentModificationDateKey] {
                             return date1.compare(date2) == .OrderedAscending

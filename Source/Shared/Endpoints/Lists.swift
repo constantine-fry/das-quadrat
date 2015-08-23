@@ -14,18 +14,20 @@ public class Lists: Endpoint {
     }
     
     /** https://developer.foursquare.com/docs/lists/lists */
-    public func get(listId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
-        return self.getWithPath(listId, parameters: parameters, completionHandler: completionHandler)
+    public func get(listId: String, parameters: Parameters?,
+        completionHandler: ResponseClosure? = nil) -> Task {
+            return self.getWithPath(listId, parameters: parameters, completionHandler: completionHandler)
     }
     
     // MARK: - General
     
     /** https://developer.foursquare.com/docs/lists/add */
-    public func add(name: String, text: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
-        let path = "add"
-        var allParameters = [Parameter.name:name, Parameter.text:text]
-        allParameters += parameters
-        return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
+    public func add(name: String, text: String, parameters: Parameters?,
+        completionHandler: ResponseClosure? = nil) -> Task {
+            let path = "add"
+            var allParameters = [Parameter.name:name, Parameter.text:text]
+            allParameters += parameters
+            return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
     
     // MARK: - Aspects
@@ -89,11 +91,12 @@ public class Lists: Endpoint {
     }
     
     /** https://developer.foursquare.com/docs/lists/moveitem */
-    public func moveitem(listId: String, itemId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
-        let path = listId + "/moveitem"
-        var allParameters = [Parameter.itemId:itemId]
-        allParameters += parameters
-        return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
+    public func moveitem(listId: String, itemId: String,
+        parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
+            let path = listId + "/moveitem"
+            var allParameters = [Parameter.itemId:itemId]
+            allParameters += parameters
+            return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
     
     /** https://developer.foursquare.com/docs/lists/share */
@@ -115,10 +118,11 @@ public class Lists: Endpoint {
     }
     
     /** https://developer.foursquare.com/docs/lists/updateitem */
-    public func updateitem(listId: String, itemId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
-        let path = listId + "/updateitem"
-        var allParameters = [Parameter.itemId:itemId]
-        allParameters += parameters
-        return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
+    public func updateitem(listId: String, itemId: String,
+        parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
+            let path = listId + "/updateitem"
+            var allParameters = [Parameter.itemId:itemId]
+            allParameters += parameters
+            return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
 }

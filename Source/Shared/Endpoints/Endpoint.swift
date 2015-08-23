@@ -38,16 +38,18 @@ public class Endpoint  {
         return self.taskWithPath(path, parameters: parameters, HTTPMethod: "POST", completionHandler: completionHandler)
     }
     
-    func uploadTaskFromURL(fromURL: NSURL, path: String, parameters: Parameters?, completionHandler:  ResponseClosure?) -> Task {
-        let request = self.requestWithPath(path, parameters: parameters, HTTPMethod: "POST")
-        let task = UploadTask(session: self.session!, request: request, completionHandler: completionHandler)
-        task.fileURL = fromURL
-        return task
+    func uploadTaskFromURL(fromURL: NSURL, path: String,
+        parameters: Parameters?, completionHandler:  ResponseClosure?) -> Task {
+            let request = self.requestWithPath(path, parameters: parameters, HTTPMethod: "POST")
+            let task = UploadTask(session: self.session!, request: request, completionHandler: completionHandler)
+            task.fileURL = fromURL
+            return task
     }
     
-    private func taskWithPath(path: String, parameters: Parameters?, HTTPMethod: String, completionHandler:  ResponseClosure?) -> Task {
-        let request = self.requestWithPath(path, parameters: parameters, HTTPMethod: HTTPMethod)
-        return DataTask(session: self.session!, request: request, completionHandler: completionHandler)
+    private func taskWithPath(path: String, parameters: Parameters?,
+        HTTPMethod: String, completionHandler:  ResponseClosure?) -> Task {
+            let request = self.requestWithPath(path, parameters: parameters, HTTPMethod: HTTPMethod)
+            return DataTask(session: self.session!, request: request, completionHandler: completionHandler)
     }
     
     private func requestWithPath(path: String, parameters: Parameters?, HTTPMethod: String) -> Request {
@@ -58,7 +60,8 @@ public class Endpoint  {
                 sessionParameters[Parameter.oauth_token] = accessToken!
             }
         }
-        let request = Request(baseURL: self.baseURL, path: (self.endpoint + "/" + path), parameters: parameters, sessionParameters: sessionParameters, HTTPMethod: HTTPMethod)
+        let request = Request(baseURL: self.baseURL, path: (self.endpoint + "/" + path),
+            parameters: parameters, sessionParameters: sessionParameters, HTTPMethod: HTTPMethod)
         request.timeoutInterval = session!.configuration.timeoutInterval
         return request
     }

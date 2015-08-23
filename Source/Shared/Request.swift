@@ -30,13 +30,15 @@ class Request {
     /** Optionally pass in a preformatted query string to append after all other params are added **/
     var preformattedQueryString: String?
     
-    init(baseURL:NSURL, path: String, parameters: Parameters?, sessionParameters:Parameters, HTTPMethod: String, preformattedQueryString: String? = nil) {
-        self.baseURL = baseURL
-        self.parameters = parameters
-        self.sessionParameters = sessionParameters
-        self.HTTPMethod = HTTPMethod
-        self.path = path
-        self.preformattedQueryString = preformattedQueryString
+    init(baseURL:NSURL, path: String, parameters: Parameters?,
+        sessionParameters:Parameters, HTTPMethod: String, preformattedQueryString: String? = nil) {
+            
+            self.baseURL = baseURL
+            self.parameters = parameters
+            self.sessionParameters = sessionParameters
+            self.HTTPMethod = HTTPMethod
+            self.path = path
+            self.preformattedQueryString = preformattedQueryString
     }
     
     func URLRequest() -> NSURLRequest {

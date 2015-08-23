@@ -43,9 +43,10 @@ public class VenueGroups: Endpoint {
     // MARK: - Aspects
     
     /** https://developer.foursquare.com/docs/venuegroups/timeseries */
-    public func timeseries(groupId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
-        let path = groupId + "/timeseries"
-        return self.getWithPath(path, parameters: parameters, completionHandler: completionHandler)
+    public func timeseries(groupId: String,
+        parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
+            let path = groupId + "/timeseries"
+            return self.getWithPath(path, parameters: parameters, completionHandler: completionHandler)
     }
     
     // MARK: - Actions
