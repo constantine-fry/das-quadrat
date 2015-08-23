@@ -4,16 +4,17 @@ Pod::Spec.new do |s|
   s.version      = "1.0.0"
   s.summary      = "Das Quadrat is Foursquare API wrapper written in Swift."
 
-  s.description  = <<-DESC
-                   Das Quadrat is Foursquare API wrapper written in Swift.
-                   DESC
-
   s.homepage     = "https://github.com/Constantine-Fry/das-quadrat"
-  s.ios.deployment_target = "8.0"
-  s.source       = { :git => "git@github.com:Constantine-Fry/das-quadrat.git", :branch => "master" }
-  s.source_files  = ["Source/iOS", "Source/QuadratTouch", "Source/Shared", "Source/Shared/Endpoints"]
+  s.license      = "BSD 2-Clause"
+  s.author       = { "Constantine Fry" => "constantine.fry@posteo.de"}
+
+
+  s.source        = { :git => "git@github.com:Constantine-Fry/das-quadrat.git", :tag => "1.0.0" }
+  s.source_files  = [ "Source/iOS", "Source/QuadratTouch", "Source/Shared", "Source/Shared/Endpoints" ]
   s.framework     = 'SystemConfiguration'
   s.exclude_files = "Classes/Exclude"
-  s.requires_arc = true
+  s.requires_arc  = true
+
+  s.ios.deployment_target = "8.0"
 
 end
