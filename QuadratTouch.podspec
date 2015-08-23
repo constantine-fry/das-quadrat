@@ -8,9 +8,9 @@ Pod::Spec.new do |s|
                    Das Quadrat is Foursquare API wrapper written in Swift.
                    DESC
 
-  s.homepage     = "https://github.com/Tripstr/das-quadrat"
+  s.homepage     = "https://github.com/Constantine-Fry/das-quadrat"
   s.ios.deployment_target = "8.0"
-  s.source       = { :git => "https://github.com/Tripstr/das-quadrat.git", :branch => "master" }
+  s.source       = { :git => "git@github.com:Constantine-Fry/das-quadrat.git", :branch => "master" }
   s.source_files  = ["Source/iOS", "Source/QuadratTouch", "Source/Shared", "Source/Shared/Endpoints"]
   s.framework     = 'SystemConfiguration'
   s.exclude_files = "Classes/Exclude"
