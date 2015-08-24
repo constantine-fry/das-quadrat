@@ -21,7 +21,7 @@ class TouchAuthorizer : Authorizer {
             redirectURL: redirectURL, delegate: self)
         authorizationViewController!.shouldControllNetworkActivityIndicator = shouldControllNetworkActivityIndicator
 
-        let navigationController = UINavigationController(rootViewController: authorizationViewController!)
+        let navigationController = AuthorizationNavigationController(rootViewController: authorizationViewController!)
         navigationController.modalPresentationStyle = .FormSheet
         delegate?.sessionWillPresentAuthorizationViewController?(authorizationViewController!)
         viewController.presentViewController(navigationController, animated: true, completion: nil)

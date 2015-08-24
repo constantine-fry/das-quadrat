@@ -16,6 +16,14 @@ enum AuthorizationViewControllerRequestStatus  {
     case Failed(NSError)    // Web view failed to load page with error.
 }
 
+/** 
+    The class where AuthorizationViewController is pushed. It does nothing.
+    You may use this class to apply you application style via UIAppearence.
+*/
+public class AuthorizationNavigationController: UINavigationController {
+    
+}
+
 public class AuthorizationViewController : UIViewController, UIWebViewDelegate {
     private let authorizationURL    : NSURL
     private let redirectURL         : NSURL
