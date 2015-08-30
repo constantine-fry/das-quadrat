@@ -27,20 +27,20 @@ public class ConsoleLogger: Logger {
     public init() {}
     
     public func logError(error: NSError, withMessage message: String) {
-        println("\(message): \(error)")
+        print("\(message): \(error)")
     }
     
     public func session(session: Session, didReceiveResult result: Result) {
-        println("")
-        println("Session did receive response:  \(result.HTTPSTatusCode), \(result.URL)")
+        print("")
+        print("Session did receive response:  \(result.HTTPSTatusCode), \(result.URL)")
         if let warning = result.response?["warning"] as? [String: AnyObject] {
             if let text = warning["text"] as? String {
-                println("Warning: \(text)")
+                print("Warning: \(text)")
             }
         }
         if let error = result.error {
-            println("Error: \(error)")
+            print("Error: \(error)")
         }
-        println("")
+        print("")
     }
 }

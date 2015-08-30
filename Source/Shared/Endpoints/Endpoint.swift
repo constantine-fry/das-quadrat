@@ -56,8 +56,8 @@ public class Endpoint  {
         var sessionParameters = session!.configuration.parameters()
         if sessionParameters[Parameter.oauth_token] == nil {
             let (accessToken, error) = session!.keychain.accessToken()
-            if accessToken != nil  {
-                sessionParameters[Parameter.oauth_token] = accessToken!
+            if let accessToken = accessToken  {
+                sessionParameters[Parameter.oauth_token] = accessToken
             }
         }
         let request = Request(baseURL: self.baseURL, path: (self.endpoint + "/" + path),

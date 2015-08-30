@@ -18,7 +18,7 @@ public let QuadratResponseErrorDetailKey = "errorDetail"
     Read `Responses & Errors`:
     https://developer.foursquare.com/overview/responses
 */
-public class Result: Printable {
+public class Result: CustomStringConvertible {
     
     /** 
         HTTP response status code.
@@ -122,10 +122,14 @@ extension Result {
         var JSONError = error
         
         if data != nil && JSONError == nil && HTTPResponse?.MIMEType == "application/json" {
-            let object: AnyObject? = NSJSONSerialization.JSONObjectWithData(data!,
-                options: NSJSONReadingOptions(0), error: &JSONError)
-            if object != nil {
+            let object: AnyObject?
+            do {
+                object = try NSJSONSerialization.JSONObjectWithData(data!,
+                                options: NSJSONReadingOptions(rawValue: 0))
                 JSONResult = object as? [String: AnyObject]
+            } catch let error as NSError {
+                JSONError = error
+                object = nil
             }
         }
         let result = Result.createResult(HTTPResponse, JSON: JSONResult, error: JSONError)

@@ -38,17 +38,17 @@ class Keychain {
             accountAttribute = configuration.client.id
         }
         keychainQuery = [
-            kSecClass           as! String  : kSecClassGenericPassword,
-            kSecAttrAccessible  as! String  : kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
-            kSecAttrService     as! String  : serviceAttribute,
-            kSecAttrAccount     as! String  : accountAttribute
+            kSecClass           as String  : kSecClassGenericPassword,
+            kSecAttrAccessible  as String  : kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
+            kSecAttrService     as String  : serviceAttribute,
+            kSecAttrAccount     as String  : accountAttribute
         ]
     }
     
     func accessToken() -> (String?, NSError?) {
         var query = keychainQuery
-        query[kSecReturnData as! String] = kCFBooleanTrue
-        query[kSecMatchLimit as! String] = kSecMatchLimitOne
+        query[kSecReturnData as String] = kCFBooleanTrue
+        query[kSecMatchLimit as String] = kSecMatchLimitOne
         
         /** 
             Fixes the issue with Keychain access in release mode.
@@ -94,7 +94,7 @@ class Keychain {
         }
         
         let accessTokenData = accessToken.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
-        query[kSecValueData as! String] =  accessTokenData
+        query[kSecValueData as String] =  accessTokenData
         let status = SecItemAdd(query, nil)
         let error = errorWithStatus(status)
         if status != errSecSuccess {

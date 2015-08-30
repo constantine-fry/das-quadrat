@@ -168,7 +168,7 @@ public class Parameter {
         var result = String()
         for (key,value) in parameters {
             let parameters = key + "=" + value
-            if count(result) == 0 {
+            if result.characters.count == 0 {
                 result += parameters
             } else {
                 result += "&" + parameters
@@ -188,7 +188,7 @@ public class Parameter {
         
         if let preformatted = preformattedQueryString {
             let delimiter = components.query != nil ? "&" : "?"
-            return NSURL(string: components.URL!.absoluteString! + delimiter + preformatted)!
+            return NSURL(string: components.URL!.absoluteString + delimiter + preformatted)!
         }
         return components.URL!
     }

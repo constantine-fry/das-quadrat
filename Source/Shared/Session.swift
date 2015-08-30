@@ -179,7 +179,7 @@ public class Session {
             (fileURL, response, error) -> Void in
             self.networkActivityController?.endNetworkActivity(identifier)
             var data: NSData?
-            if fileURL != nil {
+            if let fileURL = fileURL {
                 data = NSData(contentsOfURL: fileURL)
                 self.dataCache.addFileAtURL(fileURL, withKey: "\(URL.hash)")
             }

@@ -54,7 +54,7 @@ public class VenueGroups: Endpoint {
     /** https://developer.foursquare.com/docs/venuegroups/addvenue */
     public func addvenue(groupId: String, venueId: [String], completionHandler: ResponseClosure? = nil) -> Task {
         let path = groupId + "/addvenue"
-        let parameters = [Parameter.venueId:join(",", venueId)]
+        let parameters = [Parameter.venueId: ",".join(venueId)]
         return self.postWithPath(path, parameters: parameters, completionHandler: completionHandler)
     }
     
@@ -67,7 +67,7 @@ public class VenueGroups: Endpoint {
     /** https://developer.foursquare.com/docs/venuegroups/removevenue */
     public func removevenue(groupId: String,  venueId: [String], completionHandler: ResponseClosure? = nil) -> Task {
         let path = groupId + "/removevenue"
-        let parameters = [Parameter.venueId:join(",", venueId)]
+        let parameters = [Parameter.venueId: ",".join(venueId)]
         return self.postWithPath(path, parameters: parameters, completionHandler: completionHandler)
     }
     
