@@ -59,6 +59,19 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.updateLeftBarButton()
+    }
+    
+    private func updateLeftBarButton() {
+        if session.isAuthorized() {
+            self.navigationItem.leftBarButtonItem?.title = "Logout"
+        } else {
+            self.navigationItem.leftBarButtonItem?.title = "Login"
+        }
+    }
+    
     
     func showNoPermissionsAlert() {
         let alertController = UIAlertController(title: "No permission",
@@ -142,9 +155,16 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
     }
     
     @IBAction func authorizeButtonTapped() {
-        session.authorizeWithViewController(self, delegate: self) {
-            (authorized, error) -> Void in
-            //
+        if session.isAuthorized() {
+            session.deauthorize()
+            self.updateLeftBarButton()
+            self.exploreVenues()
+        } else {
+            session.authorizeWithViewController(self, delegate: self) {
+                (authorized, error) -> Void in
+                self.updateLeftBarButton()
+                self.exploreVenues()
+            }
         }
     }
     
