@@ -58,7 +58,7 @@ class DataCache {
             cacheURL = try fileManager.URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask,
                         appropriateForURL: nil, create: true)
         } catch _ {
-            cacheURL = nil
+            fatalError("Can't get access to cache directory")
         }
         self.directoryURL = cacheURL!.URLByAppendingPathComponent("\(directoryName)/DataCache/\(subdirectiryName)")
         privateQueue.maxConcurrentOperationCount = 1
@@ -93,19 +93,11 @@ class DataCache {
     func addFileAtURL(URL: NSURL, withKey key: String) {
         privateQueue.addOperationWithBlock { () -> Void in
             let targetURL = self.directoryURL.URLByAppendingPathComponent(key)
-            var error: NSError?
-            let copied: Bool
             do {
                 try self.fileManager.copyItemAtURL(URL, toURL: targetURL)
-                copied = true
-            } catch let error1 as NSError {
-                error = error1
-                copied = false
+            } catch let error as NSError {
+                self.logger?.logError(error, withMessage: "Cache can't copy file into cache directory.")
             } catch {
-                fatalError()
-            }
-            if !copied {
-                self.logger?.logError(error!, withMessage: "Cache can't copy file into cache directory.")
             }
         }
         privateQueue.waitUntilAllOperationsAreFinished()
@@ -115,19 +107,11 @@ class DataCache {
     func addData(data: NSData, withKey key: String) {
         privateQueue.addOperationWithBlock { () -> Void in
             let targetURL = self.directoryURL.URLByAppendingPathComponent(key)
-            var error: NSError?
-            let written: Bool
             do {
                 try data.writeToURL(targetURL, options: .DataWritingAtomic)
-                written = true
-            } catch let error1 as NSError {
-                error = error1
-                written = false
+            } catch let error as NSError {
+                self.logger?.logError(error, withMessage: "Cache can't save file into cache directory.")
             } catch {
-                fatalError()
-            }
-            if !written {
-                self.logger?.logError(error!, withMessage: "Cache can't save file into cache directory.")
             }
         }
     }
