@@ -52,11 +52,6 @@ You can add source code files directly into your project to support iOS 7.0.
 
 ###Usage
 
-#####LSApplicationQueriesSchemes
-On iOS9 an app must declare which URL scheme it wants to check with `canOpenURL:`. 
-To enable native authorization with Foursquare app you must add `foursquareauth` to `LSApplicationQueriesSchemes` array
-in info.plist file in your project.
-
 #####Setup session
 
 ```swift
@@ -103,11 +98,10 @@ The library will attempt to authorize natively via the actual Foursquare app, if
 
 If the Foursquare app is not installed on the user's device, your app will instead present a modal view controller containing a `UIWebView` that will display a web-based authorization screen instead. This occurs without leaving your app, and can be cancelled to return to the previous screen.
 
-To configure the tint color of the modal view, be sure that your application's window tint color is configured in your `AppDelegate`:
+On iOS9 an app must declare which URL scheme it wants to check with `canOpenURL:`. 
+To enable native authorization with Foursquare app you must add `foursquareauth` to `LSApplicationQueriesSchemes` array
+in info.plist file in your project.
 
-```
-self.window.tintColor=UIColor.redColor()
-```
 
 ###Requirements
 
