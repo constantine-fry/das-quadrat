@@ -84,7 +84,7 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
         self.presentViewController(alertController, animated: true, completion: nil)
     }
     
-    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .Denied || status == .Restricted {
             showNoPermissionsAlert()
         } else {
@@ -92,14 +92,14 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
         }
     }
     
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         // Process error.
         // kCLErrorDomain. Not localized.
         showErrorAlert(error)
     }
     
-    func locationManager(manager: CLLocationManager!,
-        didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
+    func locationManager(manager: CLLocationManager,
+        didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
             if venueItems == nil {
                 exploreVenues()
             }
@@ -108,9 +108,11 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
     }
     
     func exploreVenues() {
+        guard let location = self.locationManager.location else {
+            return
+        }
         
-        let location = self.locationManager.location
-        var parameters = location.parameters()
+        let parameters = location.parameters()
         let task = self.session.venues.explore(parameters) {
             (result) -> Void in
             if self.venueItems != nil {
@@ -236,11 +238,11 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
     }
     
     func sessionWillPresentAuthorizationViewController(controller: AuthorizationViewController) {
-        println("Will present authorization view controller.")
+        print("Will present authorization view controller.")
     }
     
     func sessionWillDismissAuthorizationViewController(controller: AuthorizationViewController) {
-        println("Will disimiss authorization view controller.")
+        print("Will disimiss authorization view controller.")
     }
 }
 
@@ -264,7 +266,6 @@ extension CLLocation {
 class Storyboard: UIStoryboard {
     class func create(name: String) -> UIViewController {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(name)
-            as! UIViewController
     }
 }
 
