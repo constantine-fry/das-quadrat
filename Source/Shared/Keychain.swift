@@ -33,7 +33,7 @@ class Keychain {
         
         var accountAttribute: String
         if let userTag = configuration.userTag {
-            accountAttribute = configuration.client.id + "_" + configuration.userTag!
+            accountAttribute = configuration.client.id + "_" + userTag
         } else {
             accountAttribute = configuration.client.id
         }
