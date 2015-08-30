@@ -122,14 +122,11 @@ extension Result {
         var JSONError = error
         
         if data != nil && JSONError == nil && HTTPResponse?.MIMEType == "application/json" {
-            let object: AnyObject?
             do {
-                object = try NSJSONSerialization.JSONObjectWithData(data!,
-                                options: NSJSONReadingOptions(rawValue: 0))
-                JSONResult = object as? [String: AnyObject]
+                JSONResult = try NSJSONSerialization.JSONObjectWithData(data!,
+                                options: NSJSONReadingOptions(rawValue: 0)) as? [String: AnyObject]
             } catch let error as NSError {
                 JSONError = error
-                object = nil
             }
         }
         let result = Result.createResult(HTTPResponse, JSON: JSONResult, error: JSONError)
