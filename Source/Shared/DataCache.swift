@@ -156,18 +156,11 @@ class DataCache {
     
     /** Creates base directory. */
     private func createBaseDirectory() {
-        var error: NSError?
-        let created: Bool
         do {
             try fileManager.createDirectoryAtURL(directoryURL,
                         withIntermediateDirectories: true, attributes: nil)
-            created = true
-        } catch let error1 as NSError {
-            error = error1
-            created = false
-        }
-        if !created {
-            self.logger?.logError(error!, withMessage: "Cacho can't create base directory.")
+        } catch let error as NSError {
+            self.logger?.logError(error, withMessage: "Cache can't create base directory.")
         }
     }
     
@@ -199,7 +192,7 @@ class DataCache {
                 self.logger?.logError(error, withMessage: "Cache can't get properties of files in base directory.")
                 return
             } catch {
-                
+                return
             }
             
             var cacheSize: UInt = 0
