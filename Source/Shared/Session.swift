@@ -152,9 +152,12 @@ public class Session {
     
     /** Whether session is authorized or not. */
     public func isAuthorized() -> Bool {
-        let keychain = Keychain(configuration: self.configuration)
-        let (accessToken, _) = keychain.accessToken()
-        return accessToken != nil
+        do {
+            let accessToken = try keychain.accessToken()
+            return accessToken != nil
+        } catch {
+            return false
+        }
     }
     
     /** 
@@ -162,8 +165,12 @@ public class Session {
         This method doesn't post `QuadratSessionDidBecomeUnauthorizedNotification`.
     */
     public func deauthorize() {
-        keychain.deleteAccessToken()
-        dataCache.clearCache()
+        do {
+            try keychain.deleteAccessToken()
+            dataCache.clearCache()
+        } catch {
+            
+        }
     }
     
     /** Returns cached image data. */
@@ -179,7 +186,7 @@ public class Session {
             (fileURL, response, error) -> Void in
             self.networkActivityController?.endNetworkActivity(identifier)
             var data: NSData?
-            if fileURL != nil {
+            if let fileURL = fileURL {
                 data = NSData(contentsOfURL: fileURL)
                 self.dataCache.addFileAtURL(fileURL, withKey: "\(URL.hash)")
             }

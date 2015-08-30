@@ -25,20 +25,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.quadratSession = Session(configuration: configuration)
         
         let authorized = self.quadratSession.isAuthorized()
-        println("authorized: ", authorized)
+        print("authorized: ", authorized)
         let URL = NSBundle.mainBundle().URLForResource("Apple_Swift_Logo", withExtension: "png")
         let task = self.quadratSession.users.update(URL!) {
             (response) -> Void in
-            println(response)
+            print(response)
         }
         task.start()
         
         let task2 = self.quadratSession.users.get()
-        let task3 = self.quadratSession.users.friends(userId: "self", parameters: nil)
+        let task3 = self.quadratSession.users.friends("self", parameters: nil)
 
         let multiTask = self.quadratSession.multi.get([task2, task3]){
             (responses) -> Void in
-            println(responses)
+            print(responses)
         }
         multiTask.start()
     }

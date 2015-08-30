@@ -55,9 +55,13 @@ public class Endpoint  {
     private func requestWithPath(path: String, parameters: Parameters?, HTTPMethod: String) -> Request {
         var sessionParameters = session!.configuration.parameters()
         if sessionParameters[Parameter.oauth_token] == nil {
-            let (accessToken, error) = session!.keychain.accessToken()
-            if accessToken != nil  {
-                sessionParameters[Parameter.oauth_token] = accessToken!
+            do {
+                let accessToken = try session!.keychain.accessToken()
+                if let accessToken = accessToken  {
+                    sessionParameters[Parameter.oauth_token] = accessToken
+                }
+            } catch {
+                
             }
         }
         let request = Request(baseURL: self.baseURL, path: (self.endpoint + "/" + path),

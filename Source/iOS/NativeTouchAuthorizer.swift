@@ -75,22 +75,33 @@ class NativeTouchAuthorizer : Authorizer {
         let identifier = networkActivityController?.beginNetworkActivity()
         let URL = Parameter.buildURL(NSURL(string: accessTokenURL)!, parameters: parameters)
         let request = NSURLRequest(URL: URL)
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {
-            (response, data, error) -> Void in
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+            (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             self.networkActivityController?.endNetworkActivity(identifier)
-            if data != nil && response?.MIMEType == "application/json" {
+            if let data = data, let response = response where response.MIMEType == "application/json" {
                 var parseError: NSError?
-                var jsonObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data,
-                    options: NSJSONReadingOptions(0), error: &parseError)
-                if jsonObject != nil && jsonObject!.isKindOfClass(NSDictionary) {
-                    let parameters = jsonObject as! Parameters
-                    self.finilizeAuthorizationWithParameters(parameters)
-                } else {
-                    self.finilizeAuthorization(nil, error: parseError)
+                var jsonObject: AnyObject? = nil
+                do {
+                    jsonObject = try NSJSONSerialization.JSONObjectWithData(data,
+                        options: NSJSONReadingOptions(rawValue: 0))
+                } catch let error as NSError {
+                    parseError = error
+                } catch {
+                }
+                NSOperationQueue.mainQueue().addOperationWithBlock {
+                    if let parameters = jsonObject as? Parameters {
+                        self.finilizeAuthorizationWithParameters(parameters)
+                    } else {
+                        self.finilizeAuthorization(nil, error: parseError)
+                    }
                 }
             } else {
-                self.finilizeAuthorization(nil, error: error)
+                NSOperationQueue.mainQueue().addOperationWithBlock {
+                    self.finilizeAuthorization(nil, error: error)
+                }
+                
             }
         }
+        task.resume()
     }
 }

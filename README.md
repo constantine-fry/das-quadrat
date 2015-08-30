@@ -52,6 +52,11 @@ You can add source code files directly into your project to support iOS 7.0.
 
 ###Usage
 
+#####LSApplicationQueriesSchemes
+On iOS9 an app must declare which URL scheme it wants to check with `canOpenURL:`. 
+To enable native authorization with Foursquare app you must add `foursquareauth` to `LSApplicationQueriesSchemes` array
+in info.plist file in your project.
+
 #####Setup session
 
 ```swift
@@ -95,7 +100,7 @@ multiTask.start()
 
 ###Requirements
 
-Swift 1.2 / iOS 8.0+ / Mac OS X 10.9+
+Swift 2.0 / iOS 8.0+ / Mac OS X 10.9+
 
 ###License
 

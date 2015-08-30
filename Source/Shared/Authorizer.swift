@@ -54,7 +54,7 @@ class Authorizer: AuthorizationDelegate {
     }
     
     func didReachRedirectURL(redirectURL: NSURL) {
-        println("redirectURL" + redirectURL.absoluteString!)
+        print("redirectURL" + redirectURL.absoluteString)
         let parameters = self.extractParametersFromURL(redirectURL)
         self.finilizeAuthorizationWithParameters(parameters)
     }
@@ -72,11 +72,12 @@ class Authorizer: AuthorizationDelegate {
     func finilizeAuthorization(accessToken: String?, error: NSError?) {
         var resultError = error
         var result = accessToken
-        if accessToken != nil {
-            let (saved, keychainError) = self.keychain.saveAccessToken(accessToken!)
-            if !saved {
+        if let accessToken = accessToken {
+            do {
+                try self.keychain.saveAccessToken(accessToken)
+            } catch let error as NSError {
                 result = nil
-                resultError = keychainError
+                resultError = error
             }
         }
         self.completionHandler?(result, resultError)
@@ -88,10 +89,11 @@ class Authorizer: AuthorizationDelegate {
     func cleanupCookiesForURL(URL: NSURL) {
         let storage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
         if storage.cookies != nil {
-            let cookies = storage.cookies as! [NSHTTPCookie]
-            for cookie in cookies {
-                if cookie.domain == URL.host {
-                    storage.deleteCookie(cookie as NSHTTPCookie)
+            if let cookies = storage.cookies {
+                for cookie in cookies {
+                    if cookie.domain == URL.host {
+                        storage.deleteCookie(cookie as NSHTTPCookie)
+                    }
                 }
             }
         }
@@ -109,7 +111,7 @@ class Authorizer: AuthorizationDelegate {
             // testapp123://foursquare?access_token=ACCESS_TOKEN
             queryString = fromURL.query
         }
-        var parameters = queryString?.componentsSeparatedByString("&")
+        let parameters = queryString?.componentsSeparatedByString("&")
         var map = Parameters()
         if parameters != nil {
             for string: String in parameters! {
