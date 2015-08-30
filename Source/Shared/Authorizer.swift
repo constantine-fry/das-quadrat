@@ -72,11 +72,12 @@ class Authorizer: AuthorizationDelegate {
     func finilizeAuthorization(accessToken: String?, error: NSError?) {
         var resultError = error
         var result = accessToken
-        if accessToken != nil {
-            let (saved, keychainError) = self.keychain.saveAccessToken(accessToken!)
-            if !saved {
+        if let accessToken = accessToken {
+            do {
+                try self.keychain.saveAccessToken(accessToken)
+            } catch let error as NSError {
                 result = nil
-                resultError = keychainError
+                resultError = error
             }
         }
         self.completionHandler?(result, resultError)
