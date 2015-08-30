@@ -80,15 +80,13 @@ class NativeTouchAuthorizer : Authorizer {
             self.networkActivityController?.endNetworkActivity(identifier)
             if let data = data, let response = response where response.MIMEType == "application/json" {
                 var parseError: NSError?
-                var jsonObject: AnyObject?
+                var jsonObject: AnyObject? = nil
                 do {
                     jsonObject = try NSJSONSerialization.JSONObjectWithData(data,
                         options: NSJSONReadingOptions(rawValue: 0))
                 } catch let error as NSError {
                     parseError = error
-                    jsonObject = nil
                 } catch {
-                    jsonObject = nil
                 }
                 NSOperationQueue.mainQueue().addOperationWithBlock {
                     if let parameters = jsonObject as? Parameters {
