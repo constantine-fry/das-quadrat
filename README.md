@@ -52,11 +52,6 @@ You can add source code files directly into your project to support iOS 7.0.
 
 ###Usage
 
-#####LSApplicationQueriesSchemes
-On iOS9 an app must declare which URL scheme it wants to check with `canOpenURL:`. 
-To enable native authorization with Foursquare app you must add `foursquareauth` to `LSApplicationQueriesSchemes` array
-in info.plist file in your project.
-
 #####Setup session
 
 ```swift
@@ -96,6 +91,16 @@ let multiTask = self.quadratSession.multi.get([task1, task2]){
 }
 multiTask.start()
 ```
+
+#####Native authorization
+
+The library will attempt to authorize natively via the actual Foursquare app, if installed. It will switch to the app to authorize, and then switch back to your app on success. Currently, there is no mechanism in place in Foursquare's app to switch back to your app if the user cancels the authorization from there, so the user will need to return to your app manually if they choose to cancel the authorization.
+
+If the Foursquare app is not installed on the user's device, your app will instead present a modal view controller containing a `UIWebView` that will display a web-based authorization screen instead. This occurs without leaving your app, and can be cancelled to return to the previous screen.
+
+On iOS9 an app must declare which URL scheme it wants to check with `canOpenURL:`. 
+To enable native authorization with Foursquare app you must add `foursquareauth` to `LSApplicationQueriesSchemes` array
+in info.plist file in your project.
 
 
 ###Requirements
