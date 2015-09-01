@@ -21,11 +21,12 @@ public class Tips: Endpoint {
     // MARK: - General
     
     /** https://developer.foursquare.com/docs/tips/add */
-    public func add(venueId: String, text: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
-        let path = "add"
-        var allParameters = [Parameter.venueId:venueId, Parameter.text:text]
-        allParameters += parameters
-        return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
+    public func add(venueId: String, text: String,
+        parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
+            let path = "add"
+            var allParameters = [Parameter.venueId:venueId, Parameter.text:text]
+            allParameters += parameters
+            return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
     
     // MARK: - Aspects
@@ -51,11 +52,12 @@ public class Tips: Endpoint {
     // MARK: - Actions
     
     /** https://developer.foursquare.com/docs/tips/flag */
-    public func flag(tipId: String, problem: String, parameters: Parameters?,  completionHandler: ResponseClosure? = nil) -> Task {
-        let path = tipId + "/flag"
-        var allParameters = [Parameter.problem:problem]
-        allParameters += parameters
-        return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
+    public func flag(tipId: String, problem: String,
+        parameters: Parameters?,  completionHandler: ResponseClosure? = nil) -> Task {
+            let path = tipId + "/flag"
+            var allParameters = [Parameter.problem:problem]
+            allParameters += parameters
+            return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
     
     /** https://developer.foursquare.com/docs/tips/like */

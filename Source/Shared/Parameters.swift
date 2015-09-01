@@ -168,7 +168,7 @@ public class Parameter {
         var result = String()
         for (key,value) in parameters {
             let parameters = key + "=" + value
-            if count(result) == 0 {
+            if result.characters.count == 0 {
                 result += parameters
             } else {
                 result += "&" + parameters
@@ -177,13 +177,18 @@ public class Parameter {
         return result
     }
     
-    class func buildURL(baseURL: NSURL, parameters: Parameters) -> NSURL {
+    class func buildURL(baseURL: NSURL, parameters: Parameters, preformattedQueryString: String? = nil) -> NSURL {
         let components = NSURLComponents(URL: baseURL, resolvingAgainstBaseURL: false)!
         let query = URLQuery(parameters)
         if components.query != nil {
             components.query = components.query! + "&" + query
         } else {
             components.query = query
+        }
+        
+        if let preformatted = preformattedQueryString {
+            let delimiter = components.query != nil ? "&" : "?"
+            return NSURL(string: components.URL!.absoluteString + delimiter + preformatted)!
         }
         return components.URL!
     }

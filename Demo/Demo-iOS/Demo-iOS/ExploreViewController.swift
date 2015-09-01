@@ -14,7 +14,8 @@ import QuadratTouch
 typealias JSONParameters = [String: AnyObject]
 
 /** Shows result from `explore` endpoint. And has search controller to search in nearby venues. */
-class ExploreViewController: UITableViewController, CLLocationManagerDelegate, SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
+class ExploreViewController: UITableViewController, CLLocationManagerDelegate,
+SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
     var searchController: UISearchController!
     var resultsTableViewController: SearchTableViewController!
     
@@ -43,7 +44,7 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 200
-
+        
         locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.delegate = self
@@ -52,15 +53,29 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
             locationManager.requestWhenInUseAuthorization()
         } else if status == CLAuthorizationStatus.AuthorizedWhenInUse
             || status == CLAuthorizationStatus.AuthorizedAlways {
-            locationManager.startUpdatingLocation()
+                locationManager.startUpdatingLocation()
         } else {
             showNoPermissionsAlert()
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.updateLeftBarButton()
+    }
+    
+    private func updateLeftBarButton() {
+        if session.isAuthorized() {
+            self.navigationItem.leftBarButtonItem?.title = "Logout"
+        } else {
+            self.navigationItem.leftBarButtonItem?.title = "Login"
+        }
+    }
+    
     
     func showNoPermissionsAlert() {
-        let alertController = UIAlertController(title: "No permission", message: "In order to work, app needs your location", preferredStyle: .Alert)
+        let alertController = UIAlertController(title: "No permission",
+            message: "In order to work, app needs your location", preferredStyle: .Alert)
         let openSettings = UIAlertAction(title: "Open settings", style: .Default, handler: {
             (action) -> Void in
             let URL = NSURL(string: UIApplicationOpenSettingsURLString)
@@ -72,7 +87,8 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
     }
     
     func showErrorAlert(error: NSError) {
-        let alertController = UIAlertController(title: "Error", message:error.localizedDescription, preferredStyle: .Alert)
+        let alertController = UIAlertController(title: "Error",
+            message:error.localizedDescription, preferredStyle: .Alert)
         let okAction = UIAlertAction(title: "Ok", style: .Default, handler: {
             (action) -> Void in
             self.dismissViewControllerAnimated(true, completion: nil)
@@ -81,7 +97,7 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
         self.presentViewController(alertController, animated: true, completion: nil)
     }
     
-    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .Denied || status == .Restricted {
             showNoPermissionsAlert()
         } else {
@@ -89,24 +105,27 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
         }
     }
     
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         // Process error.
         // kCLErrorDomain. Not localized.
         showErrorAlert(error)
     }
     
-    func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
-        if venueItems == nil {
-            exploreVenues()
-        }
-        resultsTableViewController.location = newLocation
-        locationManager.stopUpdatingLocation()
+    func locationManager(manager: CLLocationManager,
+        didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+            if venueItems == nil {
+                exploreVenues()
+            }
+            resultsTableViewController.location = newLocation
+            locationManager.stopUpdatingLocation()
     }
     
     func exploreVenues() {
-
-        let location = self.locationManager.location
-        var parameters = location.parameters()
+        guard let location = self.locationManager.location else {
+            return
+        }
+        
+        let parameters = location.parameters()
         let task = self.session.venues.explore(parameters) {
             (result) -> Void in
             if self.venueItems != nil {
@@ -134,11 +153,18 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
         }
         task.start()
     }
-
+    
     @IBAction func authorizeButtonTapped() {
-        session.authorizeWithViewController(self, delegate: self) {
-            (authorized, error) -> Void in
-            //
+        if session.isAuthorized() {
+            session.deauthorize()
+            self.updateLeftBarButton()
+            self.exploreVenues()
+        } else {
+            session.authorizeWithViewController(self, delegate: self) {
+                (authorized, error) -> Void in
+                self.updateLeftBarButton()
+                self.exploreVenues()
+            }
         }
     }
     
@@ -148,9 +174,10 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
         }
         return 0
     }
-
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("venueCell", forIndexPath: indexPath) as! VenueTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("venueCell", forIndexPath: indexPath)
+            as! VenueTableViewCell
         let item = self.venueItems![indexPath.row] as JSONParameters!
         self.configureCellWithItem(cell, item: item)
         return cell
@@ -173,34 +200,35 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
         }
     }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = cell as! VenueTableViewCell
-        let tips = self.venueItems![indexPath.row]["tips"] as? [JSONParameters]
-        if tips != nil  {
-            if let tip = tips!.first {
-                if let user = tip["user"] as? JSONParameters {
-                    if let photo = user["photo"] as? JSONParameters  {
-                        let URL = photoURLFromJSONObject(photo)
-                        if let imageData = session.cachedImageDataForURL(URL)  {
-                            cell.userPhotoImageView.image = UIImage(data: imageData)
-                        } else {
-                            cell.userPhotoImageView.image = nil
-                            session.downloadImageAtURL(URL) {
-                                (imageData, error) -> Void in
-                                let cell = tableView.cellForRowAtIndexPath(indexPath) as? VenueTableViewCell
-                                if cell != nil && imageData != nil {
-                                    let image = UIImage(data: imageData!)
-                                    cell!.userPhotoImageView.image = image
+    override func tableView(tableView: UITableView,
+        willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+            let cell = cell as! VenueTableViewCell
+            let tips = self.venueItems![indexPath.row]["tips"] as? [JSONParameters]
+            if tips != nil  {
+                if let tip = tips!.first {
+                    if let user = tip["user"] as? JSONParameters {
+                        if let photo = user["photo"] as? JSONParameters  {
+                            let URL = photoURLFromJSONObject(photo)
+                            if let imageData = session.cachedImageDataForURL(URL)  {
+                                cell.userPhotoImageView.image = UIImage(data: imageData)
+                            } else {
+                                cell.userPhotoImageView.image = nil
+                                session.downloadImageAtURL(URL) {
+                                    (imageData, error) -> Void in
+                                    let cell = tableView.cellForRowAtIndexPath(indexPath) as? VenueTableViewCell
+                                    if cell != nil && imageData != nil {
+                                        let image = UIImage(data: imageData!)
+                                        cell!.userPhotoImageView.image = image
+                                    }
                                 }
+                                
                             }
                             
-                        }
+                        } // let photo
                         
-                    } // let photo
-                    
+                    }
                 }
             }
-        }
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -230,11 +258,11 @@ class ExploreViewController: UITableViewController, CLLocationManagerDelegate, S
     }
     
     func sessionWillPresentAuthorizationViewController(controller: AuthorizationViewController) {
-        println("Will present authorization view controller.")
+        print("Will present authorization view controller.")
     }
     
     func sessionWillDismissAuthorizationViewController(controller: AuthorizationViewController) {
-        println("Will disimiss authorization view controller.")
+        print("Will disimiss authorization view controller.")
     }
 }
 
@@ -257,7 +285,7 @@ extension CLLocation {
 
 class Storyboard: UIStoryboard {
     class func create(name: String) -> UIViewController {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(name) as! UIViewController
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(name)
     }
 }
 

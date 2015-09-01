@@ -14,12 +14,14 @@ class TouchAuthorizer : Authorizer {
     weak var delegate: SessionAuthorizationDelegate?
     var authorizationViewController: AuthorizationViewController?
     
-    func authorize(viewController: UIViewController, delegate: SessionAuthorizationDelegate?, completionHandler: (String?, NSError?) -> Void) {
+    func authorize(viewController: UIViewController, delegate: SessionAuthorizationDelegate?,
+        completionHandler: (String?, NSError?) -> Void) {
         
-        authorizationViewController = AuthorizationViewController(authorizationURL: authorizationURL, redirectURL: redirectURL, delegate: self)
+        authorizationViewController = AuthorizationViewController(authorizationURL: authorizationURL,
+            redirectURL: redirectURL, delegate: self)
         authorizationViewController!.shouldControllNetworkActivityIndicator = shouldControllNetworkActivityIndicator
 
-        let navigationController = UINavigationController(rootViewController: authorizationViewController!)
+        let navigationController = AuthorizationNavigationController(rootViewController: authorizationViewController!)
         navigationController.modalPresentationStyle = .FormSheet
         delegate?.sessionWillPresentAuthorizationViewController?(authorizationViewController!)
         viewController.presentViewController(navigationController, animated: true, completion: nil)

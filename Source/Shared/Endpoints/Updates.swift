@@ -35,7 +35,7 @@ public class Updates: Endpoint {
     /** https://developer.foursquare.com/docs/updates/marknotificationsread */
     public func notifications(highWatermark: String, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "marknotificationsread"
-        var parameters = [Parameter.highWatermark:highWatermark]
+        let parameters = [Parameter.highWatermark: highWatermark]
         return self.postWithPath(path, parameters: parameters, completionHandler: completionHandler)
     }
 }

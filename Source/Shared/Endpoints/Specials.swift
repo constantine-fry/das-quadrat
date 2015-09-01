@@ -14,10 +14,11 @@ public class Specials: Endpoint {
     }
     
     /** https://developer.foursquare.com/docs/specials/specials */
-    public func get(specialId: String, venueId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
-        var allParameters = [Parameter.venueId:venueId]
-        allParameters += parameters
-        return self.getWithPath(specialId, parameters: allParameters, completionHandler: completionHandler)
+    public func get(specialId: String, venueId: String,
+        parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
+            var allParameters = [Parameter.venueId:venueId]
+            allParameters += parameters
+            return self.getWithPath(specialId, parameters: allParameters, completionHandler: completionHandler)
     }
     
     // MARK: - General
@@ -45,10 +46,11 @@ public class Specials: Endpoint {
     // MARK: - Actions
     
     /** https://developer.foursquare.com/docs/specials/flag */
-    public func flag(specialId:String, venueId: String, problem: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
-        let path = "add"
-        var allParameters = ["ID": specialId, Parameter.venueId:venueId, Parameter.problem:problem]
-        allParameters += allParameters
-        return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
+    public func flag(specialId:String, venueId: String,
+        problem: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
+            let path = "add"
+            var allParameters = ["ID": specialId, Parameter.venueId:venueId, Parameter.problem:problem]
+            allParameters += allParameters
+            return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
 }

@@ -5,6 +5,12 @@
       location = "group:README.md">
    </FileRef>
    <FileRef
+      location = "group:Changelog.md">
+   </FileRef>
+   <FileRef
+      location = "group:QuadratTouch.podspec">
+   </FileRef>
+   <FileRef
       location = "group:Source/Quadrat.xcodeproj">
    </FileRef>
    <FileRef

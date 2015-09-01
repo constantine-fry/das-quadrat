@@ -34,7 +34,7 @@ class SearchTableViewController: UITableViewController, UISearchResultsUpdating 
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         // Strip out all the leading and trailing spaces.
         let whitespaceCharacterSet = NSCharacterSet.whitespaceCharacterSet()
-        let strippedString = searchController.searchBar.text.stringByTrimmingCharactersInSet(whitespaceCharacterSet)
+        let strippedString = searchController.searchBar.text!.stringByTrimmingCharactersInSet(whitespaceCharacterSet)
         
         if self.location == nil {
             return
@@ -54,7 +54,7 @@ class SearchTableViewController: UITableViewController, UISearchResultsUpdating 
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) 
         let venue = venues[indexPath.row]
         if let venueLocation = venue["location"] as? JSONParameters {
             var detailText = ""

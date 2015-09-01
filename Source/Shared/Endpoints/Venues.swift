@@ -21,11 +21,12 @@ public class Venues: Endpoint {
     // MARK: - General
     
     /** https://developer.foursquare.com/docs/venues/add */
-    public func add(name: String, ll: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
-        let path = "add"
-        var allParameters = [Parameter.name:name, Parameter.ll:ll]
-        allParameters += parameters
-        return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
+    public func add(name: String, ll: String,
+        parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
+            let path = "add"
+            var allParameters = [Parameter.name:name, Parameter.ll:ll]
+            allParameters += parameters
+            return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
     
     /** https://developer.foursquare.com/docs/venues/categories */
@@ -57,7 +58,7 @@ public class Venues: Endpoint {
         let path = "suggestcompletion"
         return self.getWithPath(path, parameters: parameters, completionHandler: completionHandler)
     }
-
+    
     /** https://developer.foursquare.com/docs/venues/timeseries */
     public func timeseries(parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "timeseries"
@@ -169,11 +170,12 @@ public class Venues: Endpoint {
     }
     
     /** https://developer.foursquare.com/docs/venues/flag */
-    public func flag(venueId: String, problem: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
-        let path = venueId + "/flag"
-        var allParameters = [Parameter.problem:problem]
-        allParameters += parameters
-        return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
+    public func flag(venueId: String, problem: String,
+        parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
+            let path = venueId + "/flag"
+            var allParameters = [Parameter.problem:problem]
+            allParameters += parameters
+            return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
     
     /** https://developer.foursquare.com/docs/venues/like */
@@ -184,17 +186,19 @@ public class Venues: Endpoint {
     }
     
     /** https://developer.foursquare.com/docs/venues/proposeedit */
-    public func proposeedit(venueId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
-        let path = venueId + "/proposeedit"
-        return self.postWithPath(path, parameters: parameters, completionHandler: completionHandler)
+    public func proposeedit(venueId: String,
+        parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
+            let path = venueId + "/proposeedit"
+            return self.postWithPath(path, parameters: parameters, completionHandler: completionHandler)
     }
     
     /** https://developer.foursquare.com/docs/venues/setrole */
-    public func setrole(venueId: String, userId: String, role: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
-        let path = venueId + "/setrole"
-        var allParameters = [Parameter.userId:userId, Parameter.role:role]
-        allParameters += parameters
-        return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
+    public func setrole(venueId: String, userId: String, role: String,
+        parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
+            let path = venueId + "/setrole"
+            var allParameters = [Parameter.userId:userId, Parameter.role:role]
+            allParameters += parameters
+            return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
     
     /** https://developer.foursquare.com/docs/venues/setsinglelocation */

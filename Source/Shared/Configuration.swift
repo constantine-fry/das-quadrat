@@ -113,10 +113,13 @@ public struct Configuration {
     public init(client: Client, version: String?, accessToken: String?) {
         self.client = client
         
-        let languageCode = NSLocale.preferredLanguages().first as! String
-        let supportedCodes = ["en", "es", "fr", "de", "it", "ja", "th", "tr", "ko", "ru", "pt", "id"]
-        if contains(supportedCodes, languageCode) {
-            self.locale = languageCode
+        if let languageCode = NSLocale.preferredLanguages().first {
+            let supportedCodes = ["en", "es", "fr", "de", "it", "ja", "th", "tr", "ko", "ru", "pt", "id"]
+            if supportedCodes.contains(languageCode) {
+                self.locale = languageCode
+            } else {
+                self.locale = "en"
+            }
         } else {
             self.locale = "en"
         }
