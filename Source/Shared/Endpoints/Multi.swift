@@ -33,7 +33,7 @@ public class Multi: Endpoint {
           
             queries.append(path)
         }
-        let queryString = encodeURIComponent(",".join(queries))
+        let queryString = encodeURIComponent(queries.joinWithSeparator(","))
         
         let request =
         Request(baseURL: firstTask.request.baseURL,
