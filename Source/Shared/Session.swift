@@ -120,6 +120,7 @@ public class Session {
         self.configuration = configuration
         self.completionQueue = completionQueue
         let URLConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        URLConfiguration.timeoutIntervalForRequest = configuration.timeoutInterval
         let delegateQueue = NSOperationQueue()
         delegateQueue.maxConcurrentOperationCount = 1
         self.URLSession = NSURLSession(configuration: URLConfiguration, delegate: nil, delegateQueue: delegateQueue)
