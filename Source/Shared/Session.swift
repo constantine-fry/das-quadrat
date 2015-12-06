@@ -113,7 +113,7 @@ public class Session {
         return Multi(session: self)
         }()
     
-    public init(configuration: Configuration, completionQueue: NSOperationQueue) {
+    public init(configuration: Configuration, completionQueue: NSOperationQueue = NSOperationQueue.mainQueue()) {
         if configuration.shouldControllNetworkActivityIndicator {
             networkActivityController = NetworkActivityIndicatorController()
         }
@@ -132,13 +132,9 @@ public class Session {
         keychain.logger = self.logger
     }
     
-    public convenience init(configuration: Configuration) {
-        self.init(configuration:configuration, completionQueue: NSOperationQueue.mainQueue())
-    }
-    
-    public class func setupSharedSessionWithConfiguration(configuration: Configuration) {
+    public class func setupSharedSessionWithConfiguration(configuration: Configuration, completionQueue: NSOperationQueue = NSOperationQueue.mainQueue()) {
         if _sharedSession == nil {
-            _sharedSession = Session(configuration: configuration)
+            _sharedSession = Session(configuration: configuration, completionQueue: completionQueue)
         } else {
             fatalError("You shouldn't call call setupSharedSessionWithConfiguration twice!")
         }
