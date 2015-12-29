@@ -33,9 +33,9 @@ class Keychain {
         
         var accountAttribute: String
         if let userTag = configuration.userTag {
-            accountAttribute = configuration.client.id + "_" + userTag
+            accountAttribute = configuration.client.identifier + "_" + userTag
         } else {
-            accountAttribute = configuration.client.id
+            accountAttribute = configuration.client.identifier
         }
         keychainQuery = [
             kSecClass           as String  : kSecClassGenericPassword,

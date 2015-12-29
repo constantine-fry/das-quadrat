@@ -20,7 +20,7 @@ class AuthorizationWindowController: NSWindowController {
     var authorizationURL: NSURL!
     var redirectURL: NSURL!
     weak var delegate: AuthorizationDelegate?
-    var status: AuthorizationWindowControllerStatus = .None {
+    private var status: AuthorizationWindowControllerStatus = .None {
         didSet {
             self.updateUI()
         }
