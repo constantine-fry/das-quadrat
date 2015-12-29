@@ -11,8 +11,8 @@ disabled_rules:
 line_length: 120
 
 type_body_length:
-  - 300 # warning
-  - 400 # error
+  - 250 # warning
+  - 300 # error
 
 function_body_length:
   - 40 # warning
