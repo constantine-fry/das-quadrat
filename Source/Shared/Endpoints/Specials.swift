@@ -46,7 +46,7 @@ public class Specials: Endpoint {
     // MARK: - Actions
     
     /** https://developer.foursquare.com/docs/specials/flag */
-    public func flag(specialId:String, venueId: String,
+    public func flag(specialId: String, venueId: String,
         problem: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
             let path = "add"
             var allParameters = ["ID": specialId, Parameter.venueId:venueId, Parameter.problem:problem]

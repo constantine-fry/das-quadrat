@@ -23,46 +23,48 @@ public class Result: CustomStringConvertible {
     /** 
         HTTP response status code.
     */
-    public var HTTPSTatusCode   : Int?
+    public var HTTPSTatusCode: Int?
     
     /** 
         HTTP response headers.
         Can contain `RateLimit-Remaining` and `X-RateLimit-Limit`.
         Read about `Rate Limits` <https://developer.foursquare.com/overview/ratelimits>.
     */
-    public var HTTPHeaders      : [NSObject:AnyObject]?
+    public var HTTPHeaders: [NSObject:AnyObject]?
     
     /** 
         The URL which has been requested. 
     */
-    public var URL              : NSURL?
+    public var URL: NSURL?
     
     
     /*
         Can contain error with following error domains:
-            QuadratResponseErrorDomain  - in case of error in `meta` parameter of Foursquare response. Error doesn't have localized description, but has `QuadratResponseErrorTypeKey` and `QuadratResponseErrorDetailKey` parameters in `userUnfo`.
+            QuadratResponseErrorDomain  - in case of error in `meta` parameter of Foursquare response. 
+                Error doesn't have localized description, but has `QuadratResponseErrorTypeKey`
+                and `QuadratResponseErrorDetailKey` parameters in `userUnfo`.
             NSURLErrorDomain            - in case of some networking problem.
             NSCocoaErrorDomain          - in case of error during JSON parsing.
     */
-    public var error            : NSError?
+    public var error: NSError?
     
     /** 
         A response. Extracted from JSON `response` field.
         Can be empty in case of error or `multi` request. 
         If you are doung `multi` request use `subresponses` property
     */
-    public var response         : [String:AnyObject]?
+    public var response: [String:AnyObject]?
     
     /** 
         Responses returned from `multi` endpoint. Subresponses never have HTTP headers and status code.
         Extracted from JSON `responses` field.
     */
-    public var results          : [Result]?
+    public var results: [Result]?
     
     /** 
         A notifications. Extracted from JSON `notifications` field.
     */
-    public var notifications    : [[String:AnyObject]]?
+    public var notifications: [[String:AnyObject]]?
     
     init() {
         
@@ -116,7 +118,7 @@ extension Result {
         return result
     }
     
-    class func resultFromURLSessionResponse(response:NSURLResponse?, data: NSData?, error: NSError?) -> Result {
+    class func resultFromURLSessionResponse(response: NSURLResponse?, data: NSData?, error: NSError?) -> Result {
         let HTTPResponse = response as? NSHTTPURLResponse
         var JSONResult: [String: AnyObject]?
         var JSONError = error

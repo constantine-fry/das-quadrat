@@ -16,14 +16,14 @@ public enum FoursquareResponse {
 
 
 public class Task {
-    private var         task               : NSURLSessionTask?
-    private weak var    session            : Session?
-    private let         completionHandler  : ResponseClosure?
+    private var task: NSURLSessionTask?
+    private weak var session: Session?
+    private let completionHandler: ResponseClosure?
     
-    var                 request            : Request
+    var request: Request
     
     /** The identifier of network activity. */
-    var                 networkActivityId  : Int?
+    var networkActivityId: Int?
     
     init (session: Session, request: Request, completionHandler: ResponseClosure?) {
         self.session = session
@@ -38,7 +38,7 @@ public class Task {
         if self.session == nil {
             fatalError("No session for this task.")
         }
-        if (self.task == nil) {
+        if self.task == nil {
             self.constructURLSessionTask()
         }
         if self.task != nil {

@@ -10,9 +10,9 @@ import Foundation
 
 /** Client configuration. */
 public struct Client {
-    let id : String
-    let secret : String
-    let redirectURL : String
+    let id: String
+    let secret: String
+    let redirectURL: String
     
     public init(clientID: String, clientSecret: String, redirectURL: String) {
         self.id = clientID
@@ -47,13 +47,13 @@ struct Server {
 public struct Configuration {
     
     /** The Oauth2 specific information of application. */
-    let client          : Client
+    let client: Client
     
     /** The server specific information. */
-    let server          : Server = Server()
+    let server: Server = Server()
     
     /** The access token. May be set for some tests. */
-    public var accessToken     : String?
+    public var accessToken: String?
     
     /**
         Whether session should control network activity indicator or not. Defaults to false.
@@ -66,34 +66,34 @@ public struct Configuration {
         The `v` parameter of API. Global parameter for session.
         Date in format YYYYMMDD.
     */
-    public var version         : String = "20140503"
+    public var version = "20140503"
     
     /** 
-        The `m` parameter of API. Global parameter for session.
+        The `m` parameter of API. Global parameter for session. Can be "swarm", "foursquare" or nil.
     */
-    public var mode            : String = "swarm"
+    public var mode = "swarm"
     
     /** 
         The `locale` parameter of API. Global parameter for session.
         Two-letters language code. For example: "en" or "de"
         Default value is system language.
     */
-    public var locale          : String
+    public var locale: String
     
     /** The user tag. */
-    public var userTag         : String?
+    public var userTag: String?
     
     /**
         Timeout interval for network request, in seconds.
         Default value is 60 seconds.
     */
-    public var timeoutInterval  : NSTimeInterval = 60.0
+    public var timeoutInterval: NSTimeInterval = 60.0
     
     /** 
         Makes session print all errors and responses.
         For advance logging see `Logger` protocol and `logger` property on `Session`.
     */
-    public var debugEnabled     : Bool = false
+    public var debugEnabled: Bool = false
     
     /** 
         Creates Configuration with specified client.

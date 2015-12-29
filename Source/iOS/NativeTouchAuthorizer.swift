@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 
-class NativeTouchAuthorizer : Authorizer {
-    private var configuration : Configuration!
+class NativeTouchAuthorizer: Authorizer {
+    private var configuration: Configuration!
     
     /** Network activity controller. */
     private var networkActivityController: NetworkActivityIndicatorController?
@@ -42,7 +42,7 @@ class NativeTouchAuthorizer : Authorizer {
     }
     
     func handleURL(URL: NSURL) -> Bool {
-        if (URL.scheme == self.redirectURL.scheme) {
+        if URL.scheme == self.redirectURL.scheme {
             self.didReachRedirectURL(URL)
             return true
         }

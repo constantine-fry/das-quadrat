@@ -26,90 +26,90 @@ public typealias Parameters = [String:String]
 */
 public let QuadratSessionDidBecomeUnauthorizedNotification = "QuadratSessionDidBecomeUnauthorizedNotification"
 
-private var _sharedSession : Session?
+private var _sharedSession: Session?
 
 public class Session {
     
     /** The coniguration. */
-    let configuration       : Configuration
+    let configuration: Configuration
     
     /** The session which perform all network requests. */
-    let URLSession          : NSURLSession
+    let URLSession: NSURLSession
     
     /** The current authorizer. */
-    var authorizer          : Authorizer?
+    var authorizer: Authorizer?
     
     /** Used as image cache for downloaded files. */
-    let dataCache           : DataCache
+    let dataCache: DataCache
     
     /** The queue on which tasks have to call completion handlers. */
-    let completionQueue     : NSOperationQueue
+    let completionQueue: NSOperationQueue
    
     /** The keychain. */
-    let keychain            : Keychain
+    let keychain: Keychain
     
     /** Manages network activity indicator. */
-    var networkActivityController : NetworkActivityIndicatorController?
+    var networkActivityController: NetworkActivityIndicatorController?
 
     /**
         One can create custom logger to process all errors and responses in one place.
         Main purpose is to debug or to track all the errors accured in framework via some analytic tool.
     */
-    public var logger       : Logger?
+    public var logger: Logger?
     
-    public lazy var users : Users = {
+    public lazy var users: Users = {
         return Users(session: self)
         }()
     
-    public lazy var venues : Venues = {
+    public lazy var venues: Venues = {
         return Venues(session: self)
         }()
     
-    public lazy var venueGroups : VenueGroups = {
+    public lazy var venueGroups: VenueGroups = {
         return VenueGroups(session: self)
         }()
     
-    public lazy var checkins : Checkins = {
+    public lazy var checkins: Checkins = {
         return Checkins(session: self)
         }()
     
-    public lazy var tips : Tips = {
+    public lazy var tips: Tips = {
         return Tips(session: self)
         }()
     
-    public lazy var lists : Lists = {
+    public lazy var lists: Lists = {
         return Lists(session: self)
         }()
     
-    public lazy var updates : Updates = {
+    public lazy var updates: Updates = {
         return Updates(session: self)
         }()
     
-    public lazy var photos : Photos = {
+    public lazy var photos: Photos = {
         return Photos(session: self)
         }()
     
-    public lazy var settings : Settings = {
+    public lazy var settings: Settings = {
         return Settings(session: self)
         }()
     
-    public lazy var specials : Specials = {
+    public lazy var specials: Specials = {
         return Specials(session: self)
         }()
     
-    public lazy var events : Events = {
+    public lazy var events: Events = {
         return Events(session: self)
         }()
     
-    public lazy var pages : Pages = {
+    public lazy var pages: Pages = {
         return Pages(session: self)
         }()
     
-    public lazy var pageUpdates : PageUpdates = {
+    public lazy var pageUpdates: PageUpdates = {
         return PageUpdates(session: self)
         }()
     
-    public lazy var multi : Multi = {
+    public lazy var multi: Multi = {
         return Multi(session: self)
         }()
     
@@ -132,12 +132,13 @@ public class Session {
         keychain.logger = self.logger
     }
     
-    public class func setupSharedSessionWithConfiguration(configuration: Configuration, completionQueue: NSOperationQueue = NSOperationQueue.mainQueue()) {
-        if _sharedSession == nil {
-            _sharedSession = Session(configuration: configuration, completionQueue: completionQueue)
-        } else {
-            fatalError("You shouldn't call call setupSharedSessionWithConfiguration twice!")
-        }
+    public class func setupSharedSessionWithConfiguration(configuration: Configuration,
+        completionQueue: NSOperationQueue = NSOperationQueue.mainQueue()) {
+            if _sharedSession == nil {
+                _sharedSession = Session(configuration: configuration, completionQueue: completionQueue)
+            } else {
+                fatalError("You shouldn't call call setupSharedSessionWithConfiguration twice!")
+            }
     }
     
     public class func sharedSession() -> Session {
@@ -210,6 +211,3 @@ public class Session {
     }
 
 }
-
-
-

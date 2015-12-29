@@ -14,8 +14,8 @@ protocol AuthorizationDelegate : class {
 }
 
 class Authorizer: AuthorizationDelegate {
-    var redirectURL : NSURL
-    var authorizationURL : NSURL
+    var redirectURL: NSURL
+    var authorizationURL: NSURL
     var completionHandler: ((String?, NSError?) -> Void)?
     let keychain: Keychain
     var shouldControllNetworkActivityIndicator = false
@@ -40,7 +40,7 @@ class Authorizer: AuthorizationDelegate {
         self.cleanupCookiesForURL(authorizationURL)
     }
     
-    init(authorizationURL: NSURL, redirectURL: NSURL, keychain:Keychain) {
+    init(authorizationURL: NSURL, redirectURL: NSURL, keychain: Keychain) {
         self.authorizationURL = authorizationURL
         self.redirectURL = redirectURL
         self.keychain = keychain

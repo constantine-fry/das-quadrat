@@ -13,7 +13,7 @@ func encodeURIComponent(string: String) -> String {
 }
 
 public class Multi: Endpoint {
-    override var endpoint   : String {
+    override var endpoint: String {
         return "multi"
     }
     
@@ -21,7 +21,7 @@ public class Multi: Endpoint {
         Returns task to make request to `multi` endpoint.
         Use `subresponses` property of response object.
     */
-    public func get(tasks:[Task], completionHandler: ResponseClosure) -> Task {
+    public func get(tasks: [Task], completionHandler: ResponseClosure) -> Task {
         let firstTask = tasks.first as Task!
         var queries = [String]()
         for task in tasks {
@@ -50,7 +50,7 @@ public class Multi: Endpoint {
     
     func makeQuery(parameters: Parameters) -> String {
         var query = String()
-        for (key,value) in parameters {
+        for (key, value) in parameters {
             let encodedValue = encodeURIComponent(value)
             query += key + "=" + encodedValue + "&"
         }

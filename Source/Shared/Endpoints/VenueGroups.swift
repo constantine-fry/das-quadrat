@@ -14,7 +14,7 @@ public class VenueGroups: Endpoint {
     }
     
     /** https://developer.foursquare.com/docs/venuegroups/venuegroups */
-    public func get(groupId: String, completionHandler:  ResponseClosure? = nil) -> Task {
+    public func get(groupId: String, completionHandler: ResponseClosure? = nil) -> Task {
         return self.getWithPath(groupId, parameters: nil, completionHandler: completionHandler)
     }
     

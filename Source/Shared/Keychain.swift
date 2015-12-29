@@ -19,7 +19,7 @@ public let QuadratKeychainOSSatusErrorDomain = "QuadratKeychainOSSatusErrorDomai
 class Keychain {
     
     /** Logger to log all errors. */
-    var logger : Logger?
+    var logger: Logger?
     
     /** Query to get keychain items. */
     private let keychainQuery: [String:AnyObject]

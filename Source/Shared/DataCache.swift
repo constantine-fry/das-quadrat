@@ -32,7 +32,7 @@ private let privateQueue    = NSOperationQueue()
 class DataCache {
     
     /** Logger to log all errors. */
-    var logger : Logger?
+    var logger: Logger?
     
     /** The URL to directory where we put all the files. */
     private let directoryURL: NSURL
@@ -50,7 +50,7 @@ class DataCache {
     private let cacheConfiguration  = DataCacheConfiguration()
     
     init(name: String?) {
-        cache.totalCostLimit = Int(cacheConfiguration.maxMemoryCacheSize);
+        cache.totalCostLimit = Int(cacheConfiguration.maxMemoryCacheSize)
         let directoryName = "net.foursquare.quadrat"
         let subdirectiryName = (name != nil) ? ( "Cache" + name! ) : "DefaultCache"
         let cacheURL: NSURL?

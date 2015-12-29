@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-enum AuthorizationViewControllerRequestStatus  {
+private enum AuthorizationViewControllerRequestStatus {
     case None               // View controller has been initialized.
     case Loading            // Web view loading page.
     case Loaded             // Page has been loaded successfully.
@@ -24,9 +24,9 @@ public class AuthorizationNavigationController: UINavigationController {
     
 }
 
-public class AuthorizationViewController : UIViewController, UIWebViewDelegate {
-    private let authorizationURL    : NSURL
-    private let redirectURL         : NSURL
+public class AuthorizationViewController: UIViewController, UIWebViewDelegate {
+    private let authorizationURL: NSURL
+    private let redirectURL: NSURL
     
     /**
         Whether view controller should controll network activity indicator or not.
@@ -34,17 +34,17 @@ public class AuthorizationViewController : UIViewController, UIWebViewDelegate {
     */
     internal var shouldControllNetworkActivityIndicator = false
     
-    private var networkActivityIndicator    : NetworkActivityIndicatorController?
-    private var activityIdentifier          : Int?
+    private var networkActivityIndicator: NetworkActivityIndicatorController?
+    private var activityIdentifier: Int?
     
-    weak internal var authorizationDelegate : AuthorizationDelegate?
+    weak internal var authorizationDelegate: AuthorizationDelegate?
     
-    @IBOutlet public weak var webView       : UIWebView!
+    @IBOutlet public weak var webView: UIWebView!
     
-    @IBOutlet private weak var statusLabel  : UILabel!
-    @IBOutlet private weak var indicator    : UIActivityIndicatorView!
+    @IBOutlet private weak var statusLabel: UILabel!
+    @IBOutlet private weak var indicator: UIActivityIndicatorView!
     
-    private var status : AuthorizationViewControllerRequestStatus = .None {
+    private var status: AuthorizationViewControllerRequestStatus = .None {
         didSet {
             self.updateUI()
         }

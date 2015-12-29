@@ -73,4 +73,3 @@ public class Tips: Endpoint {
         return self.postWithPath(path, parameters: nil, completionHandler: completionHandler)
     }
 }
-
