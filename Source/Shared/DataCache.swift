@@ -165,77 +165,72 @@ class DataCache {
     /** Removes expired files. In addition removes 1/4 of files if total size exceeds `maxDiskCacheSize`. */
     private func cleanupCache() {
         privateQueue.addOperationWithBlock {
-            let expirationDate = NSDate(timeIntervalSinceNow: -self.cacheConfiguration.maxCacheAge)
-            let properties = [NSURLContentModificationDateKey, NSURLTotalFileAllocatedSizeKey]
-            
-            var fileURLs = [NSURL]()
+            let fileURLs = self.getFilesToRemove()
+            fileURLs.forEach {
+                _ = try? self.fileManager.removeItemAtURL($0)
+            }
+        }
+    }
+    
+    private func getFilesToRemove() -> [NSURL] {
+        let expirationDate = NSDate(timeIntervalSinceNow: -self.cacheConfiguration.maxCacheAge)
+        let properties = [NSURLContentModificationDateKey, NSURLTotalFileAllocatedSizeKey]
+        var cacheSize: UInt = 0
+        var expiredFiles = [NSURL]()
+        var validFiles = [NSURL]()
+        let fileURLs = self.getCachedFileURLs()
+        /** Searches for expired files and calculates total size. */
+        fileURLs.forEach {
+            (aFileURL) -> () in
+            let values: [String : AnyObject]? = try? aFileURL.resourceValuesForKeys(properties)
+            if let values = values, let modificationDate = values[NSURLContentModificationDateKey] as? NSDate {
+                if modificationDate.laterDate(expirationDate).isEqualToDate(modificationDate) {
+                    validFiles.append(aFileURL)
+                    if let fileSize = values[NSURLTotalFileAllocatedSizeKey] as? UInt {
+                        cacheSize += fileSize
+                    }
+                } else {
+                    expiredFiles.append(aFileURL)
+                }
+            }
+        }
+        
+        if cacheSize > self.cacheConfiguration.maxDiskCacheSize {
+            validFiles = self.sortFileURLByModificationDate(validFiles)
+            /** Let's just remove 1/4 of all files. */
+            validFiles.removeRange(Range(start: 0, end: validFiles.count / 4))
+            expiredFiles += validFiles
+        }
+        return expiredFiles
+    }
+    
+    private func getCachedFileURLs() -> [NSURL] {
+        let properties = [NSURLContentModificationDateKey, NSURLTotalFileAllocatedSizeKey]
+        do {
+            return try self.fileManager.contentsOfDirectoryAtURL(self.directoryURL,
+                includingPropertiesForKeys: properties, options: .SkipsHiddenFiles)
+        } catch let error as NSError {
+            self.logger?.logError(error, withMessage: "Cache can't get properties of files in base directory.")
+            return [NSURL]()
+        }
+    }
+    
+    private func sortFileURLByModificationDate(urls: [NSURL]) -> [NSURL] {
+        return urls.sort {
+            (url1, url2) -> Bool in
+            let dateKey = [NSURLContentModificationDateKey]
             do {
-                fileURLs = try self.fileManager.contentsOfDirectoryAtURL(self.directoryURL,
-                    includingPropertiesForKeys: properties, options: .SkipsHiddenFiles)
-            } catch let error as NSError {
-                self.logger?.logError(error, withMessage: "Cache can't get properties of files in base directory.")
-                return
+                let values1 = try url1.resourceValuesForKeys(dateKey) as? [String: NSDate]
+                let values2 = try url2.resourceValuesForKeys(dateKey) as? [String: NSDate]
+                if let date1 = values1?[NSURLContentModificationDateKey] {
+                    if let date2 = values2?[NSURLContentModificationDateKey] {
+                        return date1.compare(date2) == .OrderedAscending
+                    }
+                }
             } catch {
-                return
+                return false
             }
-            
-            var cacheSize: UInt = 0
-            var expiredFiles = [NSURL]()
-            var validFiles = [NSURL]()
-            
-            /** Searching for expired files and calculation total size. */
-            for aFileURL in fileURLs {
-                let values: [String : AnyObject]
-                do {
-                    values = try aFileURL.resourceValuesForKeys(properties)
-                } catch {
-                    continue
-                }
-
-                if let modificationDate = values[NSURLContentModificationDateKey] as? NSDate {
-                    if modificationDate.laterDate(expirationDate).isEqualToDate(modificationDate) {
-                        validFiles.append(aFileURL)
-                        if let fileSize = values[NSURLTotalFileAllocatedSizeKey] as? UInt {
-                            cacheSize += fileSize
-                        }
-                    } else {
-                        expiredFiles.append(aFileURL)
-                    }
-                }
-            }
-
-            if cacheSize > self.cacheConfiguration.maxDiskCacheSize {
-                /** Sorting files by modification date. From oldest to newest. */
-                validFiles.sortInPlace {
-                    (url1: NSURL, url2: NSURL) -> Bool in
-                    let dateKey = [NSURLContentModificationDateKey]
-                    do {
-                        let values1 = try url1.resourceValuesForKeys(dateKey) as? [String: NSDate]
-                        let values2 = try url2.resourceValuesForKeys(dateKey) as? [String: NSDate]
-                        if let date1 = values1?[NSURLContentModificationDateKey] {
-                            if let date2 = values2?[NSURLContentModificationDateKey] {
-                                return date1.compare(date2) == .OrderedAscending
-                            }
-                        }
-                    } catch {
-                      return false
-                    }
-                    return false
-                }
-                
-                /** Let's just remove 1/4 of all files. */
-                validFiles.removeRange(Range(start: 0, end: validFiles.count / 4))
-                expiredFiles += validFiles
-            }
-
-            for URL in expiredFiles {
-                do {
-                    try self.fileManager.removeItemAtURL(URL as NSURL)
-                } catch let error as NSError {
-                     self.logger?.logError(error, withMessage: "Cache can't remove file.")
-                } catch {
-                }
-            }
+            return false
         }
     }
     
