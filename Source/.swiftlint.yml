@@ -25,3 +25,4 @@ file_length:
 variable_name_max_length:
   - 60 # warning
   - 70 # error
+  
