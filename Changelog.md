@@ -1,5 +1,8 @@
 # Das Quadrat Changelog
 
+* Add SwiftLint to fix code style.
+* Make mode property on Configuration optional.
+
 __1.1.0__
 * Migrate to Swift 2.0.
 
