@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 
-class NativeTouchAuthorizer : Authorizer {
-    private var configuration : Configuration!
+class NativeTouchAuthorizer: Authorizer {
+    private var configuration: Configuration!
     
     /** Network activity controller. */
     private var networkActivityController: NetworkActivityIndicatorController?
@@ -42,7 +42,7 @@ class NativeTouchAuthorizer : Authorizer {
     }
     
     func handleURL(URL: NSURL) -> Bool {
-        if (URL.scheme == self.redirectURL.scheme) {
+        if URL.scheme == self.redirectURL.scheme {
             self.didReachRedirectURL(URL)
             return true
         }
@@ -72,36 +72,38 @@ class NativeTouchAuthorizer : Authorizer {
             Parameter.code          : code,
             Parameter.grant_type    : "authorization_code"
         ]
-        let identifier = networkActivityController?.beginNetworkActivity()
         let URL = Parameter.buildURL(NSURL(string: accessTokenURL)!, parameters: parameters)
         let request = NSURLRequest(URL: URL)
+        let identifier = self.networkActivityController?.beginNetworkActivity()
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
-            (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+            (data, response, error) -> Void in
             self.networkActivityController?.endNetworkActivity(identifier)
-            if let data = data, let response = response where response.MIMEType == "application/json" {
-                var parseError: NSError?
-                var jsonObject: AnyObject? = nil
-                do {
-                    jsonObject = try NSJSONSerialization.JSONObjectWithData(data,
-                        options: NSJSONReadingOptions(rawValue: 0))
-                } catch let error as NSError {
-                    parseError = error
-                } catch {
-                }
-                NSOperationQueue.mainQueue().addOperationWithBlock {
-                    if let parameters = jsonObject as? Parameters {
-                        self.finilizeAuthorizationWithParameters(parameters)
-                    } else {
-                        self.finilizeAuthorization(nil, error: parseError)
-                    }
-                }
-            } else {
-                NSOperationQueue.mainQueue().addOperationWithBlock {
-                    self.finilizeAuthorization(nil, error: error)
-                }
-                
-            }
+            self.processData(data, response: response, error: error)
         }
         task.resume()
+    }
+    
+    private func processData(data: NSData?, response: NSURLResponse?, error: NSError?) {
+        if let data = data, let response = response where response.MIMEType == "application/json" {
+            var parseError: NSError?
+            var jsonObject: AnyObject? = nil
+            do {
+                jsonObject = try NSJSONSerialization.JSONObjectWithData(data,
+                    options: NSJSONReadingOptions(rawValue: 0))
+            } catch let error as NSError {
+                parseError = error
+            }
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                if let parameters = jsonObject as? Parameters {
+                    self.finilizeAuthorizationWithParameters(parameters)
+                } else {
+                    self.finilizeAuthorization(nil, error: parseError)
+                }
+            }
+        } else {
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.finilizeAuthorization(nil, error: error)
+            }
+        }
     }
 }

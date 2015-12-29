@@ -19,7 +19,7 @@ public let QuadratKeychainOSSatusErrorDomain = "QuadratKeychainOSSatusErrorDomai
 class Keychain {
     
     /** Logger to log all errors. */
-    var logger : Logger?
+    var logger: Logger?
     
     /** Query to get keychain items. */
     private let keychainQuery: [String:AnyObject]
@@ -33,9 +33,9 @@ class Keychain {
         
         var accountAttribute: String
         if let userTag = configuration.userTag {
-            accountAttribute = configuration.client.id + "_" + userTag
+            accountAttribute = configuration.client.identifier + "_" + userTag
         } else {
-            accountAttribute = configuration.client.id
+            accountAttribute = configuration.client.identifier
         }
         keychainQuery = [
             kSecClass           as String  : kSecClassGenericPassword,

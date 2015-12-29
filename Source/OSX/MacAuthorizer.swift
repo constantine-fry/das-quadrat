@@ -9,8 +9,8 @@
 import Foundation
 import AppKit
 
-class MacAuthorizer : Authorizer {
-    var windowController : AuthorizationWindowController?
+class MacAuthorizer: Authorizer {
+    var windowController: AuthorizationWindowController?
     
     func authorize(window: NSWindow, completionHandler: (String?, NSError?) -> Void) {
         self.completionHandler = completionHandler

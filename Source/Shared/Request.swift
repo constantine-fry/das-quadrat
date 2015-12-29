@@ -10,28 +10,28 @@ import Foundation
 
 class Request {
     /** Request parameters. */
-    let parameters          : Parameters?
+    let parameters: Parameters?
     
     /** Endpoint path. */
-    let path                : String
+    let path: String
     
     /** HTTP method. POST or GET. */
-    let HTTPMethod          : String
+    let HTTPMethod: String
     
     /** Sessian wise parameters from configuration. */
-    let sessionParameters   : Parameters
+    let sessionParameters: Parameters
     
     /** Should be like this "https://api.foursquare.com/v2". Specified in `Configuration` */
-    let baseURL             : NSURL
+    let baseURL: NSURL
     
     /** The timeout interval in seconds. */
-    var timeoutInterval     : NSTimeInterval = 60
+    var timeoutInterval: NSTimeInterval = 60
     
     /** Optionally pass in a preformatted query string to append after all other params are added **/
     var preformattedQueryString: String?
     
-    init(baseURL:NSURL, path: String, parameters: Parameters?,
-        sessionParameters:Parameters, HTTPMethod: String, preformattedQueryString: String? = nil) {
+    init(baseURL: NSURL, path: String, parameters: Parameters?,
+        sessionParameters: Parameters, HTTPMethod: String, preformattedQueryString: String? = nil) {
             
             self.baseURL = baseURL
             self.parameters = parameters
@@ -48,7 +48,8 @@ class Request {
             allParameters += parameters!
         }
         let URL = self.baseURL.URLByAppendingPathComponent(self.path)
-        let requestURL = Parameter.buildURL(URL, parameters: allParameters, preformattedQueryString: preformattedQueryString)
+        let requestURL = Parameter.buildURL(URL, parameters: allParameters,
+            preformattedQueryString: preformattedQueryString)
         let request = NSMutableURLRequest(URL: requestURL)
         request.HTTPMethod = HTTPMethod
         return request

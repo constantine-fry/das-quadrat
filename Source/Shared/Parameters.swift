@@ -6,6 +6,10 @@
 //  Copyright (c) 2014 Constantine Fry. All rights reserved.
 //
 
+// swiftlint:disable colon
+// swiftlint:disable variable_name
+// swiftlint:disable variable_name_min_length
+
 import Foundation
 
 public class Parameter {
@@ -166,7 +170,7 @@ public class Parameter {
     
     class func URLQuery(parameters: Parameters) -> String {
         var result = String()
-        for (key,value) in parameters {
+        for (key, value) in parameters {
             let parameters = key + "=" + value
             if result.characters.count == 0 {
                 result += parameters

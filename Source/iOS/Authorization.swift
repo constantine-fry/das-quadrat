@@ -34,15 +34,17 @@ extension Session {
         return nativeAuthorizer.handleURL(URL) as Bool!
     }
     
-    public func authorizeWithViewController(viewController: UIViewController, delegate: SessionAuthorizationDelegate?, completionHandler: AuthorizationHandler) {
-        if (self.authorizer == nil) {
+    public func authorizeWithViewController(viewController: UIViewController,
+        delegate: SessionAuthorizationDelegate?, completionHandler: AuthorizationHandler) {
+            
+        if self.authorizer == nil {
             let block = {
                 (accessToken: String?, error: NSError?) -> Void in
                 self.authorizer = nil
                 completionHandler(accessToken != nil, error)
             }
             
-            if (self.canUseNativeOAuth()) {
+            if self.canUseNativeOAuth() {
                 let nativeAuthorizer = NativeTouchAuthorizer(configuration: self.configuration)
                 nativeAuthorizer.authorize(block)
                 self.authorizer = nativeAuthorizer

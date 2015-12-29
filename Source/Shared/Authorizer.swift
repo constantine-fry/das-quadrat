@@ -14,8 +14,8 @@ protocol AuthorizationDelegate : class {
 }
 
 class Authorizer: AuthorizationDelegate {
-    var redirectURL : NSURL
-    var authorizationURL : NSURL
+    var redirectURL: NSURL
+    var authorizationURL: NSURL
     var completionHandler: ((String?, NSError?) -> Void)?
     let keychain: Keychain
     var shouldControllNetworkActivityIndicator = false
@@ -23,7 +23,7 @@ class Authorizer: AuthorizationDelegate {
     convenience init(configuration: Configuration) {
         let baseURL = configuration.server.oauthBaseURL
         let parameters = [
-            Parameter.client_id        : configuration.client.id,
+            Parameter.client_id        : configuration.client.identifier,
             Parameter.redirect_uri     : configuration.client.redirectURL,
             Parameter.v                : configuration.version,
             Parameter.response_type    : "token"
@@ -40,7 +40,7 @@ class Authorizer: AuthorizationDelegate {
         self.cleanupCookiesForURL(authorizationURL)
     }
     
-    init(authorizationURL: NSURL, redirectURL: NSURL, keychain:Keychain) {
+    init(authorizationURL: NSURL, redirectURL: NSURL, keychain: Keychain) {
         self.authorizationURL = authorizationURL
         self.redirectURL = redirectURL
         self.keychain = keychain

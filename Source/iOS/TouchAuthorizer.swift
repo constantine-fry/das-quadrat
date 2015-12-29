@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class TouchAuthorizer : Authorizer {
+class TouchAuthorizer: Authorizer {
     weak var presentingViewController: UIViewController?
     weak var delegate: SessionAuthorizationDelegate?
     var authorizationViewController: AuthorizationViewController?
