@@ -16,13 +16,13 @@ import UIKit
 struct DataCacheConfiguration {
     
     /** Time to keep a data in cache in seconds. Default is 1 week.  */
-    private let maxCacheAge         = (60 * 60 * 24 * 7) as NSTimeInterval
+    private let maxCacheAge = (60 * 60 * 24 * 7) as NSTimeInterval
     
     /** The maximum size for disk cache in bytes. Default is 10MB. */
-    private let maxDiskCacheSize    = (1024 * 1024 * 10) as UInt
+    private let maxDiskCacheSize = (1024 * 1024 * 10) as UInt
     
     /** The maximum size for memory cache in bytes. Default is 10MB. */
-    private let maxMemoryCacheSize  = (1024 * 1024 * 10) as UInt
+    private let maxMemoryCacheSize = (1024 * 1024 * 10) as UInt
 }
 
 /** The queue for I/O operations. Shared between several instances. */
@@ -38,13 +38,13 @@ class DataCache {
     private let directoryURL: NSURL
     
     /** In memory cache for NSData. */
-    private let cache           = NSCache()
+    private let cache = NSCache()
     
     /** Obsever objects from NSNotificationCenter. */
-    private var observers       = [AnyObject]()
+    private var observers = [AnyObject]()
     
     /** The file manager to use for all file operations. */
-    private let fileManager     = NSFileManager.defaultManager()
+    private let fileManager = NSFileManager.defaultManager()
     
     /** The configuration for cache. */
     private let cacheConfiguration  = DataCacheConfiguration()
@@ -67,8 +67,8 @@ class DataCache {
     }
     
     deinit {
-        for observer in observers {
-            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        observers.forEach {
+            NSNotificationCenter.defaultCenter().removeObserver($0)
         }
     }
     
