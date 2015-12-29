@@ -18,7 +18,7 @@ private var _currentIdentifier: Int = 0
 /** Active identifiers. If it's empty network activity indicator should be hidden. */
 private var _activeIdentifiers: [Int:Int]! = [Int:Int]()
 
-let InvalidNetworkActivityIdentifier = -1
+public let InvalidNetworkActivityIdentifier = -1
 
 /** Controlls network activity indicator on iOS. Does nothing on OSX. */
 public class NetworkActivityIndicatorController {
