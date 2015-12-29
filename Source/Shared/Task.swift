@@ -13,8 +13,6 @@ public enum FoursquareResponse {
     case Error(NSError)
 }
 
-
-
 public class Task {
     private var task: NSURLSessionTask?
     private weak var session: Session?
