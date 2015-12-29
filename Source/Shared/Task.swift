@@ -79,6 +79,7 @@ class UploadTask: Task {
     var  fileURL: NSURL?
     
     override func constructURLSessionTask() {
+        // swiftlint:disable force_cast
         let mutableRequest = self.request.URLRequest().mutableCopy() as! NSMutableURLRequest
         
         let boundary = NSUUID().UUIDString
