@@ -14,7 +14,7 @@ public typealias AuthorizationHandler = (Bool, NSError?) -> Void
 /** A nandler used by all endpoints. */
 public typealias ResponseClosure = (result: Result) -> Void
 
-/** A nandler for downloading images. */
+/** A nandler for image downloading. */
 public typealias DownloadImageClosure = (imageData: NSData?, error: NSError?) -> Void
 
 /** Typealias for parameters dictionary. */

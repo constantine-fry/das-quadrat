@@ -9,16 +9,16 @@
 import Foundation
 
 class Request {
-    /** Request parameters. */
+    
     let parameters: Parameters?
     
     /** Endpoint path. */
     let path: String
     
-    /** HTTP method. POST or GET. */
+    /** Can be POST or GET. */
     let HTTPMethod: String
     
-    /** Sessian wise parameters from configuration. */
+    /** Session wise parameters from configuration. */
     let sessionParameters: Parameters
     
     /** Should be like this "https://api.foursquare.com/v2". Specified in `Configuration` */
