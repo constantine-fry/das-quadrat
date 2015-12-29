@@ -123,10 +123,10 @@ public struct Configuration {
         } else {
             self.locale = "en"
         }
-        if version != nil {
-            self.version = version!
+        if let version = version {
+            self.version = version
         }
-        if accessToken != nil {
+        if let accessToken = accessToken {
             self.accessToken = accessToken
         }
     }
@@ -138,11 +138,11 @@ public struct Configuration {
             Parameter.v             : self.version,
             Parameter.locale        : self.locale,
         ]
-        if self.mode != nil {
-            result[Parameter.m] = self.mode!
+        if let mode = self.mode {
+            result[Parameter.m] = mode
         }
-        if self.accessToken != nil {
-            result[Parameter.oauth_token] = self.accessToken!
+        if let accessToken = self.accessToken {
+            result[Parameter.oauth_token] = accessToken
         }
         return result
     }

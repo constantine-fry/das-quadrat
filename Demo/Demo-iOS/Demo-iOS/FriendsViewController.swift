@@ -36,8 +36,8 @@ class FriendsViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if friends != nil {
-            return friends!.count
+        if let friends = friends {
+            return friends.count
         }
         return 0
     }
@@ -59,15 +59,15 @@ class FriendsViewController: UITableViewController {
                 session?.downloadImageAtURL(URL) {
                     (imageData, error) -> Void in
                     let cell = tableView.cellForRowAtIndexPath(indexPath) as? FriendTableViewCell
-                    if cell != nil && imageData != nil {
-                        let image = UIImage(data: imageData!)
-                        cell!.photoImageView.image = image
+                    if let cell = cell, let imageData = imageData {
+                        let image = UIImage(data: imageData)
+                        cell.photoImageView.image = image
                     }
                 }
                 
             }
             
-        } // let photo
+        }
         
         return cell
     }

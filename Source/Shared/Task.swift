@@ -39,8 +39,8 @@ public class Task {
         if self.task == nil {
             self.constructURLSessionTask()
         }
-        if self.task != nil {
-            self.task?.resume()
+        if let task = self.task {
+            task.resume()
             networkActivityId = session!.networkActivityController?.beginNetworkActivity()
         }
     }

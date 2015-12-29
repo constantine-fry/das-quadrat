@@ -71,8 +71,8 @@ class SearchTableViewController: UITableViewController, UISearchResultsUpdating 
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.venues != nil {
-            return self.venues!.count
+        if let venues = self.venues {
+            return venues.count
         }
         return 0
     }

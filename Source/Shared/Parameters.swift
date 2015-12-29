@@ -184,8 +184,8 @@ public class Parameter {
     class func buildURL(baseURL: NSURL, parameters: Parameters, preformattedQueryString: String? = nil) -> NSURL {
         let components = NSURLComponents(URL: baseURL, resolvingAgainstBaseURL: false)!
         let query = URLQuery(parameters)
-        if components.query != nil {
-            components.query = components.query! + "&" + query
+        if let componentsQuery = components.query {
+            components.query = componentsQuery + "&" + query
         } else {
             components.query = query
         }

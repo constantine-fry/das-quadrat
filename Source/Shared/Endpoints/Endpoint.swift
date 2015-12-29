@@ -9,10 +9,8 @@
 import Foundation
 
 public func +=<K, V> (inout left: Dictionary<K, V>, right: Dictionary<K, V>?) -> Dictionary<K, V> {
-    if right != nil {
-        for (k, v) in right! {
-            left.updateValue(v, forKey: k)
-        }
+    right?.forEach {
+        left.updateValue($1, forKey: $0)
     }
     return left
 }

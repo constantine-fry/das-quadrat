@@ -32,8 +32,8 @@ class TouchAuthorizer: Authorizer {
     }
     
     override func finilizeAuthorization(accessToken: String?, error: NSError?) {
-        if authorizationViewController != nil {
-            delegate?.sessionWillDismissAuthorizationViewController?(authorizationViewController!)
+        if let authorizationViewController = self.authorizationViewController {
+            delegate?.sessionWillDismissAuthorizationViewController?(authorizationViewController)
         }
         presentingViewController?.dismissViewControllerAnimated(true) {
             self.didDismissViewController(accessToken, error: error)

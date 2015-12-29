@@ -80,8 +80,8 @@ class DataCache {
             if result == nil {
                 let targetURL = self.directoryURL.URLByAppendingPathComponent(key)
                 result = NSData(contentsOfURL: targetURL)
-                if result != nil {
-                    self.cache.setObject(result!, forKey: key, cost: result!.length)
+                if let result = result {
+                    self.cache.setObject(result, forKey: key, cost: result.length)
                 }
             }
         }

@@ -88,13 +88,10 @@ class Authorizer: AuthorizationDelegate {
     
     func cleanupCookiesForURL(URL: NSURL) {
         let storage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
-        if storage.cookies != nil {
-            if let cookies = storage.cookies {
-                for cookie in cookies {
-                    if cookie.domain == URL.host {
-                        storage.deleteCookie(cookie as NSHTTPCookie)
-                    }
-                }
+        storage.cookies?.forEach {
+            (cookie) -> () in
+            if cookie.domain == URL.host {
+                storage.deleteCookie(cookie)
             }
         }
     }
@@ -113,12 +110,10 @@ class Authorizer: AuthorizationDelegate {
         }
         let parameters = queryString?.componentsSeparatedByString("&")
         var map = Parameters()
-        if parameters != nil {
-            for string: String in parameters! {
-                let keyValue = string.componentsSeparatedByString("=")
-                if keyValue.count == 2 {
-                    map[keyValue[0]] = keyValue[1]
-                }
+        parameters?.forEach {
+            let keyValue = $0.componentsSeparatedByString("=")
+            if keyValue.count == 2 {
+                map[keyValue[0]] = keyValue[1]
             }
         }
         return map

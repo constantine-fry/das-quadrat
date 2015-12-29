@@ -52,9 +52,9 @@ class NativeTouchAuthorizer: Authorizer {
     override func didReachRedirectURL(redirectURL: NSURL) {
         let parameters = self.extractParametersFromURL(redirectURL)
         let accessCode = parameters["code"]
-        if accessCode != nil {
+        if let accessCode = accessCode {
             // We should exchange access code to access token.
-            self.requestAccessTokenWithCode(accessCode!)
+            self.requestAccessTokenWithCode(accessCode)
         } else {
             // No access code, so we have error there. This method will take care about it.
             super.didReachRedirectURL(redirectURL)
