@@ -10,12 +10,12 @@ import Foundation
 
 /** Client configuration. */
 public struct Client {
-    let id: String
+    let identifier: String
     let secret: String
     let redirectURL: String
     
     public init(clientID: String, clientSecret: String, redirectURL: String) {
-        self.id = clientID
+        self.identifier = clientID
         self.secret = clientSecret
         self.redirectURL = redirectURL
     }
@@ -133,7 +133,7 @@ public struct Configuration {
     
     func parameters() -> Parameters {
         var result = [
-            Parameter.client_id     : self.client.id,
+            Parameter.client_id     : self.client.identifier,
             Parameter.client_secret : self.client.secret,
             Parameter.v             : self.version,
             Parameter.locale        : self.locale,
