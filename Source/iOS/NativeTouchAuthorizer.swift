@@ -18,7 +18,7 @@ class NativeTouchAuthorizer: Authorizer {
     convenience init(configuration: Configuration) {
         let baseURL = configuration.server.nativeOauthBaseURL
         let parameters = [
-            Parameter.client_id    : configuration.client.id,
+            Parameter.client_id    : configuration.client.identifier,
             Parameter.redirect_uri : configuration.client.redirectURL,
             Parameter.v            : "20130509"
         ]
@@ -66,7 +66,7 @@ class NativeTouchAuthorizer: Authorizer {
         
         let client = self.configuration.client
         let parameters = [
-            Parameter.client_id     : client.id,
+            Parameter.client_id     : client.identifier,
             Parameter.client_secret : client.secret,
             Parameter.redirect_uri  : client.redirectURL,
             Parameter.code          : code,
