@@ -71,7 +71,7 @@ public struct Configuration {
     /** 
         The `m` parameter of API. Global parameter for session. Can be "swarm", "foursquare" or nil.
     */
-    public var mode = "swarm"
+    public var mode: String? = "swarm"
     
     /** 
         The `locale` parameter of API. Global parameter for session.
@@ -137,8 +137,10 @@ public struct Configuration {
             Parameter.client_secret : self.client.secret,
             Parameter.v             : self.version,
             Parameter.locale        : self.locale,
-            Parameter.m             : self.mode
         ]
+        if self.mode != nil {
+            result[Parameter.m] = self.mode!
+        }
         if self.accessToken != nil {
             result[Parameter.oauth_token] = self.accessToken!
         }
