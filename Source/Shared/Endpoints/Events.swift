@@ -23,6 +23,7 @@ public class Events: Endpoint {
     /** https://developer.foursquare.com/docs/events/categories */
     public func categories(completionHandler: ResponseClosure? = nil) -> Task {
         let path = "categories"
+        
         return self.getWithPath(path, parameters: nil, completionHandler: completionHandler)
     }
     
@@ -31,6 +32,7 @@ public class Events: Endpoint {
         let path = "search"
         var allParameters = [Parameter.domain: domain]
         allParameters += parameters
+        
         return self.getWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
     
@@ -39,6 +41,7 @@ public class Events: Endpoint {
     /** https://developer.foursquare.com/docs/events/add */
     public func add(parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "add"
+        
         return self.getWithPath(path, parameters: parameters, completionHandler: completionHandler)
     }
     

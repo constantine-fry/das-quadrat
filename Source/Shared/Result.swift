@@ -14,56 +14,56 @@ public let QuadratResponseErrorDetailKey = "errorDetail"
 
 
 /**
-    A response from Foursquare server.
-    Read `Responses & Errors`:
-    https://developer.foursquare.com/overview/responses
-*/
+ A response from Foursquare server.
+ Read `Responses & Errors`:
+ https://developer.foursquare.com/overview/responses
+ */
 public class Result: CustomStringConvertible {
     
-    /** 
-        HTTP response status code.
-    */
+    /**
+     HTTP response status code.
+     */
     public var HTTPSTatusCode: Int?
     
-    /** 
-        HTTP response headers.
-        Can contain `RateLimit-Remaining` and `X-RateLimit-Limit`.
-        Read about `Rate Limits` <https://developer.foursquare.com/overview/ratelimits>.
-    */
+    /**
+     HTTP response headers.
+     Can contain `RateLimit-Remaining` and `X-RateLimit-Limit`.
+     Read about `Rate Limits` <https://developer.foursquare.com/overview/ratelimits>.
+     */
     public var HTTPHeaders: [NSObject:AnyObject]?
     
-    /** 
-        The URL which has been requested. 
-    */
+    /**
+     The URL which has been requested.
+     */
     public var URL: NSURL?
     
     
     /*
-        Can contain error with following error domains:
-            QuadratResponseErrorDomain  - in case of error in `meta` parameter of Foursquare response. 
-                Error doesn't have localized description, but has `QuadratResponseErrorTypeKey`
-                and `QuadratResponseErrorDetailKey` parameters in `userUnfo`.
-            NSURLErrorDomain            - in case of some networking problem.
-            NSCocoaErrorDomain          - in case of error during JSON parsing.
+    Can contain error with following error domains:
+    QuadratResponseErrorDomain  - in case of error in `meta` parameter of Foursquare response.
+    Error doesn't have localized description, but has `QuadratResponseErrorTypeKey`
+    and `QuadratResponseErrorDetailKey` parameters in `userUnfo`.
+    NSURLErrorDomain            - in case of some networking problem.
+    NSCocoaErrorDomain          - in case of error during JSON parsing.
     */
     public var error: NSError?
     
-    /** 
-        A response. Extracted from JSON `response` field.
-        Can be empty in case of error or `multi` request. 
-        If you are doung `multi` request use `subresponses` property
-    */
+    /**
+     A response. Extracted from JSON `response` field.
+     Can be empty in case of error or `multi` request.
+     If you are doung `multi` request use `subresponses` property
+     */
     public var response: [String:AnyObject]?
     
-    /** 
-        Responses returned from `multi` endpoint. Subresponses never have HTTP headers and status code.
-        Extracted from JSON `responses` field.
-    */
+    /**
+     Responses returned from `multi` endpoint. Subresponses never have HTTP headers and status code.
+     Extracted from JSON `responses` field.
+     */
     public var results: [Result]?
     
-    /** 
-        A notifications. Extracted from JSON `notifications` field.
-    */
+    /**
+     A notifications. Extracted from JSON `notifications` field.
+     */
     public var notifications: [[String:AnyObject]]?
     
     init() {
@@ -84,6 +84,7 @@ extension Result {
         let result = Result()
         if let error = error {
             result.error = error
+            
             return result
         }
         
@@ -111,7 +112,7 @@ extension Result {
                 result.response = nil
             }
         }
-
+        
         return result
     }
     
@@ -123,12 +124,14 @@ extension Result {
         if let data = data where JSONError == nil && HTTPResponse?.MIMEType == "application/json" {
             do {
                 JSONResult = try NSJSONSerialization.JSONObjectWithData(data,
-                                options: NSJSONReadingOptions(rawValue: 0)) as? [String: AnyObject]
+                    options: NSJSONReadingOptions(rawValue: 0)) as? [String: AnyObject]
             } catch let error as NSError {
                 JSONError = error
             }
         }
+        
         let result = Result.createResult(HTTPResponse, JSON: JSONResult, error: JSONError)
+        
         return result
     }
 }
@@ -151,6 +154,7 @@ extension Result {
         if let error = self.error {
             return (error.domain == NSURLErrorDomain  && error.code == NSURLErrorCancelled)
         }
+        
         return false
     }
 }

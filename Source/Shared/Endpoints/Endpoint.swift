@@ -16,7 +16,7 @@ public func +=<K, V> (inout left: Dictionary<K, V>, right: Dictionary<K, V>?) ->
 }
 
 public class Endpoint {
-    weak    var session: Session?
+    weak var session: Session?
     private let baseURL: NSURL
     
     var endpoint: String {

@@ -9,7 +9,7 @@
 import Foundation
 
 #if os(iOS)
-import UIKit
+    import UIKit
 #endif
 
 /** Last issued identifier. */
@@ -24,13 +24,13 @@ public let InvalidNetworkActivityIdentifier = -1
 public class NetworkActivityIndicatorController {
     
     let mainQueue = NSOperationQueue.mainQueue()
-
+    
     /** Shows network activity indicator and return activity identifier. */
     func beginNetworkActivity() -> Int {
         #if os(iOS)
             let result = _currentIdentifier++
             _activeIdentifiers[result] = result
-            mainQueue.addOperationWithBlock { 
+            mainQueue.addOperationWithBlock {
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             }
             return result

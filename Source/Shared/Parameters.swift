@@ -154,7 +154,7 @@ public class Parameter {
     
     // MARK: - Z
     public class var zip                    : String { return __FUNCTION__ }
-
+    
     // MARK: - INTERNAL
     class var client_id       : String { return "client_id" }
     class var client_secret   : String { return "client_secret" }
@@ -178,6 +178,7 @@ public class Parameter {
                 result += "&" + parameters
             }
         }
+        
         return result
     }
     
@@ -194,6 +195,7 @@ public class Parameter {
             let delimiter = components.query != nil ? "&" : "?"
             return NSURL(string: components.URL!.absoluteString + delimiter + preformatted)!
         }
+        
         return components.URL!
     }
 }

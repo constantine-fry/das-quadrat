@@ -10,6 +10,7 @@ import Foundation
 
 /** Client configuration. */
 public struct Client {
+    
     let identifier: String
     let secret: String
     let redirectURL: String
@@ -30,20 +31,20 @@ struct Server {
     /** Base URL to login oauth2 page. */
     let oauthBaseURL = "https://foursquare.com/oauth2/authenticate"
     
-    /** Base URL to open Foursquare iOS app for authorization. 
-        In response app will get access code, which should be exchange to access token. */
+    /** Base URL to open Foursquare iOS app for authorization.
+     In response app will get access code, which should be exchange to access token. */
     let nativeOauthBaseURL = "foursquareauth://authorize"
     
     /** Base URL to exchange access code to access token. */
     let nativeOauthAccessTokenBaseURL = "https://foursquare.com/oauth2/access_token"
 }
 
-/** 
-    Session configuartion.
-
-    Read 'Versioning & Internationalization' for `version`, `mode` and `locale` parameters.
-    https://developer.foursquare.com/overview/versioning
-*/
+/**
+ Session configuartion.
+ 
+ Read 'Versioning & Internationalization' for `version`, `mode` and `locale` parameters.
+ https://developer.foursquare.com/overview/versioning
+ */
 public struct Configuration {
     
     /** The Oauth2 specific information of application. */
@@ -56,60 +57,60 @@ public struct Configuration {
     public var accessToken: String?
     
     /**
-        Whether session should control network activity indicator or not. Defaults to false.
-        If you set it to `true` you can use `NetworkActivityIndicatorController` 
-        to control activity indicator in other parts of you application.
-    */
+     Whether session should control network activity indicator or not. Defaults to false.
+     If you set it to `true` you can use `NetworkActivityIndicatorController`
+     to control activity indicator in other parts of you application.
+     */
     public var shouldControllNetworkActivityIndicator = false
     
-    /** 
-        The `v` parameter of API. Global parameter for session.
-        Date in format YYYYMMDD.
-    */
+    /**
+     The `v` parameter of API. Global parameter for session.
+     Date in format YYYYMMDD.
+     */
     public var version = "20140503"
     
-    /** 
-        The `m` parameter of API. Global parameter for session. Can be "swarm", "foursquare" or nil.
-    */
+    /**
+     The `m` parameter of API. Global parameter for session. Can be "swarm", "foursquare" or nil.
+     */
     public var mode: String? = "swarm"
     
-    /** 
-        The `locale` parameter of API. Global parameter for session.
-        Two-letters language code. For example: "en" or "de"
-        Default value is system language.
-    */
+    /**
+     The `locale` parameter of API. Global parameter for session.
+     Two-letters language code. For example: "en" or "de"
+     Default value is system language.
+     */
     public var locale: String
     
     /** The user tag. */
     public var userTag: String?
     
     /**
-        Timeout interval for network request, in seconds.
-        Default value is 60 seconds.
-    */
+     Timeout interval for network request, in seconds.
+     Default value is 60 seconds.
+     */
     public var timeoutInterval: NSTimeInterval = 60.0
     
-    /** 
-        Makes session print all errors and responses.
-        For advance logging see `Logger` protocol and `logger` property on `Session`.
-    */
+    /**
+     Makes session print all errors and responses.
+     For advance logging see `Logger` protocol and `logger` property on `Session`.
+     */
     public var debugEnabled: Bool = false
     
-    /** 
-        Creates Configuration with specified client.
-        `Mode`      set `swarm`.
-        `Locale`    set to system language. (NSLocale.preferredLanguages().first)
-        `Version`   set to 20141102.
-    */
+    /**
+     Creates Configuration with specified client.
+     `Mode`      set `swarm`.
+     `Locale`    set to system language. (NSLocale.preferredLanguages().first)
+     `Version`   set to 20141102.
+     */
     public init(client: Client) {
         self.init(client: client, version: nil, accessToken: nil)
     }
     
-    /** 
-        Creates Configuration with specified client.
-        @discussion Access token passed in configuration never stored in Keychain.
-        The main purpose: create session for some tests classes with hard coded access token.
-    */
+    /**
+     Creates Configuration with specified client.
+     @discussion Access token passed in configuration never stored in Keychain.
+     The main purpose: create session for some tests classes with hard coded access token.
+     */
     public init(client: Client, version: String?, accessToken: String?) {
         self.client = client
         
@@ -144,6 +145,7 @@ public struct Configuration {
         if let accessToken = self.accessToken {
             result[Parameter.oauth_token] = accessToken
         }
+        
         return result
     }
 }

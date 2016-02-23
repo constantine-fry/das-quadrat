@@ -9,9 +9,9 @@
 import Foundation
 
 /**
-    Logger protocol. Main purpose to log error accured in Session.
-    One can log all the errors in his own log file or track all errors with some analytic tool.
-*/
+ Logger protocol. Main purpose to log error accured in Session.
+ One can log all the errors in his own log file or track all errors with some analytic tool.
+ */
 public protocol Logger {
     
     /** All pesponses which session receive will be passed into this method. Can be called on any thread. */
@@ -38,9 +38,11 @@ public class ConsoleLogger: Logger {
                 print("Warning: \(text)")
             }
         }
+        
         if let error = result.error {
             print("Error: \(error)")
         }
+        
         print("")
     }
 }

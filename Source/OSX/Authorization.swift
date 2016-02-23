@@ -9,14 +9,12 @@
 import Foundation
 import AppKit
 
-
 extension Session {
     
     public func authorizeWithViewController(window: NSWindow, completionHandler: AuthorizationHandler) {
         if self.authorizer == nil {
             let authorizer = MacAuthorizer(configuration: self.configuration)
-            authorizer.authorize(window) {
-                (accessToken, error) -> Void in
+            authorizer.authorize(window) { (accessToken, error) -> Void in
                 completionHandler(accessToken != nil, error)
                 
                 // Fixes the crash.
@@ -24,6 +22,7 @@ extension Session {
                     self.authorizer = nil
                 }
             }
+            
             self.authorizer = authorizer
         }
     }

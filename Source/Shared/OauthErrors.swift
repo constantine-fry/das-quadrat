@@ -29,32 +29,33 @@ extension NSError {
         var description: String!
         
         switch string {
-            case "invalid_request":
-                code = .OauthInvalidRequest
-                description = "Oauth invalid request"
+        case "invalid_request":
+            code = .OauthInvalidRequest
+            description = "Oauth invalid request"
             
-            case "invalid_client":
-                code = .OauthInvalidClient
-                description = "Oauth invalid client"
+        case "invalid_client":
+            code = .OauthInvalidClient
+            description = "Oauth invalid client"
             
-            case "invalid_grant":
-                code = .OauthInvalidGrant
-                description = "Oauth invalid client"
+        case "invalid_grant":
+            code = .OauthInvalidGrant
+            description = "Oauth invalid client"
             
-            case "unauthorized_client":
-                code = .OauthUnauthorizedClient
-                description = "Oauth unauthorized client"
+        case "unauthorized_client":
+            code = .OauthUnauthorizedClient
+            description = "Oauth unauthorized client"
             
-            case "unsupported_grant_type":
-                code = .OauthUnsupportedGrantType
-                description = "Oauth unsupported grant type"
-        
-            default:
-                code = .OauthUnknownError
-                description = "Oauth unknown error"
+        case "unsupported_grant_type":
+            code = .OauthUnsupportedGrantType
+            description = "Oauth unsupported grant type"
+            
+        default:
+            code = .OauthUnknownError
+            description = "Oauth unknown error"
         }
         
         let info = [NSLocalizedDescriptionKey:description, QuadratOauthErrorOriginalStringKey: string]
+        
         return NSError(domain: QuadratOauthErrorDomain, code: code.rawValue, userInfo: info)
     }
 }
