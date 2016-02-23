@@ -9,10 +9,10 @@
 import Foundation
 import Security
 
-/** 
-    The error domain for errors returned by `Keychain Service`.
-    The `code` property will contain OSStatus. See SecBase.h for error codes.
-    The `userInfo` is always nil and there is no localized description provided.
+/**
+The error domain for errors returned by `Keychain Service`.
+The `code` property will contain OSStatus. See SecBase.h for error codes.
+The `userInfo` is always nil and there is no localized description provided.
 */
 public let QuadratKeychainOSSatusErrorDomain = "QuadratKeychainOSSatusErrorDomain"
 
@@ -49,10 +49,10 @@ class Keychain {
         query[kSecReturnData as String] = kCFBooleanTrue
         query[kSecMatchLimit as String] = kSecMatchLimitOne
         
-        /** 
-            Fixes the issue with Keychain access in release mode.
-            https://devforums.apple.com/message/1070614#1070614
-        */
+        /**
+         Fixes the issue with Keychain access in release mode.
+         https://devforums.apple.com/message/1070614#1070614
+         */
         var dataTypeRef: AnyObject? = nil
         let status = withUnsafeMutablePointer(&dataTypeRef) {cfPointer -> OSStatus in
             SecItemCopyMatching(query, UnsafeMutablePointer(cfPointer))

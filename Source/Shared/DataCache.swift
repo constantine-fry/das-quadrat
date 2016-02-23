@@ -9,7 +9,7 @@
 import Foundation
 
 #if os(iOS)
-import UIKit
+    import UIKit
 #endif
 
 /** Configs for data cache. */
@@ -56,7 +56,7 @@ class DataCache {
         let cacheURL: NSURL?
         do {
             cacheURL = try fileManager.URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask,
-                        appropriateForURL: nil, create: true)
+                appropriateForURL: nil, create: true)
         } catch _ {
             fatalError("Can't get access to cache directory")
         }
@@ -102,7 +102,7 @@ class DataCache {
             } catch {
             }
         }
-       
+        
         privateQueue.waitUntilAllOperationsAreFinished()
     }
     
@@ -145,7 +145,7 @@ class DataCache {
     private func createBaseDirectory() {
         do {
             try fileManager.createDirectoryAtURL(directoryURL,
-                        withIntermediateDirectories: true, attributes: nil)
+                withIntermediateDirectories: true, attributes: nil)
         } catch let error as NSError {
             self.logger?.logError(error, withMessage: "Cache can't create base directory.")
         }

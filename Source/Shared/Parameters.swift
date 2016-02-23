@@ -154,7 +154,7 @@ public class Parameter {
     
     // MARK: - Z
     public class var zip                    : String { return __FUNCTION__ }
-
+    
     // MARK: - INTERNAL
     class var client_id       : String { return "client_id" }
     class var client_secret   : String { return "client_secret" }

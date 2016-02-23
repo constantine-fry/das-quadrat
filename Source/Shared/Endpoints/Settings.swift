@@ -26,7 +26,7 @@ public class Settings: Endpoint {
         
         return self.getWithPath(path, parameters: nil, completionHandler: completionHandler)
     }
-
+    
     // MARK: - Actions
     
     /** https://developer.foursquare.com/docs/settings/set */

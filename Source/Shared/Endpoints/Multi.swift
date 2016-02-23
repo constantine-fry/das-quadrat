@@ -17,10 +17,10 @@ public class Multi: Endpoint {
         return "multi"
     }
     
-    /** 
-        Returns task to make request to `multi` endpoint.
-        Use `subresponses` property of response object.
-    */
+    /**
+     Returns task to make request to `multi` endpoint.
+     Use `subresponses` property of response object.
+     */
     public func get(tasks: [Task], completionHandler: ResponseClosure) -> Task {
         let firstTask = tasks.first as Task!
         var queries = [String]()
@@ -31,7 +31,7 @@ public class Multi: Endpoint {
             if let params = request.parameters {
                 path = path + "?" + makeQuery(params)
             }
-          
+            
             queries.append(path)
         }
         

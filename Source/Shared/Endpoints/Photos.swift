@@ -26,5 +26,5 @@ public class Photos: Endpoint {
         
         return self.uploadTaskFromURL(fromURL, path: path, parameters: parameters, completionHandler: completionHandler)
     }
-
+    
 }
