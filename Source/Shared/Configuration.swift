@@ -10,6 +10,7 @@ import Foundation
 
 /** Client configuration. */
 public struct Client {
+    
     let identifier: String
     let secret: String
     let redirectURL: String
@@ -144,6 +145,7 @@ public struct Configuration {
         if let accessToken = self.accessToken {
             result[Parameter.oauth_token] = accessToken
         }
+        
         return result
     }
 }

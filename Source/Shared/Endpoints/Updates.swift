@@ -27,6 +27,7 @@ public class Updates: Endpoint {
         if let limit = limit {
             parameters = [Parameter.limit:limit]
         }
+        
         return self.getWithPath(path, parameters: parameters, completionHandler: completionHandler)
     }
     
@@ -36,6 +37,7 @@ public class Updates: Endpoint {
     public func notifications(highWatermark: String, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "marknotificationsread"
         let parameters = [Parameter.highWatermark: highWatermark]
+        
         return self.postWithPath(path, parameters: parameters, completionHandler: completionHandler)
     }
 }

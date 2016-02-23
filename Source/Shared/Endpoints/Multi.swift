@@ -24,6 +24,7 @@ public class Multi: Endpoint {
     public func get(tasks: [Task], completionHandler: ResponseClosure) -> Task {
         let firstTask = tasks.first as Task!
         var queries = [String]()
+        
         for task in tasks {
             let request = task.request
             var path = "/" + request.path
@@ -33,6 +34,7 @@ public class Multi: Endpoint {
           
             queries.append(path)
         }
+        
         let queryString = encodeURIComponent(queries.joinWithSeparator(","))
         
         let request =
@@ -45,16 +47,20 @@ public class Multi: Endpoint {
         )
         
         let multiTask = DataTask(session: self.session!, request: request, completionHandler: completionHandler)
+        
         return multiTask
     }
     
     func makeQuery(parameters: Parameters) -> String {
         var query = String()
+        
         for (key, value) in parameters {
             let encodedValue = encodeURIComponent(value)
             query += key + "=" + encodedValue + "&"
         }
+        
         query.removeAtIndex(query.endIndex.predecessor())
+        
         return query
     }
     

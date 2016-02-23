@@ -35,6 +35,7 @@ class Keychain {
         } else {
             accountAttribute = configuration.client.identifier
         }
+        
         keychainQuery = [
             kSecClass           as String  : kSecClassGenericPassword,
             kSecAttrAccessible  as String  : kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
@@ -56,6 +57,7 @@ class Keychain {
         let status = withUnsafeMutablePointer(&dataTypeRef) {cfPointer -> OSStatus in
             SecItemCopyMatching(query, UnsafeMutablePointer(cfPointer))
         }
+        
         var accessToken: String? = nil
         if status == errSecSuccess {
             if let retrievedData = dataTypeRef as? NSData {
@@ -64,11 +66,13 @@ class Keychain {
                 }
             }
         }
+        
         if status != errSecSuccess && status != errSecItemNotFound {
             let error = errorWithStatus(status)
             logger?.logError(error, withMessage: "Keychain can't read access token.")
             throw error
         }
+        
         return accessToken
     }
     
@@ -90,6 +94,7 @@ class Keychain {
         } catch {
             
         }
+        
         var query = keychainQuery
         let accessTokenData = accessToken.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
         query[kSecValueData as String] =  accessTokenData

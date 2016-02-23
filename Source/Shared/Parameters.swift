@@ -178,6 +178,7 @@ public class Parameter {
                 result += "&" + parameters
             }
         }
+        
         return result
     }
     
@@ -194,6 +195,7 @@ public class Parameter {
             let delimiter = components.query != nil ? "&" : "?"
             return NSURL(string: components.URL!.absoluteString + delimiter + preformatted)!
         }
+        
         return components.URL!
     }
 }

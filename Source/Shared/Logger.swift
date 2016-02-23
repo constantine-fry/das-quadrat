@@ -38,9 +38,11 @@ public class ConsoleLogger: Logger {
                 print("Warning: \(text)")
             }
         }
+        
         if let error = result.error {
             print("Error: \(error)")
         }
+        
         print("")
     }
 }

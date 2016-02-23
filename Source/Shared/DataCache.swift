@@ -85,7 +85,9 @@ class DataCache {
                 }
             }
         }
+        
         privateQueue.waitUntilAllOperationsAreFinished()
+        
         return result
     }
     
@@ -100,6 +102,7 @@ class DataCache {
             } catch {
             }
         }
+       
         privateQueue.waitUntilAllOperationsAreFinished()
     }
     
@@ -201,16 +204,17 @@ class DataCache {
             validFiles.removeRange(Range(start: 0, end: validFiles.count / 4))
             expiredFiles += validFiles
         }
+        
         return expiredFiles
     }
     
     private func getCachedFileURLs() -> [NSURL] {
         let properties = [NSURLContentModificationDateKey, NSURLTotalFileAllocatedSizeKey]
         do {
-            return try self.fileManager.contentsOfDirectoryAtURL(self.directoryURL,
-                includingPropertiesForKeys: properties, options: .SkipsHiddenFiles)
+            return try self.fileManager.contentsOfDirectoryAtURL(self.directoryURL, includingPropertiesForKeys: properties, options: .SkipsHiddenFiles)
         } catch let error as NSError {
             self.logger?.logError(error, withMessage: "Cache can't get properties of files in base directory.")
+            
             return [NSURL]()
         }
     }
@@ -230,6 +234,7 @@ class DataCache {
             } catch {
                 return false
             }
+            
             return false
         }
     }

@@ -84,6 +84,7 @@ extension Result {
         let result = Result()
         if let error = error {
             result.error = error
+            
             return result
         }
         
@@ -128,7 +129,9 @@ extension Result {
                 JSONError = error
             }
         }
+        
         let result = Result.createResult(HTTPResponse, JSON: JSONResult, error: JSONError)
+        
         return result
     }
 }
@@ -151,6 +154,7 @@ extension Result {
         if let error = self.error {
             return (error.domain == NSURLErrorDomain  && error.code == NSURLErrorCancelled)
         }
+       
         return false
     }
 }

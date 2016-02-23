@@ -14,6 +14,7 @@ protocol AuthorizationDelegate : class {
 }
 
 class Authorizer: AuthorizationDelegate {
+    
     var redirectURL: NSURL
     var authorizationURL: NSURL
     var completionHandler: ((String?, NSError?) -> Void)?
@@ -47,7 +48,6 @@ class Authorizer: AuthorizationDelegate {
     }
     
     // MARK: - Delegate methods
-    
     func userDidCancel() {
         let error = NSError(domain: NSCocoaErrorDomain, code: NSUserCancelledError, userInfo: nil)
         self.finilizeAuthorization(nil, error: error)
@@ -60,7 +60,6 @@ class Authorizer: AuthorizationDelegate {
     }
     
     // MARK: - Finilization
-    
     func finilizeAuthorizationWithParameters(parameters: Parameters) {
         var error: NSError?
         if let errorString = parameters["error"] {
@@ -85,7 +84,6 @@ class Authorizer: AuthorizationDelegate {
     }
     
     // MARK: - Helpers
-    
     func cleanupCookiesForURL(URL: NSURL) {
         let storage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
         storage.cookies?.forEach {
@@ -116,6 +114,7 @@ class Authorizer: AuthorizationDelegate {
                 map[keyValue[0]] = keyValue[1]
             }
         }
+        
         return map
     }
     

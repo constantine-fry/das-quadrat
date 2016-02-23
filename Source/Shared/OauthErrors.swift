@@ -55,6 +55,7 @@ extension NSError {
         }
         
         let info = [NSLocalizedDescriptionKey:description, QuadratOauthErrorOriginalStringKey: string]
+        
         return NSError(domain: QuadratOauthErrorDomain, code: code.rawValue, userInfo: info)
     }
 }
