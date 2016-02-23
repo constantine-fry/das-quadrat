@@ -23,20 +23,22 @@ extension Session {
     public func canUseNativeOAuth() -> Bool {
         let baseURL = self.configuration.server.nativeOauthBaseURL
         let URL = NSURL(string: baseURL) as NSURL!
+        
         return UIApplication.sharedApplication().canOpenURL(URL)
     }
     
     public func handleURL(URL: NSURL) -> Bool {
         if let nativeAuthorizer = self.authorizer as? NativeTouchAuthorizer {
-           return nativeAuthorizer.handleURL(URL) as Bool!
+            return nativeAuthorizer.handleURL(URL) as Bool!
         }
+        
         let nativeAuthorizer = NativeTouchAuthorizer(configuration: self.configuration)
+        
         return nativeAuthorizer.handleURL(URL) as Bool!
     }
     
-    public func authorizeWithViewController(viewController: UIViewController,
-        delegate: SessionAuthorizationDelegate?, completionHandler: AuthorizationHandler) {
-            
+    public func authorizeWithViewController(viewController: UIViewController, delegate: SessionAuthorizationDelegate?, completionHandler: AuthorizationHandler) {
+        
         if self.authorizer == nil {
             let block = {
                 (accessToken: String?, error: NSError?) -> Void in
@@ -54,6 +56,5 @@ extension Session {
                 self.authorizer = touchAuthorizer
             }
         }
-
     }
 }

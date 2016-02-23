@@ -16,10 +16,10 @@ private enum AuthorizationViewControllerRequestStatus {
     case Failed(NSError)    // Web view failed to load page with error.
 }
 
-/** 
-    The class where AuthorizationViewController is pushed. It does nothing.
-    You may use this class to apply you application style via UIAppearence.
-*/
+/**
+ The class where AuthorizationViewController is pushed. It does nothing.
+ You may use this class to apply you application style via UIAppearence.
+ */
 public class AuthorizationNavigationController: UINavigationController {
     
 }
@@ -29,18 +29,16 @@ public class AuthorizationViewController: UIViewController, UIWebViewDelegate {
     private let redirectURL: NSURL
     
     /**
-        Whether view controller should controll network activity indicator or not.
-        Should be set before presenting view controller.
-    */
+     Whether view controller should controll network activity indicator or not.
+     Should be set before presenting view controller.
+     */
     internal var shouldControllNetworkActivityIndicator = false
     
     private var networkActivityIndicator: NetworkActivityIndicatorController?
     private var activityIdentifier: Int?
-    
     weak internal var authorizationDelegate: AuthorizationDelegate?
     
     @IBOutlet public weak var webView: UIWebView!
-    
     @IBOutlet private weak var statusLabel: UILabel!
     @IBOutlet private weak var indicator: UIActivityIndicatorView!
     
@@ -51,7 +49,6 @@ public class AuthorizationViewController: UIViewController, UIWebViewDelegate {
     }
     
     // MARK: -
-    
     init(authorizationURL: NSURL, redirectURL: NSURL, delegate: AuthorizationDelegate) {
         self.authorizationURL = authorizationURL
         self.redirectURL = redirectURL
@@ -66,19 +63,21 @@ public class AuthorizationViewController: UIViewController, UIWebViewDelegate {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        
         webView.scrollView.showsVerticalScrollIndicator = false
         
         let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel,
             target: self, action: Selector("cancelButtonTapped"))
         self.navigationItem.leftBarButtonItem = cancelButton
+        
         if shouldControllNetworkActivityIndicator {
             networkActivityIndicator = NetworkActivityIndicatorController()
         }
+        
         self.loadAuthorizationPage()
     }
     
     // MARK: - Actions
-    
     @objc func loadAuthorizationPage() {
         self.status = .Loading
         let request = NSURLRequest(URL: self.authorizationURL)
@@ -90,17 +89,17 @@ public class AuthorizationViewController: UIViewController, UIWebViewDelegate {
     }
     
     // MARK: - Web view delegate methods
-    
-    public func webView(webView: UIWebView, shouldStartLoadWithRequest
-        request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-            if let URLString = request.URL?.absoluteString {
-                if URLString.hasPrefix(self.redirectURL.absoluteString) {
-                    // If we've reached redirect URL we should let know delegate.
-                    self.authorizationDelegate?.didReachRedirectURL(request.URL!)
-                    return false
-                }
+    public func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if let URLString = request.URL?.absoluteString {
+            if URLString.hasPrefix(self.redirectURL.absoluteString) {
+                // If we've reached redirect URL we should let know delegate.
+                self.authorizationDelegate?.didReachRedirectURL(request.URL!)
+                
+                return false
             }
-            return true
+        }
+        
+        return true
     }
     
     public func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
@@ -109,6 +108,7 @@ public class AuthorizationViewController: UIViewController, UIWebViewDelegate {
                 // URL loading was interrupted. It happens when one taps "download Foursquare to sign up!".
                 return
             }
+            
             self.status = .Failed(error)
         }
     }

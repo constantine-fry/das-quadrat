@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class NativeTouchAuthorizer: Authorizer {
+    
     private var configuration: Configuration!
     
     /** Network activity controller. */
@@ -25,12 +26,15 @@ class NativeTouchAuthorizer: Authorizer {
         
         let authorizationURL = Parameter.buildURL(NSURL(string: baseURL)!, parameters: parameters)
         let redirectURL = NSURL(string: configuration.client.redirectURL)
+        
         if redirectURL == nil {
             fatalError("Check your redirectURL")
         }
+        
         let keychain = Keychain(configuration: configuration)
         self.init(authorizationURL: authorizationURL, redirectURL: redirectURL!, keychain:keychain)
         self.configuration = configuration
+        
         if configuration.shouldControllNetworkActivityIndicator {
             networkActivityController = NetworkActivityIndicatorController()
         }
@@ -44,14 +48,17 @@ class NativeTouchAuthorizer: Authorizer {
     func handleURL(URL: NSURL) -> Bool {
         if URL.scheme == self.redirectURL.scheme {
             self.didReachRedirectURL(URL)
+        
             return true
         }
+        
         return false
     }
     
     override func didReachRedirectURL(redirectURL: NSURL) {
         let parameters = self.extractParametersFromURL(redirectURL)
         let accessCode = parameters["code"]
+        
         if let accessCode = accessCode {
             // We should exchange access code to access token.
             self.requestAccessTokenWithCode(accessCode)
@@ -72,14 +79,16 @@ class NativeTouchAuthorizer: Authorizer {
             Parameter.code          : code,
             Parameter.grant_type    : "authorization_code"
         ]
+        
         let URL = Parameter.buildURL(NSURL(string: accessTokenURL)!, parameters: parameters)
         let request = NSURLRequest(URL: URL)
         let identifier = self.networkActivityController?.beginNetworkActivity()
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
-            (data, response, error) -> Void in
+        
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) -> Void in
             self.networkActivityController?.endNetworkActivity(identifier)
             self.processData(data, response: response, error: error)
         }
+        
         task.resume()
     }
     
@@ -93,6 +102,7 @@ class NativeTouchAuthorizer: Authorizer {
             } catch let error as NSError {
                 parseError = error
             }
+            
             NSOperationQueue.mainQueue().addOperationWithBlock {
                 if let parameters = jsonObject as? Parameters {
                     self.finilizeAuthorizationWithParameters(parameters)
