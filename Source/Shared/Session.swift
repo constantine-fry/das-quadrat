@@ -115,7 +115,7 @@ public class Session {
     
     public init(configuration: Configuration, completionQueue: NSOperationQueue = NSOperationQueue.mainQueue()) {
         if configuration.shouldControllNetworkActivityIndicator {
-            networkActivityController = NetworkActivityIndicatorController()
+            self.networkActivityController = NetworkActivityIndicatorController()
         }
         self.configuration = configuration
         self.completionQueue = completionQueue
@@ -124,12 +124,12 @@ public class Session {
         let delegateQueue = NSOperationQueue()
         delegateQueue.maxConcurrentOperationCount = 1
         self.URLSession = NSURLSession(configuration: URLConfiguration, delegate: nil, delegateQueue: delegateQueue)
-        dataCache = DataCache(name: configuration.userTag)
+        self.dataCache = DataCache(name: configuration.userTag)
         if configuration.debugEnabled {
             self.logger = ConsoleLogger()
         }
-        keychain = Keychain(configuration: self.configuration)
-        keychain.logger = self.logger
+        self.keychain = Keychain(configuration: self.configuration)
+        self.keychain.logger = self.logger
     }
     
     public class func setupSharedSessionWithConfiguration(configuration: Configuration,
@@ -164,8 +164,8 @@ public class Session {
     */
     public func deauthorize() {
         do {
-            try keychain.deleteAccessToken()
-            dataCache.clearCache()
+            try self.keychain.deleteAccessToken()
+            self.dataCache.clearCache()
         } catch {
             
         }
@@ -173,7 +173,7 @@ public class Session {
     
     /** Returns cached image data. */
     public func cachedImageDataForURL(URL: NSURL) -> NSData? {
-        return dataCache.dataForKey("\(URL.hash)")
+        return self.dataCache.dataForKey("\(URL.hash)")
     }
     
     /** Downloads image at URL and puts in cache. */

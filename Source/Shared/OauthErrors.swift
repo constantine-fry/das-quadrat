@@ -54,7 +54,7 @@ extension NSError {
                 description = "Oauth unknown error"
         }
         
-        let info = [NSLocalizedDescriptionKey:description, QuadratOauthErrorOriginalStringKey: string]
+        let info = [NSLocalizedDescriptionKey: description, QuadratOauthErrorOriginalStringKey: string]
         return NSError(domain: QuadratOauthErrorDomain, code: code.rawValue, userInfo: info)
     }
 }

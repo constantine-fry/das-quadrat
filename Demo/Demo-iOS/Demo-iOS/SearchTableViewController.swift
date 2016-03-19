@@ -40,17 +40,17 @@ class SearchTableViewController: UITableViewController, UISearchResultsUpdating 
             return
         }
         
-        currentTask?.cancel()
+        self.currentTask?.cancel()
         var parameters = [Parameter.query:strippedString]
         parameters += self.location.parameters()
-        currentTask = session.venues.search(parameters) {
+        self.currentTask = session.venues.search(parameters) {
             (result) -> Void in
             if let response = result.response {
                 self.venues = response["venues"] as? [JSONParameters]
                 self.tableView.reloadData()
             }
         }
-        currentTask?.start()
+        self.currentTask?.start()
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -79,8 +79,8 @@ class SearchTableViewController: UITableViewController, UISearchResultsUpdating 
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let venueInfo = venues![indexPath.row] as JSONParameters!
-        delegate?.searchTableViewController(self, didSelectVenue: venueInfo)
+        let venueInfo = self.venues![indexPath.row] as JSONParameters!
+        self.delegate?.searchTableViewController(self, didSelectVenue: venueInfo)
     }
 
 }

@@ -28,32 +28,32 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        numberFormatter.numberStyle = .DecimalStyle
+        self.numberFormatter.numberStyle = .DecimalStyle
         
-        session = Session.sharedSession()
-        session.logger = ConsoleLogger()
+        self.session = Session.sharedSession()
+        self.session.logger = ConsoleLogger()
         
-        resultsTableViewController = Storyboard.create("venueSearch") as! SearchTableViewController
-        resultsTableViewController.session = session
-        resultsTableViewController.delegate = self
-        searchController = UISearchController(searchResultsController: resultsTableViewController)
-        searchController.searchResultsUpdater = resultsTableViewController
-        searchController.searchBar.sizeToFit()
-        tableView.tableHeaderView = searchController.searchBar
-        definesPresentationContext = true
+        self.resultsTableViewController = Storyboard.create("venueSearch") as! SearchTableViewController
+        self.resultsTableViewController.session = session
+        self.resultsTableViewController.delegate = self
+        self.searchController = UISearchController(searchResultsController: resultsTableViewController)
+        self.searchController.searchResultsUpdater = resultsTableViewController
+        self.searchController.searchBar.sizeToFit()
+        self.tableView.tableHeaderView = searchController.searchBar
+        self.definesPresentationContext = true
         
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 200
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 200
         
-        locationManager = CLLocationManager()
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        locationManager.delegate = self
+        self.locationManager = CLLocationManager()
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        self.locationManager.delegate = self
         let status = CLLocationManager.authorizationStatus()
         if status == .NotDetermined {
-            locationManager.requestWhenInUseAuthorization()
+            self.locationManager.requestWhenInUseAuthorization()
         } else if status == CLAuthorizationStatus.AuthorizedWhenInUse
             || status == CLAuthorizationStatus.AuthorizedAlways {
-                locationManager.startUpdatingLocation()
+                self.locationManager.startUpdatingLocation()
         } else {
             showNoPermissionsAlert()
         }
@@ -65,7 +65,7 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
     }
     
     private func updateLeftBarButton() {
-        if session.isAuthorized() {
+        if self.session.isAuthorized() {
             self.navigationItem.leftBarButtonItem?.title = "Logout"
         } else {
             self.navigationItem.leftBarButtonItem?.title = "Login"
@@ -101,7 +101,7 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
         if status == .Denied || status == .Restricted {
             showNoPermissionsAlert()
         } else {
-            locationManager.startUpdatingLocation()
+            self.locationManager.startUpdatingLocation()
         }
     }
     
@@ -113,11 +113,11 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
     
     func locationManager(manager: CLLocationManager,
         didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
-            if venueItems == nil {
+            if self.venueItems == nil {
                 exploreVenues()
             }
-            resultsTableViewController.location = newLocation
-            locationManager.stopUpdatingLocation()
+            self.resultsTableViewController.location = newLocation
+            self.locationManager.stopUpdatingLocation()
     }
     
     func exploreVenues() {
@@ -155,12 +155,12 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
     }
     
     @IBAction func authorizeButtonTapped() {
-        if session.isAuthorized() {
-            session.deauthorize()
+        if self.session.isAuthorized() {
+            self.session.deauthorize()
             self.updateLeftBarButton()
             self.exploreVenues()
         } else {
-            session.authorizeWithViewController(self, delegate: self) {
+            self.session.authorizeWithViewController(self, delegate: self) {
                 (authorized, error) -> Void in
                 self.updateLeftBarButton()
                 self.exploreVenues()

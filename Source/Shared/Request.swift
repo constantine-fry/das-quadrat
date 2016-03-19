@@ -44,7 +44,7 @@ class Request {
     func URLRequest() -> NSURLRequest {
         // if multi,
         var allParameters = self.sessionParameters
-        if let parameters = parameters {
+        if let parameters = self.parameters {
             allParameters += parameters
         }
         let URL = self.baseURL.URLByAppendingPathComponent(self.path)

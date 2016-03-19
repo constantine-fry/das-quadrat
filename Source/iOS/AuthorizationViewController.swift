@@ -66,7 +66,7 @@ public class AuthorizationViewController: UIViewController, UIWebViewDelegate {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        webView.scrollView.showsVerticalScrollIndicator = false
+        self.webView.scrollView.showsVerticalScrollIndicator = false
         
         let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel,
             target: self, action: Selector("cancelButtonTapped"))

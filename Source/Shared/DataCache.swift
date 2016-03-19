@@ -67,7 +67,7 @@ class DataCache {
     }
     
     deinit {
-        observers.forEach {
+        self.observers.forEach {
             NSNotificationCenter.defaultCenter().removeObserver($0)
         }
     }
@@ -127,14 +127,14 @@ class DataCache {
                 self?.cleanupCache()
                 self?.cache.removeAllObjects()
             }
-            observers.append(firstObserver)
+            self.observers.append(firstObserver)
             
             let didReceiveMemoryWaring = UIApplicationDidReceiveMemoryWarningNotification
             let secondObserver = center.addObserverForName(didReceiveMemoryWaring, object: nil, queue: nil) {
                 [weak self] (notification) -> Void in
                 self?.cache.removeAllObjects()
             }
-            observers.append(secondObserver)
+            self.observers.append(secondObserver)
         #endif
     }
     
