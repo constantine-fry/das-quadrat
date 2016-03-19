@@ -65,7 +65,7 @@ public class VenueGroups: Endpoint {
     }
     
     /** https://developer.foursquare.com/docs/venuegroups/removevenue */
-    public func removevenue(groupId: String,  venueId: [String], completionHandler: ResponseClosure? = nil) -> Task {
+    public func removevenue(groupId: String, venueId: [String], completionHandler: ResponseClosure? = nil) -> Task {
         let path = groupId + "/removevenue"
         let parameters = [Parameter.venueId: venueId.joinWithSeparator(",")]
         return self.postWithPath(path, parameters: parameters, completionHandler: completionHandler)

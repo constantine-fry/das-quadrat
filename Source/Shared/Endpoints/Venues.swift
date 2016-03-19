@@ -136,7 +136,7 @@ public class Venues: Endpoint {
     }
     
     /** https://developer.foursquare.com/docs/venues/stats */
-    public func stats(venueId: String,  parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
+    public func stats(venueId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = venueId + "/stats"
         return self.getWithPath(path, parameters: parameters, completionHandler: completionHandler)
     }
