@@ -151,10 +151,18 @@ public class Session {
     /** Whether session is authorized or not. */
     public func isAuthorized() -> Bool {
         do {
-            let accessToken = try keychain.accessToken()
+            let accessToken = try self.keychain.accessToken()
             return accessToken != nil
         } catch {
             return false
+        }
+    }
+    
+    public func accessToken() -> String? {
+        do {
+            return try self.keychain.accessToken()
+        } catch {
+            return nil
         }
     }
     
