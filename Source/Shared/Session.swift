@@ -59,59 +59,59 @@ public class Session {
     
     public lazy var users: Users = {
         return Users(session: self)
-        }()
+    }()
     
     public lazy var venues: Venues = {
         return Venues(session: self)
-        }()
+    }()
     
     public lazy var venueGroups: VenueGroups = {
         return VenueGroups(session: self)
-        }()
+    }()
     
     public lazy var checkins: Checkins = {
         return Checkins(session: self)
-        }()
+    }()
     
     public lazy var tips: Tips = {
         return Tips(session: self)
-        }()
+    }()
     
     public lazy var lists: Lists = {
         return Lists(session: self)
-        }()
+    }()
     
     public lazy var updates: Updates = {
         return Updates(session: self)
-        }()
+    }()
     
     public lazy var photos: Photos = {
         return Photos(session: self)
-        }()
+    }()
     
     public lazy var settings: Settings = {
         return Settings(session: self)
-        }()
+    }()
     
     public lazy var specials: Specials = {
         return Specials(session: self)
-        }()
+    }()
     
     public lazy var events: Events = {
         return Events(session: self)
-        }()
+    }()
     
     public lazy var pages: Pages = {
         return Pages(session: self)
-        }()
+    }()
     
     public lazy var pageUpdates: PageUpdates = {
         return PageUpdates(session: self)
-        }()
+    }()
     
     public lazy var multi: Multi = {
         return Multi(session: self)
-        }()
+    }()
     
     public init(configuration: Configuration, completionQueue: NSOperationQueue = NSOperationQueue.mainQueue()) {
         if configuration.shouldControllNetworkActivityIndicator {
