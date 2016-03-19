@@ -238,9 +238,9 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func photoURLFromJSONObject(photo: JSONParameters!) -> NSURL {
-        let prefix = photo!["prefix"] as! String
-        let suffix = photo!["suffix"] as! String
+    func photoURLFromJSONObject(photo: JSONParameters) -> NSURL {
+        let prefix = photo["prefix"] as! String
+        let suffix = photo["suffix"] as! String
         let URLString = prefix + "100x100" + suffix
         let URL = NSURL(string: URLString)
         return URL!
