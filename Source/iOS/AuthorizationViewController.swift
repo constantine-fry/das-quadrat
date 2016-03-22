@@ -69,7 +69,7 @@ public class AuthorizationViewController: UIViewController, UIWebViewDelegate {
         self.webView.scrollView.showsVerticalScrollIndicator = false
         
         let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel,
-            target: self, action: Selector("cancelButtonTapped"))
+            target: self, action: #selector(AuthorizationViewController.cancelButtonTapped))
         self.navigationItem.leftBarButtonItem = cancelButton
         if shouldControllNetworkActivityIndicator {
             networkActivityIndicator = NetworkActivityIndicatorController()

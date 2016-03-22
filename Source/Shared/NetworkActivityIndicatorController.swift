@@ -28,7 +28,7 @@ public class NetworkActivityIndicatorController {
     /** Shows network activity indicator and return activity identifier. */
     func beginNetworkActivity() -> Int {
         #if os(iOS)
-            let result = _currentIdentifier++
+            let result = _currentIdentifier + 1
             _activeIdentifiers[result] = result
             self.mainQueue.addOperationWithBlock {
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = true
