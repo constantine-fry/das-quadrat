@@ -198,7 +198,7 @@ class DataCache {
         if cacheSize > self.cacheConfiguration.maxDiskCacheSize {
             validFiles = self.sortFileURLByModificationDate(validFiles)
             /** Let's just remove 1/4 of all files. */
-            validFiles.removeRange(Range(start: 0, end: validFiles.count / 4))
+            validFiles.removeRange(0 ..< (validFiles.count / 4))
             expiredFiles += validFiles
         }
         return expiredFiles
