@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 
-class NativeTouchAuthorizer : Authorizer {
-    private var configuration : Configuration!
+class NativeTouchAuthorizer: Authorizer {
+    private var configuration: Configuration!
     
     /** Network activity controller. */
     private var networkActivityController: NetworkActivityIndicatorController?
@@ -18,7 +18,7 @@ class NativeTouchAuthorizer : Authorizer {
     convenience init(configuration: Configuration) {
         let baseURL = configuration.server.nativeOauthBaseURL
         let parameters = [
-            Parameter.client_id    : configuration.client.id,
+            Parameter.client_id    : configuration.client.identifier,
             Parameter.redirect_uri : configuration.client.redirectURL,
             Parameter.v            : "20130509"
         ]
@@ -42,7 +42,7 @@ class NativeTouchAuthorizer : Authorizer {
     }
     
     func handleURL(URL: NSURL) -> Bool {
-        if (URL.scheme == self.redirectURL.scheme) {
+        if URL.scheme == self.redirectURL.scheme {
             self.didReachRedirectURL(URL)
             return true
         }
@@ -52,9 +52,9 @@ class NativeTouchAuthorizer : Authorizer {
     override func didReachRedirectURL(redirectURL: NSURL) {
         let parameters = self.extractParametersFromURL(redirectURL)
         let accessCode = parameters["code"]
-        if accessCode != nil {
+        if let accessCode = accessCode {
             // We should exchange access code to access token.
-            self.requestAccessTokenWithCode(accessCode!)
+            self.requestAccessTokenWithCode(accessCode)
         } else {
             // No access code, so we have error there. This method will take care about it.
             super.didReachRedirectURL(redirectURL)
@@ -66,42 +66,44 @@ class NativeTouchAuthorizer : Authorizer {
         
         let client = self.configuration.client
         let parameters = [
-            Parameter.client_id     : client.id,
+            Parameter.client_id     : client.identifier,
             Parameter.client_secret : client.secret,
             Parameter.redirect_uri  : client.redirectURL,
             Parameter.code          : code,
             Parameter.grant_type    : "authorization_code"
         ]
-        let identifier = networkActivityController?.beginNetworkActivity()
         let URL = Parameter.buildURL(NSURL(string: accessTokenURL)!, parameters: parameters)
         let request = NSURLRequest(URL: URL)
+        let identifier = self.networkActivityController?.beginNetworkActivity()
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
-            (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+            (data, response, error) -> Void in
             self.networkActivityController?.endNetworkActivity(identifier)
-            if let data = data, let response = response where response.MIMEType == "application/json" {
-                var parseError: NSError?
-                var jsonObject: AnyObject? = nil
-                do {
-                    jsonObject = try NSJSONSerialization.JSONObjectWithData(data,
-                        options: NSJSONReadingOptions(rawValue: 0))
-                } catch let error as NSError {
-                    parseError = error
-                } catch {
-                }
-                NSOperationQueue.mainQueue().addOperationWithBlock {
-                    if let parameters = jsonObject as? Parameters {
-                        self.finilizeAuthorizationWithParameters(parameters)
-                    } else {
-                        self.finilizeAuthorization(nil, error: parseError)
-                    }
-                }
-            } else {
-                NSOperationQueue.mainQueue().addOperationWithBlock {
-                    self.finilizeAuthorization(nil, error: error)
-                }
-                
-            }
+            self.processData(data, response: response, error: error)
         }
         task.resume()
+    }
+    
+    private func processData(data: NSData?, response: NSURLResponse?, error: NSError?) {
+        if let data = data, let response = response where response.MIMEType == "application/json" {
+            var parseError: NSError?
+            var jsonObject: AnyObject? = nil
+            do {
+                jsonObject = try NSJSONSerialization.JSONObjectWithData(data,
+                    options: NSJSONReadingOptions(rawValue: 0))
+            } catch let error as NSError {
+                parseError = error
+            }
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                if let parameters = jsonObject as? Parameters {
+                    self.finilizeAuthorizationWithParameters(parameters)
+                } else {
+                    self.finilizeAuthorization(nil, error: parseError)
+                }
+            }
+        } else {
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.finilizeAuthorization(nil, error: error)
+            }
+        }
     }
 }

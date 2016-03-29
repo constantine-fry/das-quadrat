@@ -1,0 +1,27 @@
+# This is configuration file for SwitLint.
+# https://github.com/realm/SwiftLint
+
+disabled_rules:
+  - leading_whitespace
+  - trailing_whitespace
+  - valid_docs
+  - variable_name
+  - variable_name_min_length
+  
+line_length: 120
+
+type_body_length:
+  - 250 # warning
+  - 300 # error
+
+function_body_length:
+  - 40 # warning
+  - 50 # error
+  
+file_length:
+  - 250 # warning
+  - 300 # error
+  
+variable_name_max_length:
+  - 60 # warning
+  - 70 # error

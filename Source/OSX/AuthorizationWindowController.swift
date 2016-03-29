@@ -9,7 +9,7 @@
 import Cocoa
 import WebKit
 
-enum AuthorizationWindowControllerRequestStatus  {
+private enum AuthorizationWindowControllerStatus {
     case None               // View controller has been initialized.
     case Loading            // Web view loading page.
     case Loaded             // Page has been loaded successfully.
@@ -18,9 +18,9 @@ enum AuthorizationWindowControllerRequestStatus  {
 
 class AuthorizationWindowController: NSWindowController {
     var authorizationURL: NSURL!
-    var redirectURL     : NSURL!
-    weak var delegate   : AuthorizationDelegate?
-    var status : AuthorizationWindowControllerRequestStatus = .None {
+    var redirectURL: NSURL!
+    weak var delegate: AuthorizationDelegate?
+    private var status: AuthorizationWindowControllerStatus = .None {
         didSet {
             self.updateUI()
         }
@@ -99,7 +99,7 @@ class AuthorizationWindowController: NSWindowController {
     
     /** Updates UI to current status. */
     func updateUI() {
-        switch (self.status) {
+        switch self.status {
             
         case .Loading:
             self.loadIndicator.startAnimation(self)

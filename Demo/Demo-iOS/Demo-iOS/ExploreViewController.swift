@@ -28,32 +28,32 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        numberFormatter.numberStyle = .DecimalStyle
+        self.numberFormatter.numberStyle = .DecimalStyle
         
-        session = Session.sharedSession()
-        session.logger = ConsoleLogger()
+        self.session = Session.sharedSession()
+        self.session.logger = ConsoleLogger()
         
-        resultsTableViewController = Storyboard.create("venueSearch") as! SearchTableViewController
-        resultsTableViewController.session = session
-        resultsTableViewController.delegate = self
-        searchController = UISearchController(searchResultsController: resultsTableViewController)
-        searchController.searchResultsUpdater = resultsTableViewController
-        searchController.searchBar.sizeToFit()
-        tableView.tableHeaderView = searchController.searchBar
-        definesPresentationContext = true
+        self.resultsTableViewController = Storyboard.create("venueSearch") as! SearchTableViewController
+        self.resultsTableViewController.session = session
+        self.resultsTableViewController.delegate = self
+        self.searchController = UISearchController(searchResultsController: resultsTableViewController)
+        self.searchController.searchResultsUpdater = resultsTableViewController
+        self.searchController.searchBar.sizeToFit()
+        self.tableView.tableHeaderView = searchController.searchBar
+        self.definesPresentationContext = true
         
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 200
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 200
         
-        locationManager = CLLocationManager()
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        locationManager.delegate = self
+        self.locationManager = CLLocationManager()
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        self.locationManager.delegate = self
         let status = CLLocationManager.authorizationStatus()
         if status == .NotDetermined {
-            locationManager.requestWhenInUseAuthorization()
+            self.locationManager.requestWhenInUseAuthorization()
         } else if status == CLAuthorizationStatus.AuthorizedWhenInUse
             || status == CLAuthorizationStatus.AuthorizedAlways {
-                locationManager.startUpdatingLocation()
+                self.locationManager.startUpdatingLocation()
         } else {
             showNoPermissionsAlert()
         }
@@ -65,7 +65,7 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
     }
     
     private func updateLeftBarButton() {
-        if session.isAuthorized() {
+        if self.session.isAuthorized() {
             self.navigationItem.leftBarButtonItem?.title = "Logout"
         } else {
             self.navigationItem.leftBarButtonItem?.title = "Login"
@@ -101,7 +101,7 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
         if status == .Denied || status == .Restricted {
             showNoPermissionsAlert()
         } else {
-            locationManager.startUpdatingLocation()
+            self.locationManager.startUpdatingLocation()
         }
     }
     
@@ -113,11 +113,11 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
     
     func locationManager(manager: CLLocationManager,
         didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
-            if venueItems == nil {
+            if self.venueItems == nil {
                 exploreVenues()
             }
-            resultsTableViewController.location = newLocation
-            locationManager.stopUpdatingLocation()
+            self.resultsTableViewController.location = newLocation
+            self.locationManager.stopUpdatingLocation()
     }
     
     func exploreVenues() {
@@ -135,8 +135,8 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
                 fatalError("!!!")
             }
             
-            if result.response != nil {
-                if let groups = result.response!["groups"] as? [[String: AnyObject]]  {
+            if let response = result.response {
+                if let groups = response["groups"] as? [[String: AnyObject]]  {
                     var venues = [[String: AnyObject]]()
                     for group in groups {
                         if let items = group["items"] as? [[String: AnyObject]] {
@@ -147,20 +147,20 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
                     self.venueItems = venues
                 }
                 self.tableView.reloadData()
-            } else if result.error != nil && !result.isCancelled() {
-                self.showErrorAlert(result.error!)
+            } else if let error = result.error where !result.isCancelled() {
+                self.showErrorAlert(error)
             }
         }
         task.start()
     }
     
     @IBAction func authorizeButtonTapped() {
-        if session.isAuthorized() {
-            session.deauthorize()
+        if self.session.isAuthorized() {
+            self.session.deauthorize()
             self.updateLeftBarButton()
             self.exploreVenues()
         } else {
-            session.authorizeWithViewController(self, delegate: self) {
+            self.session.authorizeWithViewController(self, delegate: self) {
                 (authorized, error) -> Void in
                 self.updateLeftBarButton()
                 self.exploreVenues()
@@ -169,8 +169,8 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if venueItems != nil {
-            return venueItems!.count
+        if let venueItems = self.venueItems {
+            return venueItems.count
         }
         return 0
     }
@@ -185,18 +185,14 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
     
     
     func configureCellWithItem(cell:VenueTableViewCell, item: JSONParameters) {
-        let venueInfo = item["venue"] as? JSONParameters
-        let tips = item["tips"] as? [JSONParameters]
-        if venueInfo != nil {
-            cell.venueNameLabel.text = venueInfo!["name"] as? String
-            if let rating = venueInfo!["rating"] as? CGFloat {
+        if let venueInfo = item["venue"] as? JSONParameters {
+            cell.venueNameLabel.text = venueInfo["name"] as? String
+            if let rating = venueInfo["rating"] as? CGFloat {
                 cell.venueRatingLabel.text = numberFormatter.stringFromNumber(rating)
             }
         }
-        if tips != nil  {
-            if let tip = tips!.first {
-                cell.venueCommentLabel.text = tip["text"] as? String
-            }
+        if let tips = item["tips"] as? [JSONParameters], let tip = tips.first {
+            cell.venueCommentLabel.text = tip["text"] as? String
         }
     }
     
@@ -204,33 +200,26 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
         willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
             let cell = cell as! VenueTableViewCell
             let tips = self.venueItems![indexPath.row]["tips"] as? [JSONParameters]
-            if tips != nil  {
-                if let tip = tips!.first {
-                    if let user = tip["user"] as? JSONParameters {
-                        if let photo = user["photo"] as? JSONParameters  {
-                            let URL = photoURLFromJSONObject(photo)
-                            if let imageData = session.cachedImageDataForURL(URL)  {
-                                cell.userPhotoImageView.image = UIImage(data: imageData)
-                            } else {
-                                cell.userPhotoImageView.image = nil
-                                session.downloadImageAtURL(URL) {
-                                    (imageData, error) -> Void in
-                                    let cell = tableView.cellForRowAtIndexPath(indexPath) as? VenueTableViewCell
-                                    if cell != nil && imageData != nil {
-                                        let image = UIImage(data: imageData!)
-                                        cell!.userPhotoImageView.image = image
-                                    }
-                                }
-                                
-                            }
-                            
-                        } // let photo
-                        
+            guard let tip = tips?.first, let user = tip["user"] as? JSONParameters,
+                let photo = user["photo"] as? JSONParameters else {
+                    return
+            }
+            let URL = photoURLFromJSONObject(photo)
+            if let imageData = session.cachedImageDataForURL(URL)  {
+                cell.userPhotoImageView.image = UIImage(data: imageData)
+            } else {
+                cell.userPhotoImageView.image = nil
+                session.downloadImageAtURL(URL) {
+                    (imageData, error) -> Void in
+                    let cell = tableView.cellForRowAtIndexPath(indexPath) as? VenueTableViewCell
+                    if let cell = cell, let imageData = imageData {
+                        let image = UIImage(data: imageData)
+                        cell.userPhotoImageView.image = image
                     }
                 }
             }
     }
-    
+
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let venue = venueItems![indexPath.row]["venue"] as! JSONParameters
@@ -249,9 +238,9 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func photoURLFromJSONObject(photo: JSONParameters!) -> NSURL {
-        let prefix = photo!["prefix"] as! String
-        let suffix = photo!["suffix"] as! String
+    func photoURLFromJSONObject(photo: JSONParameters) -> NSURL {
+        let prefix = photo["prefix"] as! String
+        let suffix = photo["suffix"] as! String
         let URLString = prefix + "100x100" + suffix
         let URL = NSURL(string: URLString)
         return URL!

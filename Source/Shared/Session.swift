@@ -14,7 +14,7 @@ public typealias AuthorizationHandler = (Bool, NSError?) -> Void
 /** A nandler used by all endpoints. */
 public typealias ResponseClosure = (result: Result) -> Void
 
-/** A nandler for downloading images. */
+/** A nandler for image downloading. */
 public typealias DownloadImageClosure = (imageData: NSData?, error: NSError?) -> Void
 
 /** Typealias for parameters dictionary. */
@@ -26,121 +26,119 @@ public typealias Parameters = [String:String]
 */
 public let QuadratSessionDidBecomeUnauthorizedNotification = "QuadratSessionDidBecomeUnauthorizedNotification"
 
-private var _sharedSession : Session?
+private var _sharedSession: Session?
 
 public class Session {
     
     /** The coniguration. */
-    let configuration       : Configuration
+    let configuration: Configuration
     
     /** The session which perform all network requests. */
-    let URLSession          : NSURLSession
+    let URLSession: NSURLSession
     
     /** The current authorizer. */
-    var authorizer          : Authorizer?
+    var authorizer: Authorizer?
     
     /** Used as image cache for downloaded files. */
-    let dataCache           : DataCache
+    let dataCache: DataCache
     
     /** The queue on which tasks have to call completion handlers. */
-    let completionQueue     : NSOperationQueue
+    let completionQueue: NSOperationQueue
    
     /** The keychain. */
-    let keychain            : Keychain
+    let keychain: Keychain
     
     /** Manages network activity indicator. */
-    var networkActivityController : NetworkActivityIndicatorController?
+    var networkActivityController: NetworkActivityIndicatorController?
 
     /**
         One can create custom logger to process all errors and responses in one place.
         Main purpose is to debug or to track all the errors accured in framework via some analytic tool.
     */
-    public var logger       : Logger?
+    public var logger: Logger?
     
-    public lazy var users : Users = {
+    public lazy var users: Users = {
         return Users(session: self)
-        }()
+    }()
     
-    public lazy var venues : Venues = {
+    public lazy var venues: Venues = {
         return Venues(session: self)
-        }()
+    }()
     
-    public lazy var venueGroups : VenueGroups = {
+    public lazy var venueGroups: VenueGroups = {
         return VenueGroups(session: self)
-        }()
+    }()
     
-    public lazy var checkins : Checkins = {
+    public lazy var checkins: Checkins = {
         return Checkins(session: self)
-        }()
+    }()
     
-    public lazy var tips : Tips = {
+    public lazy var tips: Tips = {
         return Tips(session: self)
-        }()
+    }()
     
-    public lazy var lists : Lists = {
+    public lazy var lists: Lists = {
         return Lists(session: self)
-        }()
+    }()
     
-    public lazy var updates : Updates = {
+    public lazy var updates: Updates = {
         return Updates(session: self)
-        }()
+    }()
     
-    public lazy var photos : Photos = {
+    public lazy var photos: Photos = {
         return Photos(session: self)
-        }()
+    }()
     
-    public lazy var settings : Settings = {
+    public lazy var settings: Settings = {
         return Settings(session: self)
-        }()
+    }()
     
-    public lazy var specials : Specials = {
+    public lazy var specials: Specials = {
         return Specials(session: self)
-        }()
+    }()
     
-    public lazy var events : Events = {
+    public lazy var events: Events = {
         return Events(session: self)
-        }()
+    }()
     
-    public lazy var pages : Pages = {
+    public lazy var pages: Pages = {
         return Pages(session: self)
-        }()
+    }()
     
-    public lazy var pageUpdates : PageUpdates = {
+    public lazy var pageUpdates: PageUpdates = {
         return PageUpdates(session: self)
-        }()
+    }()
     
-    public lazy var multi : Multi = {
+    public lazy var multi: Multi = {
         return Multi(session: self)
-        }()
+    }()
     
-    public init(configuration: Configuration, completionQueue: NSOperationQueue) {
+    public init(configuration: Configuration, completionQueue: NSOperationQueue = NSOperationQueue.mainQueue()) {
         if configuration.shouldControllNetworkActivityIndicator {
-            networkActivityController = NetworkActivityIndicatorController()
+            self.networkActivityController = NetworkActivityIndicatorController()
         }
         self.configuration = configuration
         self.completionQueue = completionQueue
         let URLConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        URLConfiguration.timeoutIntervalForRequest = configuration.timeoutInterval
         let delegateQueue = NSOperationQueue()
         delegateQueue.maxConcurrentOperationCount = 1
         self.URLSession = NSURLSession(configuration: URLConfiguration, delegate: nil, delegateQueue: delegateQueue)
-        dataCache = DataCache(name: configuration.userTag)
+        self.dataCache = DataCache(name: configuration.userTag)
         if configuration.debugEnabled {
             self.logger = ConsoleLogger()
         }
-        keychain = Keychain(configuration: self.configuration)
-        keychain.logger = self.logger
+        self.keychain = Keychain(configuration: self.configuration)
+        self.keychain.logger = self.logger
     }
     
-    public convenience init(configuration: Configuration) {
-        self.init(configuration:configuration, completionQueue: NSOperationQueue.mainQueue())
-    }
-    
-    public class func setupSharedSessionWithConfiguration(configuration: Configuration) {
-        if _sharedSession == nil {
-            _sharedSession = Session(configuration: configuration)
-        } else {
-            fatalError("You shouldn't call call setupSharedSessionWithConfiguration twice!")
-        }
+    public class func setupSharedSessionWithConfiguration(configuration: Configuration,
+        completionQueue: NSOperationQueue = NSOperationQueue.mainQueue()) {
+            if _sharedSession == nil {
+                _sharedSession = Session(configuration: configuration, completionQueue: completionQueue)
+            } else {
+                fatalError("You shouldn't call call setupSharedSessionWithConfiguration twice!")
+            }
     }
     
     public class func sharedSession() -> Session {
@@ -153,10 +151,18 @@ public class Session {
     /** Whether session is authorized or not. */
     public func isAuthorized() -> Bool {
         do {
-            let accessToken = try keychain.accessToken()
+            let accessToken = try self.keychain.accessToken()
             return accessToken != nil
         } catch {
             return false
+        }
+    }
+    
+    public func accessToken() -> String? {
+        do {
+            return try self.keychain.accessToken()
+        } catch {
+            return nil
         }
     }
     
@@ -166,8 +172,8 @@ public class Session {
     */
     public func deauthorize() {
         do {
-            try keychain.deleteAccessToken()
-            dataCache.clearCache()
+            try self.keychain.deleteAccessToken()
+            self.dataCache.clearCache()
         } catch {
             
         }
@@ -175,7 +181,7 @@ public class Session {
     
     /** Returns cached image data. */
     public func cachedImageDataForURL(URL: NSURL) -> NSData? {
-        return dataCache.dataForKey("\(URL.hash)")
+        return self.dataCache.dataForKey("\(URL.hash)")
     }
     
     /** Downloads image at URL and puts in cache. */
@@ -213,6 +219,3 @@ public class Session {
     }
 
 }
-
-
-

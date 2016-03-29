@@ -14,7 +14,7 @@ public class Venues: Endpoint {
     }
     
     /** https://developer.foursquare.com/docs/venues/venues */
-    public func get(venueId: String, completionHandler:  ResponseClosure? = nil) -> Task {
+    public func get(venueId: String, completionHandler: ResponseClosure? = nil) -> Task {
         return self.getWithPath(venueId, parameters: nil, completionHandler: completionHandler)
     }
     
@@ -94,13 +94,13 @@ public class Venues: Endpoint {
     }
     
     /** https://developer.foursquare.com/docs/venues/likes */
-    public func likes(venueId: String, completionHandler:  ResponseClosure? = nil) -> Task {
+    public func likes(venueId: String, completionHandler: ResponseClosure? = nil) -> Task {
         let path = venueId + "/likes"
         return self.getWithPath(path, parameters: nil, completionHandler: completionHandler)
     }
     
     /** https://developer.foursquare.com/docs/venues/links */
-    public func links(venueId: String, completionHandler:  ResponseClosure? = nil) -> Task {
+    public func links(venueId: String, completionHandler: ResponseClosure? = nil) -> Task {
         let path = venueId + "/links"
         return self.getWithPath(path, parameters: nil, completionHandler: completionHandler)
     }
@@ -136,7 +136,7 @@ public class Venues: Endpoint {
     }
     
     /** https://developer.foursquare.com/docs/venues/stats */
-    public func stats(venueId: String,  parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
+    public func stats(venueId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = venueId + "/stats"
         return self.getWithPath(path, parameters: parameters, completionHandler: completionHandler)
     }
@@ -164,7 +164,7 @@ public class Venues: Endpoint {
     }
     
     /** https://developer.foursquare.com/docs/venues/edit */
-    public func edit(venueId:String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
+    public func edit(venueId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = venueId + "/edit"
         return self.postWithPath(path, parameters: parameters, completionHandler: completionHandler)
     }

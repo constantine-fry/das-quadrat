@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class TouchAuthorizer : Authorizer {
+class TouchAuthorizer: Authorizer {
     weak var presentingViewController: UIViewController?
     weak var delegate: SessionAuthorizationDelegate?
     var authorizationViewController: AuthorizationViewController?
@@ -17,9 +17,10 @@ class TouchAuthorizer : Authorizer {
     func authorize(viewController: UIViewController, delegate: SessionAuthorizationDelegate?,
         completionHandler: (String?, NSError?) -> Void) {
         
-        authorizationViewController = AuthorizationViewController(authorizationURL: authorizationURL,
+        self.authorizationViewController = AuthorizationViewController(authorizationURL: authorizationURL,
             redirectURL: redirectURL, delegate: self)
-        authorizationViewController!.shouldControllNetworkActivityIndicator = shouldControllNetworkActivityIndicator
+        self.authorizationViewController!.shouldControllNetworkActivityIndicator
+            = shouldControllNetworkActivityIndicator
 
         let navigationController = AuthorizationNavigationController(rootViewController: authorizationViewController!)
         navigationController.modalPresentationStyle = .FormSheet
@@ -32,10 +33,10 @@ class TouchAuthorizer : Authorizer {
     }
     
     override func finilizeAuthorization(accessToken: String?, error: NSError?) {
-        if authorizationViewController != nil {
-            delegate?.sessionWillDismissAuthorizationViewController?(authorizationViewController!)
+        if let authorizationViewController = self.authorizationViewController {
+            self.delegate?.sessionWillDismissAuthorizationViewController?(authorizationViewController)
         }
-        presentingViewController?.dismissViewControllerAnimated(true) {
+        self.presentingViewController?.dismissViewControllerAnimated(true) {
             self.didDismissViewController(accessToken, error: error)
             self.authorizationViewController = nil
         }

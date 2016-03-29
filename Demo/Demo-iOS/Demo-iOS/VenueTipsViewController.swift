@@ -23,9 +23,9 @@ class VenueTipsViewController: UITableViewController {
         self.tableView.estimatedRowHeight = 44
         let task = self.session.venues.get(self.venueId!) {
             (result) -> Void in
-            if result.response != nil {
-                if let venue = result.response!["venue"] as? JSONParameters {
-                    if let tips = venue["tips"] as? JSONParameters {
+            if let response = result.response {
+                if let venue = response["venue"] as? JSONParameters,
+                    let tips = venue["tips"] as? JSONParameters {
                         var tipItems = [JSONParameters]()
                         if let groups = tips["groups"] as? [JSONParameters] {
                             for group in groups {
@@ -35,7 +35,6 @@ class VenueTipsViewController: UITableViewController {
                             }
                         }
                         self.tips = tipItems
-                    }
                 }
             } else {
                 // Show error.
@@ -46,8 +45,8 @@ class VenueTipsViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.tips != nil {
-            return self.tips!.count
+        if let tips = self.tips {
+            return tips.count
         }
         return 0
     }

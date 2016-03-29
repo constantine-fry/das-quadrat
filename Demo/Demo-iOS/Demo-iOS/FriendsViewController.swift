@@ -18,12 +18,12 @@ class FriendsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        session = Session.sharedSession()
+        self.session = Session.sharedSession()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        let task = session?.users.friends(parameters: nil) {
+        let task = self.session?.users.friends(parameters: nil) {
             (response) -> Void in
             if let items = response.response?["friends"] as? JSONParameters {
                 if let friends = items["items"] as? [JSONParameters] {
@@ -36,8 +36,8 @@ class FriendsViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if friends != nil {
-            return friends!.count
+        if let friends = self.friends {
+            return friends.count
         }
         return 0
     }
@@ -56,25 +56,25 @@ class FriendsViewController: UITableViewController {
                 cell.photoImageView.image = UIImage(data: imageData)
             } else {
                 cell.photoImageView.image = nil
-                session?.downloadImageAtURL(URL) {
+                self.session?.downloadImageAtURL(URL) {
                     (imageData, error) -> Void in
                     let cell = tableView.cellForRowAtIndexPath(indexPath) as? FriendTableViewCell
-                    if cell != nil && imageData != nil {
-                        let image = UIImage(data: imageData!)
-                        cell!.photoImageView.image = image
+                    if let cell = cell, let imageData = imageData {
+                        let image = UIImage(data: imageData)
+                        cell.photoImageView.image = image
                     }
                 }
                 
             }
             
-        } // let photo
+        }
         
         return cell
     }
     
-    func photoURLFromJSONObject(photo: JSONParameters!) -> NSURL {
-        let prefix = photo!["prefix"] as! String
-        let suffix = photo!["suffix"] as! String
+    func photoURLFromJSONObject(photo: JSONParameters) -> NSURL {
+        let prefix = photo["prefix"] as! String
+        let suffix = photo["suffix"] as! String
         let URLString = prefix + "100x100" + suffix
         let URL = NSURL(string: URLString)
         return URL!

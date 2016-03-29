@@ -14,8 +14,8 @@ protocol AuthorizationDelegate : class {
 }
 
 class Authorizer: AuthorizationDelegate {
-    var redirectURL : NSURL
-    var authorizationURL : NSURL
+    var redirectURL: NSURL
+    var authorizationURL: NSURL
     var completionHandler: ((String?, NSError?) -> Void)?
     let keychain: Keychain
     var shouldControllNetworkActivityIndicator = false
@@ -23,7 +23,7 @@ class Authorizer: AuthorizationDelegate {
     convenience init(configuration: Configuration) {
         let baseURL = configuration.server.oauthBaseURL
         let parameters = [
-            Parameter.client_id        : configuration.client.id,
+            Parameter.client_id        : configuration.client.identifier,
             Parameter.redirect_uri     : configuration.client.redirectURL,
             Parameter.v                : configuration.version,
             Parameter.response_type    : "token"
@@ -40,7 +40,7 @@ class Authorizer: AuthorizationDelegate {
         self.cleanupCookiesForURL(authorizationURL)
     }
     
-    init(authorizationURL: NSURL, redirectURL: NSURL, keychain:Keychain) {
+    init(authorizationURL: NSURL, redirectURL: NSURL, keychain: Keychain) {
         self.authorizationURL = authorizationURL
         self.redirectURL = redirectURL
         self.keychain = keychain
@@ -54,7 +54,6 @@ class Authorizer: AuthorizationDelegate {
     }
     
     func didReachRedirectURL(redirectURL: NSURL) {
-        print("redirectURL" + redirectURL.absoluteString)
         let parameters = self.extractParametersFromURL(redirectURL)
         self.finilizeAuthorizationWithParameters(parameters)
     }
@@ -88,13 +87,10 @@ class Authorizer: AuthorizationDelegate {
     
     func cleanupCookiesForURL(URL: NSURL) {
         let storage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
-        if storage.cookies != nil {
-            if let cookies = storage.cookies {
-                for cookie in cookies {
-                    if cookie.domain == URL.host {
-                        storage.deleteCookie(cookie as NSHTTPCookie)
-                    }
-                }
+        storage.cookies?.forEach {
+            (cookie) -> () in
+            if cookie.domain == URL.host {
+                storage.deleteCookie(cookie)
             }
         }
     }
@@ -113,12 +109,10 @@ class Authorizer: AuthorizationDelegate {
         }
         let parameters = queryString?.componentsSeparatedByString("&")
         var map = Parameters()
-        if parameters != nil {
-            for string: String in parameters! {
-                let keyValue = string.componentsSeparatedByString("=")
-                if keyValue.count == 2 {
-                    map[keyValue[0]] = keyValue[1]
-                }
+        parameters?.forEach {
+            let keyValue = $0.componentsSeparatedByString("=")
+            if keyValue.count == 2 {
+                map[keyValue[0]] = keyValue[1]
             }
         }
         return map

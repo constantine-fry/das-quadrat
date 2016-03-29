@@ -24,8 +24,8 @@ public class Updates: Endpoint {
     public func notifications(limit: String?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "notifications"
         var parameters: Parameters?
-        if limit != nil {
-            parameters = [Parameter.limit:limit!]
+        if let limit = limit {
+            parameters = [Parameter.limit:limit]
         }
         return self.getWithPath(path, parameters: parameters, completionHandler: completionHandler)
     }

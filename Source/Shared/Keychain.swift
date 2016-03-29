@@ -18,10 +18,8 @@ public let QuadratKeychainOSSatusErrorDomain = "QuadratKeychainOSSatusErrorDomai
 
 class Keychain {
     
-    /** Logger to log all errors. */
-    var logger : Logger?
+    var logger: Logger?
     
-    /** Query to get keychain items. */
     private let keychainQuery: [String:AnyObject]
     
     init(configuration: Configuration) {
@@ -33,9 +31,9 @@ class Keychain {
         
         var accountAttribute: String
         if let userTag = configuration.userTag {
-            accountAttribute = configuration.client.id + "_" + userTag
+            accountAttribute = configuration.client.identifier + "_" + userTag
         } else {
-            accountAttribute = configuration.client.id
+            accountAttribute = configuration.client.identifier
         }
         keychainQuery = [
             kSecClass           as String  : kSecClassGenericPassword,
@@ -68,7 +66,7 @@ class Keychain {
         }
         if status != errSecSuccess && status != errSecItemNotFound {
             let error = errorWithStatus(status)
-            logger?.logError(error, withMessage: "Keychain can't read access token.")
+            self.logger?.logError(error, withMessage: "Keychain can't read access token.")
             throw error
         }
         return accessToken
@@ -79,7 +77,7 @@ class Keychain {
         let status = SecItemDelete(query)
         if status != errSecSuccess && status != errSecItemNotFound {
             let error = errorWithStatus(status)
-            logger?.logError(error, withMessage: "Keychain can't delete access token .")
+            self.logger?.logError(error, withMessage: "Keychain can't delete access token .")
             throw error
         }
     }
@@ -98,7 +96,7 @@ class Keychain {
         let status = SecItemAdd(query, nil)
         if status != errSecSuccess {
             let error = errorWithStatus(status)
-            logger?.logError(error, withMessage: "Keychain can't add access token.")
+            self.logger?.logError(error, withMessage: "Keychain can't add access token.")
             throw error
         }
     }

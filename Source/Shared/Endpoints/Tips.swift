@@ -53,7 +53,7 @@ public class Tips: Endpoint {
     
     /** https://developer.foursquare.com/docs/tips/flag */
     public func flag(tipId: String, problem: String,
-        parameters: Parameters?,  completionHandler: ResponseClosure? = nil) -> Task {
+        parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
             let path = tipId + "/flag"
             var allParameters = [Parameter.problem:problem]
             allParameters += parameters
@@ -73,4 +73,3 @@ public class Tips: Endpoint {
         return self.postWithPath(path, parameters: nil, completionHandler: completionHandler)
     }
 }
-
