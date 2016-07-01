@@ -183,7 +183,7 @@ class DataCache {
         fileURLs.forEach {
             (aFileURL) -> () in
             let values: [String : AnyObject]? = try? aFileURL.resourceValuesForKeys(properties)
-            if let values = values, let modificationDate = values[NSURLContentModificationDateKey] as? NSDate {
+            if let values = values, modificationDate = values[NSURLContentModificationDateKey] as? NSDate {
                 if modificationDate.laterDate(expirationDate).isEqualToDate(modificationDate) {
                     validFiles.append(aFileURL)
                     if let fileSize = values[NSURLTotalFileAllocatedSizeKey] as? UInt {
