@@ -94,14 +94,14 @@ extension Result {
         }
         
         if let JSON = JSON {
-            if let meta = JSON["meta"] as? [String:AnyObject], let code = meta["code"] as? Int
+            if let meta = JSON["meta"] as? [String:AnyObject], code = meta["code"] as? Int
                 where code < 200 || code > 299 {
                     result.error = NSError(domain: QuadratResponseErrorDomain, code: code, userInfo: meta)
             }
             result.notifications = JSON["notifications"] as? [[String:AnyObject]]
             result.response = JSON["response"] as? [String:AnyObject]
             
-            if let response = result.response, let responses = response["responses"] as? [[String:AnyObject]] {
+            if let response = result.response, responses = response["responses"] as? [[String:AnyObject]] {
                 var subResults = [Result]()
                 for aJSONResponse in responses {
                     let quatratResponse = Result.createResult(nil, JSON: aJSONResponse, error: nil)

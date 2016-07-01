@@ -84,7 +84,7 @@ class NativeTouchAuthorizer: Authorizer {
     }
     
     private func processData(data: NSData?, response: NSURLResponse?, error: NSError?) {
-        if let data = data, let response = response where response.MIMEType == "application/json" {
+        if let data = data, response = response where response.MIMEType == "application/json" {
             var parseError: NSError?
             var jsonObject: AnyObject? = nil
             do {
