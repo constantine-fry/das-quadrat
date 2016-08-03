@@ -1,5 +1,8 @@
 # Das Quadrat Changelog
 
+* Migrate to Swift 2.3.
+
+__1.1.3__
 * Add SwiftLint to fix code style.
 * Make mode property on Configuration optional.
 
