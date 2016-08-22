@@ -60,7 +60,7 @@ class DataCache {
         } catch _ {
             fatalError("Can't get access to cache directory")
         }
-        self.directoryURL = cacheURL!.URLByAppendingPathComponent("\(directoryName)/DataCache/\(subdirectiryName)")
+        self.directoryURL = cacheURL!.URLByAppendingPathComponent("\(directoryName)/DataCache/\(subdirectiryName)")!
         privateQueue.maxConcurrentOperationCount = 1
         createBaseDirectory()
         subscribeForNotifications()
@@ -79,7 +79,7 @@ class DataCache {
             result = self.cache.objectForKey(key) as? NSData
             if result == nil {
                 let targetURL = self.directoryURL.URLByAppendingPathComponent(key)
-                result = NSData(contentsOfURL: targetURL)
+                result = NSData(contentsOfURL: targetURL!)
                 if let result = result {
                     self.cache.setObject(result, forKey: key, cost: result.length)
                 }
@@ -94,7 +94,7 @@ class DataCache {
         privateQueue.addOperationWithBlock { () -> Void in
             let targetURL = self.directoryURL.URLByAppendingPathComponent(key)
             do {
-                try self.fileManager.copyItemAtURL(URL, toURL: targetURL)
+                try self.fileManager.copyItemAtURL(URL, toURL: targetURL!)
             } catch let error as NSError {
                 self.logger?.logError(error, withMessage: "Cache can't copy file into cache directory.")
             } catch {
@@ -108,7 +108,7 @@ class DataCache {
         privateQueue.addOperationWithBlock { () -> Void in
             let targetURL = self.directoryURL.URLByAppendingPathComponent(key)
             do {
-                try data.writeToURL(targetURL, options: .DataWritingAtomic)
+                try data.writeToURL(targetURL!, options: .DataWritingAtomic)
             } catch let error as NSError {
                 self.logger?.logError(error, withMessage: "Cache can't save file into cache directory.")
             } catch {
