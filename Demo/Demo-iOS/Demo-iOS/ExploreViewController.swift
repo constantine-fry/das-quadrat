@@ -30,7 +30,7 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
         super.viewDidLoad()
         self.numberFormatter.numberStyle = .DecimalStyle
         
-        self.session = Session.sharedSession()
+        self.session = Session.getSharedSession()
         self.session.logger = ConsoleLogger()
         
         self.resultsTableViewController = Storyboard.create("venueSearch") as! SearchTableViewController
@@ -147,7 +147,7 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
                     self.venueItems = venues
                 }
                 self.tableView.reloadData()
-            } else if let error = result.error where !result.isCancelled() {
+            } else if result.isCancelled() == false, let error = result.error {
                 self.showErrorAlert(error)
             }
         }

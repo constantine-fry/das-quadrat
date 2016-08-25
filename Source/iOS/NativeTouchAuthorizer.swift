@@ -18,8 +18,8 @@ class NativeTouchAuthorizer: Authorizer {
     convenience init(configuration: Configuration) {
         let baseURL = configuration.server.nativeOauthBaseURL
         let parameters = [
-            Parameter.client_id    : configuration.client.identifier,
-            Parameter.redirect_uri : configuration.client.redirectURL,
+            Parameter.clientId    : configuration.client.identifier,
+            Parameter.redirectUri : configuration.client.redirectURL,
             Parameter.v            : "20130509"
         ]
         
@@ -66,11 +66,11 @@ class NativeTouchAuthorizer: Authorizer {
         
         let client = self.configuration.client
         let parameters = [
-            Parameter.client_id     : client.identifier,
-            Parameter.client_secret : client.secret,
-            Parameter.redirect_uri  : client.redirectURL,
+            Parameter.clientId     : client.identifier,
+            Parameter.clientSecret : client.secret,
+            Parameter.redirectUri  : client.redirectURL,
             Parameter.code          : code,
-            Parameter.grant_type    : "authorization_code"
+            Parameter.grantType    : "authorization_code"
         ]
         let URL = Parameter.buildURL(NSURL(string: accessTokenURL)!, parameters: parameters)
         let request = NSURLRequest(URL: URL)

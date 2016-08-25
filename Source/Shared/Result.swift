@@ -8,62 +8,62 @@
 
 import Foundation
 
-public let QuadratResponseErrorDomain   = "QuadratOauthErrorDomain"
-public let QuadratResponseErrorTypeKey  = "errorType"
-public let QuadratResponseErrorDetailKey = "errorDetail"
+public let quadratResponseErrorDomain   = "QuadratOauthErrorDomain"
+public let quadratResponseErrorTypeKey  = "errorType"
+public let quadratResponseErrorDetailKey = "errorDetail"
 
 
 /**
-    A response from Foursquare server.
-    Read `Responses & Errors`:
-    https://developer.foursquare.com/overview/responses
-*/
+ A response from Foursquare server.
+ Read `Responses & Errors`:
+ https://developer.foursquare.com/overview/responses
+ */
 public class Result: CustomStringConvertible {
     
-    /** 
-        HTTP response status code.
-    */
-    public var HTTPSTatusCode: Int?
+    /**
+     HTTP response status code.
+     */
+    public var httpStatusCode: Int?
     
-    /** 
-        HTTP response headers.
-        Can contain `RateLimit-Remaining` and `X-RateLimit-Limit`.
-        Read about `Rate Limits` <https://developer.foursquare.com/overview/ratelimits>.
-    */
-    public var HTTPHeaders: [NSObject:AnyObject]?
+    /**
+     HTTP response headers.
+     Can contain `RateLimit-Remaining` and `X-RateLimit-Limit`.
+     Read about `Rate Limits` <https://developer.foursquare.com/overview/ratelimits>.
+     */
+    public var httpHeaders: [NSObject:AnyObject]?
     
-    /** 
-        The URL which has been requested. 
-    */
-    public var URL: NSURL?
+    /**
+     The URL which has been requested.
+     */
+    public var url: NSURL?
     
     
     /*
-        Can contain error with following error domains:
-            QuadratResponseErrorDomain  - in case of error in `meta` parameter of Foursquare response. 
-                Error doesn't have localized description, but has `QuadratResponseErrorTypeKey`
-                and `QuadratResponseErrorDetailKey` parameters in `userUnfo`.
-            NSURLErrorDomain            - in case of some networking problem.
-            NSCocoaErrorDomain          - in case of error during JSON parsing.
-    */
+     Can contain error with following error domains:
+     QuadratResponseErrorDomain  - in case of error in `meta` parameter of Foursquare response.
+     Error doesn't have localized description, but has `QuadratResponseErrorTypeKey`
+     and `QuadratResponseErrorDetailKey` parameters in `userUnfo`.
+     NSURLErrorDomain            - in case of some networking problem.
+     NSCocoaErrorDomain          - in case of error during JSON parsing.
+     */
     public var error: NSError?
     
-    /** 
-        A response. Extracted from JSON `response` field.
-        Can be empty in case of error or `multi` request. 
-        If you are doung `multi` request use `subresponses` property
-    */
+    /**
+     A response. Extracted from JSON `response` field.
+     Can be empty in case of error or `multi` request.
+     If you are doung `multi` request use `subresponses` property
+     */
     public var response: [String:AnyObject]?
     
-    /** 
-        Responses returned from `multi` endpoint. Subresponses never have HTTP headers and status code.
-        Extracted from JSON `responses` field.
-    */
+    /**
+     Responses returned from `multi` endpoint. Subresponses never have HTTP headers and status code.
+     Extracted from JSON `responses` field.
+     */
     public var results: [Result]?
     
-    /** 
-        A notifications. Extracted from JSON `notifications` field.
-    */
+    /**
+     A notifications. Extracted from JSON `notifications` field.
+     */
     public var notifications: [[String:AnyObject]]?
     
     init() {
@@ -71,7 +71,7 @@ public class Result: CustomStringConvertible {
     }
     
     public var description: String {
-        return "Status code: \(HTTPSTatusCode)\nResponse: \(response)\nError: \(error)"
+        return "Status code: \(httpStatusCode)\nResponse: \(response)\nError: \(error)"
     }
     
 }
@@ -88,15 +88,15 @@ extension Result {
         }
         
         if let HTTPResponse = HTTPResponse {
-            result.HTTPHeaders = HTTPResponse.allHeaderFields
-            result.HTTPSTatusCode = HTTPResponse.statusCode
-            result.URL = HTTPResponse.URL
+            result.httpHeaders = HTTPResponse.allHeaderFields
+            result.httpStatusCode = HTTPResponse.statusCode
+            result.url = HTTPResponse.URL
         }
         
         if let JSON = JSON {
             if let meta = JSON["meta"] as? [String:AnyObject], let code = meta["code"] as? Int
                 where code < 200 || code > 299 {
-                    result.error = NSError(domain: QuadratResponseErrorDomain, code: code, userInfo: meta)
+                result.error = NSError(domain: quadratResponseErrorDomain, code: code, userInfo: meta)
             }
             result.notifications = JSON["notifications"] as? [[String:AnyObject]]
             result.response = JSON["response"] as? [String:AnyObject]
@@ -111,7 +111,7 @@ extension Result {
                 result.response = nil
             }
         }
-
+        
         return result
     }
     
@@ -123,7 +123,7 @@ extension Result {
         if let data = data where JSONError == nil && HTTPResponse?.MIMEType == "application/json" {
             do {
                 JSONResult = try NSJSONSerialization.JSONObjectWithData(data,
-                                options: NSJSONReadingOptions(rawValue: 0)) as? [String: AnyObject]
+                                                                        options: NSJSONReadingOptions(rawValue: 0)) as? [String: AnyObject]
             } catch let error as NSError {
                 JSONError = error
             }
@@ -138,12 +138,12 @@ extension Result {
     
     /** Returns `RateLimit-Remaining` parameter, if there is one in `HTTPHeaders`. */
     public func rateLimitRemaining() -> Int? {
-        return self.HTTPHeaders?["RateLimit-Remaining"] as? Int
+        return self.httpHeaders?["RateLimit-Remaining"] as? Int
     }
     
     /** Returns `X-RateLimit-Limit` parameter, if there is one in `HTTPHeaders`. */
     public func rateLimit() -> Int? {
-        return self.HTTPHeaders?["X-RateLimit-Limit"] as? Int
+        return self.httpHeaders?["X-RateLimit-Limit"] as? Int
     }
     
     /** Whether task has been cancelled or not. */

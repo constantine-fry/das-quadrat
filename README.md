@@ -98,14 +98,14 @@ The library will attempt to authorize natively via the actual Foursquare app, if
 
 If the Foursquare app is not installed on the user's device, your app will instead present a modal view controller containing a `UIWebView` that will display a web-based authorization screen instead. This occurs without leaving your app, and can be cancelled to return to the previous screen.
 
-On iOS9 an app must declare which URL scheme it wants to check with `canOpenURL:`. 
+On iOS9 an app must declare which URL scheme it wants to check with `canOpenURL:`.
 To enable native authorization with Foursquare app you must add `foursquareauth` to `LSApplicationQueriesSchemes` array
 in info.plist file in your project.
 
 
 ###Requirements
 
-Swift 2.0 / iOS 8.0+ / Mac OS X 10.9+
+Swift 2.3 / iOS 8.0+ / Mac OS X 10.9+
 
 ###License
 

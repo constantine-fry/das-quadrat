@@ -8,7 +8,7 @@
 
 import Foundation
 
-public func +=<K, V> (inout left: Dictionary<K, V>, right: Dictionary<K, V>?) -> Dictionary<K, V> {
+public func +=<K, V> ( inout left: Dictionary<K, V>, right: Dictionary<K, V>?) -> Dictionary<K, V> {
     right?.forEach {
         left.updateValue($1, forKey: $0)
     }
@@ -52,18 +52,18 @@ public class Endpoint {
     
     private func requestWithPath(path: String, parameters: Parameters?, httpMethod: String) -> Request {
         var sessionParameters = session!.configuration.parameters()
-        if sessionParameters[Parameter.oauth_token] == nil {
+        if sessionParameters[Parameter.oauthToken] == nil {
             do {
                 let accessToken = try session!.keychain.accessToken()
                 if let accessToken = accessToken {
-                    sessionParameters[Parameter.oauth_token] = accessToken
+                    sessionParameters[Parameter.oauthToken] = accessToken
                 }
             } catch {
                 
             }
         }
         let request = Request(baseURL: self.baseURL, path: (self.endpoint + "/" + path),
-            parameters: parameters, sessionParameters: sessionParameters, HTTPMethod: httpMethod)
+            parameters: parameters, sessionParameters: sessionParameters, httpMethod: httpMethod)
         request.timeoutInterval = session!.configuration.timeoutInterval
         return request
     }

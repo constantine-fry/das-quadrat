@@ -24,9 +24,9 @@ public typealias Parameters = [String:String]
     Posted when session have access token, but server returns response with 401 HTTP code.
     Guaranteed to be posted an main thread.
 */
-public let QuadratSessionDidBecomeUnauthorizedNotification = "QuadratSessionDidBecomeUnauthorizedNotification"
+public let quadratSessionDidBecomeUnauthorizedNotification = "QuadratSessionDidBecomeUnauthorizedNotification"
 
-private var _sharedSession: Session?
+private var sharedSession: Session?
 
 public class Session {
     
@@ -34,7 +34,7 @@ public class Session {
     let configuration: Configuration
     
     /** The session which perform all network requests. */
-    let URLSession: NSURLSession
+    let urlSession: NSURLSession
     
     /** The current authorizer. */
     var authorizer: Authorizer?
@@ -123,7 +123,7 @@ public class Session {
         URLConfiguration.timeoutIntervalForRequest = configuration.timeoutInterval
         let delegateQueue = NSOperationQueue()
         delegateQueue.maxConcurrentOperationCount = 1
-        self.URLSession = NSURLSession(configuration: URLConfiguration, delegate: nil, delegateQueue: delegateQueue)
+        self.urlSession = NSURLSession(configuration: URLConfiguration, delegate: nil, delegateQueue: delegateQueue)
         self.dataCache = DataCache(name: configuration.userTag)
         if configuration.debugEnabled {
             self.logger = ConsoleLogger()
@@ -134,18 +134,18 @@ public class Session {
     
     public class func setupSharedSessionWithConfiguration(configuration: Configuration,
         completionQueue: NSOperationQueue = NSOperationQueue.mainQueue()) {
-            if _sharedSession == nil {
-                _sharedSession = Session(configuration: configuration, completionQueue: completionQueue)
+            if sharedSession == nil {
+                sharedSession = Session(configuration: configuration, completionQueue: completionQueue)
             } else {
                 fatalError("You shouldn't call call setupSharedSessionWithConfiguration twice!")
             }
     }
     
-    public class func sharedSession() -> Session {
-        if _sharedSession == nil {
+    public class func getSharedSession() -> Session {
+        if sharedSession == nil {
             fatalError("You must call setupSharedInstanceWithConfiguration before!")
         }
-        return _sharedSession!
+        return sharedSession!
     }
     
     /** Whether session is authorized or not. */
@@ -188,7 +188,7 @@ public class Session {
     public func downloadImageAtURL(URL: NSURL, completionHandler: DownloadImageClosure) {
         let request = NSURLRequest(URL: URL)
         let identifier = networkActivityController?.beginNetworkActivity()
-        let task = self.URLSession.downloadTaskWithRequest(request) {
+        let task = self.urlSession.downloadTaskWithRequest(request) {
             (fileURL, response, error) -> Void in
             self.networkActivityController?.endNetworkActivity(identifier)
             var data: NSData?
@@ -204,7 +204,7 @@ public class Session {
     }
     
     func processResult(result: Result) {
-        if result.HTTPSTatusCode == 401 && self.isAuthorized() {
+        if result.httpStatusCode == 401 && self.isAuthorized() {
             self.deathorizeAndNotify()
         }
        self.logger?.session(self, didReceiveResult: result)
@@ -213,7 +213,7 @@ public class Session {
     private func deathorizeAndNotify() {
         self.deauthorize()
         dispatch_async(dispatch_get_main_queue()) {
-            let name = QuadratSessionDidBecomeUnauthorizedNotification
+            let name = quadratSessionDidBecomeUnauthorizedNotification
             NSNotificationCenter.defaultCenter().postNotificationName(name, object: self)
         }
     }
