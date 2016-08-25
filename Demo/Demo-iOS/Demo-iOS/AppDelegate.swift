@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, openURL url: NSURL,
         sourceApplication: String?, annotation: AnyObject) -> Bool {
-            return Session.sharedSession().handleURL(url)
+            return Session.getSharedSession().handleURL(url)
     }
     
 }

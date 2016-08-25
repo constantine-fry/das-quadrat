@@ -40,7 +40,7 @@ public class Multi: Endpoint {
             path: self.endpoint,
             parameters: nil,
             sessionParameters: firstTask.request.sessionParameters,
-            HTTPMethod: "POST",
+            httpMethod: "POST",
             preformattedQueryString: "requests=\(queryString)"
         )
         

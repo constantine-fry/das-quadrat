@@ -14,7 +14,7 @@ import Security
     The `code` property will contain OSStatus. See SecBase.h for error codes.
     The `userInfo` is always nil and there is no localized description provided.
 */
-public let QuadratKeychainOSSatusErrorDomain = "QuadratKeychainOSSatusErrorDomain"
+public let quadratKeychainOSSatusErrorDomain = "QuadratKeychainOSSatusErrorDomain"
 
 class Keychain {
     
@@ -102,7 +102,7 @@ class Keychain {
     }
     
     private func errorWithStatus(status: OSStatus) -> NSError {
-        return NSError(domain: QuadratKeychainOSSatusErrorDomain, code: Int(status), userInfo: nil)
+        return NSError(domain: quadratKeychainOSSatusErrorDomain, code: Int(status), userInfo: nil)
     }
     
     func allAllAccessTokens() -> [String] {

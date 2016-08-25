@@ -133,8 +133,8 @@ public struct Configuration {
     
     func parameters() -> Parameters {
         var result = [
-            Parameter.client_id     : self.client.identifier,
-            Parameter.client_secret : self.client.secret,
+            Parameter.clientId     : self.client.identifier,
+            Parameter.clientSecret : self.client.secret,
             Parameter.v             : self.version,
             Parameter.locale        : self.locale,
         ]
@@ -142,7 +142,7 @@ public struct Configuration {
             result[Parameter.m] = mode
         }
         if let accessToken = self.accessToken {
-            result[Parameter.oauth_token] = accessToken
+            result[Parameter.oauthToken] = accessToken
         }
         return result
     }

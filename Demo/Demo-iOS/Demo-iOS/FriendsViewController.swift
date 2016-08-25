@@ -18,7 +18,7 @@ class FriendsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.session = Session.sharedSession()
+        self.session = Session.getSharedSession()
     }
     
     override func viewWillAppear(animated: Bool) {

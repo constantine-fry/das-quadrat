@@ -16,7 +16,7 @@ class Request {
     let path: String
     
     /** Can be POST or GET. */
-    let HTTPMethod: String
+    let httpMethod: String
     
     /** Session wise parameters from configuration. */
     let sessionParameters: Parameters
@@ -31,12 +31,12 @@ class Request {
     var preformattedQueryString: String?
     
     init(baseURL: NSURL, path: String, parameters: Parameters?,
-        sessionParameters: Parameters, HTTPMethod: String, preformattedQueryString: String? = nil) {
+        sessionParameters: Parameters, httpMethod: String, preformattedQueryString: String? = nil) {
             
             self.baseURL = baseURL
             self.parameters = parameters
             self.sessionParameters = sessionParameters
-            self.HTTPMethod = HTTPMethod
+            self.httpMethod = httpMethod
             self.path = path
             self.preformattedQueryString = preformattedQueryString
     }
@@ -48,10 +48,10 @@ class Request {
             allParameters += parameters
         }
         let URL = self.baseURL.URLByAppendingPathComponent(self.path)
-        let requestURL = Parameter.buildURL(URL, parameters: allParameters,
+        let requestURL = Parameter.buildURL(URL!, parameters: allParameters,
             preformattedQueryString: preformattedQueryString)
         let request = NSMutableURLRequest(URL: requestURL)
-        request.HTTPMethod = HTTPMethod
+        request.HTTPMethod = httpMethod
         return request
     }
 }

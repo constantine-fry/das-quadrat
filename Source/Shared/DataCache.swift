@@ -35,7 +35,7 @@ class DataCache {
     var logger: Logger?
     
     /** The URL to directory where we put all the files. */
-    private let directoryURL: NSURL
+    private let directoryURL: NSURL?
     
     /** In memory cache for NSData. */
     private let cache = NSCache()
@@ -56,7 +56,7 @@ class DataCache {
         let cacheURL: NSURL?
         do {
             cacheURL = try fileManager.URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask,
-                        appropriateForURL: nil, create: true)
+                                                       appropriateForURL: nil, create: true)
         } catch _ {
             fatalError("Can't get access to cache directory")
         }
@@ -77,8 +77,8 @@ class DataCache {
         var result: NSData?
         privateQueue.addOperationWithBlock {
             result = self.cache.objectForKey(key) as? NSData
-            if result == nil {
-                let targetURL = self.directoryURL.URLByAppendingPathComponent(key)
+            if result == nil,
+                let targetURL = self.directoryURL?.URLByAppendingPathComponent(key) {
                 result = NSData(contentsOfURL: targetURL)
                 if let result = result {
                     self.cache.setObject(result, forKey: key, cost: result.length)
@@ -92,12 +92,13 @@ class DataCache {
     /** Copies file into cache. */
     func addFileAtURL(URL: NSURL, withKey key: String) {
         privateQueue.addOperationWithBlock { () -> Void in
-            let targetURL = self.directoryURL.URLByAppendingPathComponent(key)
-            do {
-                try self.fileManager.copyItemAtURL(URL, toURL: targetURL)
-            } catch let error as NSError {
-                self.logger?.logError(error, withMessage: "Cache can't copy file into cache directory.")
-            } catch {
+            if let targetURL = self.directoryURL?.URLByAppendingPathComponent(key) {
+                do {
+                    try self.fileManager.copyItemAtURL(URL, toURL: targetURL)
+                } catch let error as NSError {
+                    self.logger?.logError(error, withMessage: "Cache can't copy file into cache directory.")
+                } catch {
+                }
             }
         }
         privateQueue.waitUntilAllOperationsAreFinished()
@@ -106,12 +107,13 @@ class DataCache {
     /** Saves data into cache. */
     func addData(data: NSData, withKey key: String) {
         privateQueue.addOperationWithBlock { () -> Void in
-            let targetURL = self.directoryURL.URLByAppendingPathComponent(key)
-            do {
-                try data.writeToURL(targetURL, options: .DataWritingAtomic)
-            } catch let error as NSError {
-                self.logger?.logError(error, withMessage: "Cache can't save file into cache directory.")
-            } catch {
+            if let targetURL = self.directoryURL?.URLByAppendingPathComponent(key) {
+                do {
+                    try data.writeToURL(targetURL, options: .DataWritingAtomic)
+                } catch let error as NSError {
+                    self.logger?.logError(error, withMessage: "Cache can't save file into cache directory.")
+                } catch {
+                }
             }
         }
     }
@@ -140,24 +142,28 @@ class DataCache {
     
     /** Creates base directory. */
     private func createBaseDirectory() {
-        do {
-            try fileManager.createDirectoryAtURL(directoryURL,
-                        withIntermediateDirectories: true, attributes: nil)
-        } catch let error as NSError {
-            self.logger?.logError(error, withMessage: "Cache can't create base directory.")
+        if let directoryURL = directoryURL {
+            do {
+                try fileManager.createDirectoryAtURL(directoryURL,
+                                                     withIntermediateDirectories: true, attributes: nil)
+            } catch let error as NSError {
+                self.logger?.logError(error, withMessage: "Cache can't create base directory.")
+            }
         }
     }
     
     /** Removes all cached files. */
     func clearCache() {
-        privateQueue.addOperationWithBlock {
-            self.cache.removeAllObjects()
-            do {
-                try self.fileManager.removeItemAtURL(self.directoryURL)
-                self.createBaseDirectory()
-            } catch let error as NSError {
-                self.logger?.logError(error, withMessage: "Cache can't remove base directory.")
-            } catch {
+        if let directoryURL = directoryURL {
+            privateQueue.addOperationWithBlock {
+                self.cache.removeAllObjects()
+                do {
+                    try self.fileManager.removeItemAtURL(directoryURL)
+                    self.createBaseDirectory()
+                } catch let error as NSError {
+                    self.logger?.logError(error, withMessage: "Cache can't remove base directory.")
+                } catch {
+                }
             }
         }
     }
@@ -206,9 +212,12 @@ class DataCache {
     
     private func getCachedFileURLs() -> [NSURL] {
         let properties = [NSURLContentModificationDateKey, NSURLTotalFileAllocatedSizeKey]
+        guard let directoryURL = directoryURL else {
+            return [NSURL]()
+        }
         do {
-            return try self.fileManager.contentsOfDirectoryAtURL(self.directoryURL,
-                includingPropertiesForKeys: properties, options: .SkipsHiddenFiles)
+            return try self.fileManager.contentsOfDirectoryAtURL(directoryURL,
+                                                                 includingPropertiesForKeys: properties, options: .SkipsHiddenFiles)
         } catch let error as NSError {
             self.logger?.logError(error, withMessage: "Cache can't get properties of files in base directory.")
             return [NSURL]()
