@@ -7,6 +7,7 @@ disabled_rules:
   - valid_docs
   - variable_name
   - variable_name_min_length
+  - mark
   
 line_length: 120
 
