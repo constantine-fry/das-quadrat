@@ -15,8 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    func application(application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
             
             self.window?.tintColor = UIColor(red: 71.0/255.0, green: 57.0/255.0, blue: 151.0/255.0, alpha: 1.0)
             
@@ -30,9 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
     }
     
-    func application(application: UIApplication, openURL url: NSURL,
-        sourceApplication: String?, annotation: AnyObject) -> Bool {
-            return Session.sharedSession().handleURL(url)
+    func application(_ application: UIApplication, open url: URL,
+        sourceApplication: String?, annotation: Any) -> Bool {
+            return Session.sharedSession().handleURL(url: url)
     }
     
 }

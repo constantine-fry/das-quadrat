@@ -8,20 +8,20 @@
 
 import Foundation
 
-public class VenueGroups: Endpoint {
+open class VenueGroups: Endpoint {
     override var endpoint: String {
         return "venuegroups"
     }
     
     /** https://developer.foursquare.com/docs/venuegroups/venuegroups */
-    public func get(groupId: String, completionHandler: ResponseClosure? = nil) -> Task {
+    open func get(_ groupId: String, completionHandler: ResponseClosure? = nil) -> Task {
         return self.getWithPath(groupId, parameters: nil, completionHandler: completionHandler)
     }
     
     // MARK: - General
     
     /** https://developer.foursquare.com/docs/venuegroups/add */
-    public func add(name: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
+    open func add(_ name: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "add"
         var allParameters = [Parameter.name: name]
         allParameters += parameters
@@ -29,13 +29,13 @@ public class VenueGroups: Endpoint {
     }
     
     /** https://developer.foursquare.com/docs/venuegroups/delete */
-    public func delete(groupId: String, completionHandler: ResponseClosure? = nil) -> Task {
+    open func delete(_ groupId: String, completionHandler: ResponseClosure? = nil) -> Task {
         let path = groupId + "/delete"
         return self.postWithPath(path, parameters: nil, completionHandler: completionHandler)
     }
     
     /** https://developer.foursquare.com/docs/venuegroups/list */
-    public func list(completionHandler: ResponseClosure? = nil) -> Task {
+    open func list(_ completionHandler: ResponseClosure? = nil) -> Task {
         let path = "list"
         return self.getWithPath(path, parameters: nil, completionHandler: completionHandler)
     }
@@ -43,7 +43,7 @@ public class VenueGroups: Endpoint {
     // MARK: - Aspects
     
     /** https://developer.foursquare.com/docs/venuegroups/timeseries */
-    public func timeseries(groupId: String,
+    open func timeseries(_ groupId: String,
         parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
             let path = groupId + "/timeseries"
             return self.getWithPath(path, parameters: parameters, completionHandler: completionHandler)
@@ -52,27 +52,27 @@ public class VenueGroups: Endpoint {
     // MARK: - Actions
     
     /** https://developer.foursquare.com/docs/venuegroups/addvenue */
-    public func addvenue(groupId: String, venueId: [String], completionHandler: ResponseClosure? = nil) -> Task {
+    open func addvenue(_ groupId: String, venueId: [String], completionHandler: ResponseClosure? = nil) -> Task {
         let path = groupId + "/addvenue"
-        let parameters = [Parameter.venueId: venueId.joinWithSeparator(",")]
+        let parameters = [Parameter.venueId: venueId.joined(separator: ",")]
         return self.postWithPath(path, parameters: parameters, completionHandler: completionHandler)
     }
     
     /** https://developer.foursquare.com/docs/venuegroups/edit */
-    public func edit(groupId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
+    open func edit(_ groupId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = groupId + "/edit"
         return self.postWithPath(path, parameters: parameters, completionHandler: completionHandler)
     }
     
     /** https://developer.foursquare.com/docs/venuegroups/removevenue */
-    public func removevenue(groupId: String, venueId: [String], completionHandler: ResponseClosure? = nil) -> Task {
+    open func removevenue(_ groupId: String, venueId: [String], completionHandler: ResponseClosure? = nil) -> Task {
         let path = groupId + "/removevenue"
-        let parameters = [Parameter.venueId: venueId.joinWithSeparator(",")]
+        let parameters = [Parameter.venueId: venueId.joined(separator: ",")]
         return self.postWithPath(path, parameters: parameters, completionHandler: completionHandler)
     }
     
     /** https://developer.foursquare.com/docs/venuegroups/update */
-    public func update(groupId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
+    open func update(_ groupId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = groupId + "/update"
         return self.postWithPath(path, parameters: parameters, completionHandler: completionHandler)
     }

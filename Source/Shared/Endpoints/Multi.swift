@@ -8,11 +8,11 @@
 
 import Foundation
 
-func encodeURIComponent(string: String) -> String {
-    return string.stringByAddingPercentEncodingWithAllowedCharacters(.alphanumericCharacterSet())!
+func encodeURIComponent(_ string: String) -> String {
+    return string.addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics)!
 }
 
-public class Multi: Endpoint {
+open class Multi: Endpoint {
     override var endpoint: String {
         return "multi"
     }
@@ -21,7 +21,7 @@ public class Multi: Endpoint {
         Returns task to make request to `multi` endpoint.
         Use `subresponses` property of response object.
     */
-    public func get(tasks: [Task], completionHandler: ResponseClosure) -> Task {
+    open func get(_ tasks: [Task], completionHandler: @escaping ResponseClosure) -> Task {
         let firstTask = tasks.first as Task!
         var queries = [String]()
         for task in tasks {
@@ -33,13 +33,13 @@ public class Multi: Endpoint {
           
             queries.append(path)
         }
-        let queryString = encodeURIComponent(queries.joinWithSeparator(","))
+        let queryString = encodeURIComponent(queries.joined(separator: ","))
         
         let request =
-        Request(baseURL: firstTask.request.baseURL,
+        Request(baseURL: (firstTask?.request.baseURL)!,
             path: self.endpoint,
             parameters: nil,
-            sessionParameters: firstTask.request.sessionParameters,
+            sessionParameters: (firstTask?.request.sessionParameters)!,
             HTTPMethod: "POST",
             preformattedQueryString: "requests=\(queryString)"
         )
@@ -48,13 +48,13 @@ public class Multi: Endpoint {
         return multiTask
     }
     
-    func makeQuery(parameters: Parameters) -> String {
+    func makeQuery(_ parameters: Parameters) -> String {
         var query = String()
         for (key, value) in parameters {
             let encodedValue = encodeURIComponent(value)
             query += key + "=" + encodedValue + "&"
         }
-        query.removeAtIndex(query.endIndex.predecessor())
+        query.remove(at: query.characters.index(before: query.endIndex))
         return query
     }
     

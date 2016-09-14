@@ -87,7 +87,7 @@ public struct Configuration {
         Timeout interval for network request, in seconds.
         Default value is 60 seconds.
     */
-    public var timeoutInterval: NSTimeInterval = 60.0
+    public var timeoutInterval: TimeInterval = 60.0
     
     /** 
         Makes session print all errors and responses.
@@ -113,7 +113,7 @@ public struct Configuration {
     public init(client: Client, version: String?, accessToken: String?) {
         self.client = client
         
-        if let languageCode = NSLocale.preferredLanguages().first {
+        if let languageCode = Locale.preferredLanguages.first {
             let supportedCodes = ["en", "es", "fr", "de", "it", "ja", "th", "tr", "ko", "ru", "pt", "id"]
             if supportedCodes.contains(languageCode) {
                 self.locale = languageCode
