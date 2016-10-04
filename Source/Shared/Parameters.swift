@@ -12,148 +12,148 @@
 
 import Foundation
 
-public class Parameter {
+open class Parameter {
     // MARK: - PUBLIC
     
     // MARK: Ids
-    public class var categoryId             : String { return #function }
-    public class var checkinId              : String { return #function }
-    public class var commentId              : String { return #function }
-    public class var contentId              : String { return #function }
-    public class var eventId                : String { return #function }
-    public class var itemId                 : String { return #function }
-    public class var offerId                : String { return #function }
-    public class var pageId                 : String { return #function }
-    public class var participantId          : String { return #function }
-    public class var photoId                : String { return #function }
-    public class var postContentId          : String { return #function }
-    public class var primaryCategoryId      : String { return #function }
-    public class var providerId             : String { return #function }
-    public class var storeId                : String { return #function }
-    public class var tipId                  : String { return #function }
-    public class var userId                 : String { return #function }
-    public class var venueId                : String { return #function }
+    open class var categoryId             : String { return #function }
+    open class var checkinId              : String { return #function }
+    open class var commentId              : String { return #function }
+    open class var contentId              : String { return #function }
+    open class var eventId                : String { return #function }
+    open class var itemId                 : String { return #function }
+    open class var offerId                : String { return #function }
+    open class var pageId                 : String { return #function }
+    open class var participantId          : String { return #function }
+    open class var photoId                : String { return #function }
+    open class var postContentId          : String { return #function }
+    open class var primaryCategoryId      : String { return #function }
+    open class var providerId             : String { return #function }
+    open class var storeId                : String { return #function }
+    open class var tipId                  : String { return #function }
+    open class var userId                 : String { return #function }
+    open class var venueId                : String { return #function }
     
     // MARK: - A
-    public class var addCategoryIds         : String { return #function }
-    public class var address                : String { return #function }
-    public class var afterId                : String { return #function }
-    public class var afterTimestamp         : String { return #function }
-    public class var alt                    : String { return #function }
-    public class var altAcc                 : String { return #function }
+    open class var addCategoryIds         : String { return #function }
+    open class var address                : String { return #function }
+    open class var afterId                : String { return #function }
+    open class var afterTimestamp         : String { return #function }
+    open class var alt                    : String { return #function }
+    open class var altAcc                 : String { return #function }
     
     // MARK: - B
-    public class var beforeId               : String { return #function }
-    public class var beforeTimestamp        : String { return #function }
-    public class var broadcast              : String { return #function }
+    open class var beforeId               : String { return #function }
+    open class var beforeTimestamp        : String { return #function }
+    open class var broadcast              : String { return #function }
     
     // MARK: - C
-    public class var city                   : String { return #function }
-    public class var collaborative          : String { return #function }
-    public class var comment                : String { return #function }
-    public class var cost                   : String { return #function }
-    public class var count1                 : String { return #function }
-    public class var crossStreet            : String { return #function }
+    open class var city                   : String { return #function }
+    open class var collaborative          : String { return #function }
+    open class var comment                : String { return #function }
+    open class var cost                   : String { return #function }
+    open class var count1                 : String { return #function }
+    open class var crossStreet            : String { return #function }
     
     // MARK: - D
-    public class var day                    : String { return #function }
-    public class var description            : String { return #function }
-    public class var domain                 : String { return #function }
+    open class var day                    : String { return #function }
+    open class var description            : String { return #function }
+    open class var domain                 : String { return #function }
     
     // MARK: - E
-    public class var email                  : String { return #function }
-    public class var endAt                  : String { return #function }
+    open class var email                  : String { return #function }
+    open class var endAt                  : String { return #function }
     
     // MARK: - F
-    public class var facebookUrl            : String { return #function }
-    public class var fbid                   : String { return #function }
-    public class var fields                 : String { return #function }
-    public class var finePrint              : String { return #function }
-    public class var friendVisits           : String { return #function }
+    open class var facebookUrl            : String { return #function }
+    open class var fbid                   : String { return #function }
+    open class var fields                 : String { return #function }
+    open class var finePrint              : String { return #function }
+    open class var friendVisits           : String { return #function }
     
     // MARK: - G
-    public class var group                  : String { return #function }
+    open class var group                  : String { return #function }
     
     // MARK: - H
-    public class var highWatermark          : String { return #function }
-    public class var hours                  : String { return #function }
+    open class var highWatermark          : String { return #function }
+    open class var hours                  : String { return #function }
     
     // MARK: - I
-    public class var ignoreDuplicates       : String { return #function }
-    public class var ignoreDuplicatesKey    : String { return #function }
-    public class var includeFollowing       : String { return #function }
-    public class var intent                 : String { return #function }
+    open class var ignoreDuplicates       : String { return #function }
+    open class var ignoreDuplicatesKey    : String { return #function }
+    open class var includeFollowing       : String { return #function }
+    open class var intent                 : String { return #function }
     
     // MARK: - L
-    public class var lastVenue              : String { return #function }
-    public class var likes                  : String { return #function }
-    public class var limit                  : String { return #function }
-    public class var linkedId               : String { return #function }
-    public class var ll                     : String { return #function }
-    public class var llAcc                  : String { return #function }
-    public class var llBounds               : String { return #function }
+    open class var lastVenue              : String { return #function }
+    open class var likes                  : String { return #function }
+    open class var limit                  : String { return #function }
+    open class var linkedId               : String { return #function }
+    open class var ll                     : String { return #function }
+    open class var llAcc                  : String { return #function }
+    open class var llBounds               : String { return #function }
     
     // MARK: - T
-    public class var mentions               : String { return #function }
-    public class var menuUrl                : String { return #function }
-    public class var message                : String { return #function }
+    open class var mentions               : String { return #function }
+    open class var menuUrl                : String { return #function }
+    open class var message                : String { return #function }
     
     // MARK: - S
-    public class var name                   : String { return #function }
-    public class var ne                     : String { return #function }
-    public class var near                   : String { return #function }
-    public class var novelty                : String { return #function }
+    open class var name                   : String { return #function }
+    open class var ne                     : String { return #function }
+    open class var near                   : String { return #function }
+    open class var novelty                : String { return #function }
     
     // MARK: - O
-    public class var offset                 : String { return #function }
-    public class var openNow                : String { return #function }
+    open class var offset                 : String { return #function }
+    open class var openNow                : String { return #function }
     
     // MARK: - P
-    public class var phone                  : String { return #function }
-    public class var postText               : String { return #function }
-    public class var price                  : String { return #function }
-    public class var problem                : String { return #function }
+    open class var phone                  : String { return #function }
+    open class var postText               : String { return #function }
+    open class var price                  : String { return #function }
+    open class var problem                : String { return #function }
     
     // MARK: - Q
-    public class var query                  : String { return #function }
+    open class var query                  : String { return #function }
     
     // MARK: - R
-    public class var radius                 : String { return #function }
-    public class var removeCategoryIds      : String { return #function }
-    public class var role                   : String { return #function }
+    open class var radius                 : String { return #function }
+    open class var removeCategoryIds      : String { return #function }
+    open class var role                   : String { return #function }
     
     // MARK: - S
-    public class var saved                  : String { return #function }
-    public class var section                : String { return #function }
-    public class var set                    : String { return #function }
-    public class var shout                  : String { return #function }
-    public class var signature              : String { return #function }
-    public class var sort                   : String { return #function }
-    public class var sortByDistance         : String { return #function }
-    public class var specials               : String { return #function }
-    public class var startAt                : String { return #function }
-    public class var state                  : String { return #function }
-    public class var status                 : String { return #function }
-    public class var sw                     : String { return #function }
+    open class var saved                  : String { return #function }
+    open class var section                : String { return #function }
+    open class var set                    : String { return #function }
+    open class var shout                  : String { return #function }
+    open class var signature              : String { return #function }
+    open class var sort                   : String { return #function }
+    open class var sortByDistance         : String { return #function }
+    open class var specials               : String { return #function }
+    open class var startAt                : String { return #function }
+    open class var state                  : String { return #function }
+    open class var status                 : String { return #function }
+    open class var sw                     : String { return #function }
     
     // MARK: - T
-    public class var text                   : String { return #function }
-    public class var time                   : String { return #function }
-    public class var twitter                : String { return #function }
-    public class var twitterSource          : String { return #function }
-    public class var type                   : String { return #function }
+    open class var text                   : String { return #function }
+    open class var time                   : String { return #function }
+    open class var twitter                : String { return #function }
+    open class var twitterSource          : String { return #function }
+    open class var type                   : String { return #function }
     
     // MARK: - U
-    public class var url                    : String { return #function }
+    open class var url                    : String { return #function }
     
     // MARK: - V
-    public class var value                  : String { return #function }
-    public class var venuell                : String { return #function }
-    public class var venuePhotos            : String { return #function }
-    public class var visible                : String { return #function }
+    open class var value                  : String { return #function }
+    open class var venuell                : String { return #function }
+    open class var venuePhotos            : String { return #function }
+    open class var visible                : String { return #function }
     
     // MARK: - Z
-    public class var zip                    : String { return #function }
+    open class var zip                    : String { return #function }
 
     // MARK: - INTERNAL
     class var client_id       : String { return "client_id" }
@@ -168,7 +168,7 @@ public class Parameter {
     class var m               : String { return "m" }
     class var requests        : String { return "requests" }
     
-    class func URLQuery(parameters: Parameters) -> String {
+    class func URLQuery(_ parameters: Parameters) -> String {
         var result = String()
         for (key, value) in parameters {
             let parameters = key + "=" + value
@@ -181,8 +181,8 @@ public class Parameter {
         return result
     }
     
-    class func buildURL(baseURL: NSURL, parameters: Parameters, preformattedQueryString: String? = nil) -> NSURL {
-        let components = NSURLComponents(URL: baseURL, resolvingAgainstBaseURL: false)!
+    class func buildURL(_ baseURL: URL, parameters: Parameters, preformattedQueryString: String? = nil) -> URL {
+        var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)!
         let query = URLQuery(parameters)
         if let componentsQuery = components.query {
             components.query = componentsQuery + "&" + query
@@ -192,8 +192,8 @@ public class Parameter {
         
         if let preformatted = preformattedQueryString {
             let delimiter = components.query != nil ? "&" : "?"
-            return NSURL(string: components.URL!.absoluteString + delimiter + preformatted)!
+            return URL(string: components.url!.absoluteString + delimiter + preformatted)!
         }
-        return components.URL!
+        return components.url!
     }
 }

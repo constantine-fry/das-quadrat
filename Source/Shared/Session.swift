@@ -12,10 +12,10 @@ import Foundation
 public typealias AuthorizationHandler = (Bool, NSError?) -> Void
 
 /** A nandler used by all endpoints. */
-public typealias ResponseClosure = (result: Result) -> Void
+public typealias ResponseClosure = (_ result: Result) -> Void
 
 /** A nandler for image downloading. */
-public typealias DownloadImageClosure = (imageData: NSData?, error: NSError?) -> Void
+public typealias DownloadImageClosure = (_ imageData: Data?, _ error: NSError?) -> Void
 
 /** Typealias for parameters dictionary. */
 public typealias Parameters = [String:String]
@@ -28,13 +28,13 @@ public let QuadratSessionDidBecomeUnauthorizedNotification = "QuadratSessionDidB
 
 private var _sharedSession: Session?
 
-public class Session {
+open class Session {
     
     /** The coniguration. */
     let configuration: Configuration
     
     /** The session which perform all network requests. */
-    let URLSession: NSURLSession
+    let URLSession: Foundation.URLSession
     
     /** The current authorizer. */
     var authorizer: Authorizer?
@@ -43,7 +43,7 @@ public class Session {
     let dataCache: DataCache
     
     /** The queue on which tasks have to call completion handlers. */
-    let completionQueue: NSOperationQueue
+    let completionQueue: OperationQueue
    
     /** The keychain. */
     let keychain: Keychain
@@ -55,75 +55,76 @@ public class Session {
         One can create custom logger to process all errors and responses in one place.
         Main purpose is to debug or to track all the errors accured in framework via some analytic tool.
     */
-    public var logger: Logger?
+    open var logger: Logger?
     
-    public lazy var users: Users = {
+    open lazy var users: Users = {
         return Users(session: self)
     }()
     
-    public lazy var venues: Venues = {
+    open lazy var venues: Venues = {
         return Venues(session: self)
     }()
     
-    public lazy var venueGroups: VenueGroups = {
+    open lazy var venueGroups: VenueGroups = {
         return VenueGroups(session: self)
     }()
     
-    public lazy var checkins: Checkins = {
+    open lazy var checkins: Checkins = {
         return Checkins(session: self)
     }()
     
-    public lazy var tips: Tips = {
+    open lazy var tips: Tips = {
         return Tips(session: self)
     }()
     
-    public lazy var lists: Lists = {
+    open lazy var lists: Lists = {
         return Lists(session: self)
     }()
     
-    public lazy var updates: Updates = {
+    open lazy var updates: Updates = {
         return Updates(session: self)
     }()
     
-    public lazy var photos: Photos = {
+    open lazy var photos: Photos = {
         return Photos(session: self)
     }()
     
-    public lazy var settings: Settings = {
+    open lazy var settings: Settings = {
         return Settings(session: self)
     }()
     
-    public lazy var specials: Specials = {
+    open lazy var specials: Specials = {
         return Specials(session: self)
     }()
     
-    public lazy var events: Events = {
+    open lazy var events: Events = {
         return Events(session: self)
     }()
     
-    public lazy var pages: Pages = {
+    open lazy var pages: Pages = {
         return Pages(session: self)
     }()
     
-    public lazy var pageUpdates: PageUpdates = {
+    open lazy var pageUpdates: PageUpdates = {
         return PageUpdates(session: self)
     }()
     
-    public lazy var multi: Multi = {
+    open lazy var multi: Multi = {
         return Multi(session: self)
     }()
     
-    public init(configuration: Configuration, completionQueue: NSOperationQueue = NSOperationQueue.mainQueue()) {
+    public init(configuration: Configuration, completionQueue: OperationQueue = OperationQueue.main) {
         if configuration.shouldControllNetworkActivityIndicator {
             self.networkActivityController = NetworkActivityIndicatorController()
         }
         self.configuration = configuration
         self.completionQueue = completionQueue
-        let URLConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let URLConfiguration = URLSessionConfiguration.default
         URLConfiguration.timeoutIntervalForRequest = configuration.timeoutInterval
-        let delegateQueue = NSOperationQueue()
+        let delegateQueue = OperationQueue()
         delegateQueue.maxConcurrentOperationCount = 1
-        self.URLSession = NSURLSession(configuration: URLConfiguration, delegate: nil, delegateQueue: delegateQueue)
+        self.URLSession = Foundation.URLSession(configuration: URLConfiguration,
+                                                delegate: nil, delegateQueue: delegateQueue)
         self.dataCache = DataCache(name: configuration.userTag)
         if configuration.debugEnabled {
             self.logger = ConsoleLogger()
@@ -132,8 +133,8 @@ public class Session {
         self.keychain.logger = self.logger
     }
     
-    public class func setupSharedSessionWithConfiguration(configuration: Configuration,
-        completionQueue: NSOperationQueue = NSOperationQueue.mainQueue()) {
+    open class func setupSharedSessionWithConfiguration(_ configuration: Configuration,
+        completionQueue: OperationQueue = OperationQueue.main) {
             if _sharedSession == nil {
                 _sharedSession = Session(configuration: configuration, completionQueue: completionQueue)
             } else {
@@ -141,7 +142,7 @@ public class Session {
             }
     }
     
-    public class func sharedSession() -> Session {
+    open class func sharedSession() -> Session {
         if _sharedSession == nil {
             fatalError("You must call setupSharedInstanceWithConfiguration before!")
         }
@@ -149,7 +150,7 @@ public class Session {
     }
     
     /** Whether session is authorized or not. */
-    public func isAuthorized() -> Bool {
+    open func isAuthorized() -> Bool {
         do {
             let accessToken = try self.keychain.accessToken()
             return accessToken != nil
@@ -158,7 +159,7 @@ public class Session {
         }
     }
     
-    public func accessToken() -> String? {
+    open func accessToken() -> String? {
         do {
             return try self.keychain.accessToken()
         } catch {
@@ -170,7 +171,7 @@ public class Session {
         Removes access token from keychain.
         This method doesn't post `QuadratSessionDidBecomeUnauthorizedNotification`.
     */
-    public func deauthorize() {
+    open func deauthorize() {
         do {
             try self.keychain.deleteAccessToken()
             self.dataCache.clearCache()
@@ -180,41 +181,41 @@ public class Session {
     }
     
     /** Returns cached image data. */
-    public func cachedImageDataForURL(URL: NSURL) -> NSData? {
-        return self.dataCache.dataForKey("\(URL.hash)")
+    open func cachedImageDataForURL(_ url: Foundation.URL) -> Data? {
+        return self.dataCache.dataForKey("\((url as NSURL).hash)")
     }
     
     /** Downloads image at URL and puts in cache. */
-    public func downloadImageAtURL(URL: NSURL, completionHandler: DownloadImageClosure) {
-        let request = NSURLRequest(URL: URL)
+    open func downloadImageAtURL(_ url: Foundation.URL, completionHandler: @escaping DownloadImageClosure) {
+        let request = URLRequest(url: url)
         let identifier = networkActivityController?.beginNetworkActivity()
-        let task = self.URLSession.downloadTaskWithRequest(request) {
+        let task = self.URLSession.downloadTask(with: request, completionHandler: {
             (fileURL, response, error) -> Void in
             self.networkActivityController?.endNetworkActivity(identifier)
-            var data: NSData?
+            var data: Data?
             if let fileURL = fileURL {
-                data = NSData(contentsOfURL: fileURL)
-                self.dataCache.addFileAtURL(fileURL, withKey: "\(URL.hash)")
+                data = try? Data(contentsOf: fileURL)
+                self.dataCache.addFileAtURL(fileURL, withKey: "\((url as NSURL).hash)")
             }
-            self.completionQueue.addOperationWithBlock {
-                completionHandler(imageData: data, error: error)
+            self.completionQueue.addOperation {
+                completionHandler(data, error as NSError?)
             }
-        }
+        }) 
         task.resume()
     }
     
-    func processResult(result: Result) {
+    func processResult(_ result: Result) {
         if result.HTTPSTatusCode == 401 && self.isAuthorized() {
             self.deathorizeAndNotify()
         }
        self.logger?.session(self, didReceiveResult: result)
     }
 
-    private func deathorizeAndNotify() {
+    fileprivate func deathorizeAndNotify() {
         self.deauthorize()
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             let name = QuadratSessionDidBecomeUnauthorizedNotification
-            NSNotificationCenter.defaultCenter().postNotificationName(name, object: self)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: name), object: self)
         }
     }
 

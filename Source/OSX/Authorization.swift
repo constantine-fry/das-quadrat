@@ -12,7 +12,7 @@ import AppKit
 
 extension Session {
     
-    public func authorizeWithViewController(window: NSWindow, completionHandler: AuthorizationHandler) {
+    public func authorizeWithViewController(_ window: NSWindow, completionHandler: @escaping AuthorizationHandler) {
         if self.authorizer == nil {
             let authorizer = MacAuthorizer(configuration: self.configuration)
             authorizer.authorize(window) {
@@ -20,7 +20,7 @@ extension Session {
                 completionHandler(accessToken != nil, error)
                 
                 // Fixes the crash.
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     self.authorizer = nil
                 }
             }

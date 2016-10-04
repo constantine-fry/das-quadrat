@@ -16,7 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var window: NSWindow!
     var quadratSession : Session!
 
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         let client = Client(clientID:       "5P1OVCFK0CCVCQ5GBBCWRFGUVNX5R4WGKHL2DGJGZ32FDFKT",
                             clientSecret:   "UPZJO0A0XL44IHCD1KQBMAYGCZ45Z03BORJZZJXELPWHPSAR",
@@ -26,7 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let authorized = self.quadratSession.isAuthorized()
         print("authorized: ", authorized)
-        let URL = NSBundle.mainBundle().URLForResource("Apple_Swift_Logo", withExtension: "png")
+        let URL = Bundle.main.url(forResource: "Apple_Swift_Logo", withExtension: "png")
         let task = self.quadratSession.users.update(URL!) {
             (response) -> Void in
             print(response)
@@ -43,11 +43,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         multiTask.start()
     }
 
-    func applicationWillTerminate(aNotification: NSNotification) {
+    func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
 
-    @IBAction func loginButtonClicked(sender: AnyObject) {
+    @IBAction func loginButtonClicked(_ sender: AnyObject) {
         self.quadratSession.authorizeWithViewController(self.window) {
                 authorized, error in
                 //

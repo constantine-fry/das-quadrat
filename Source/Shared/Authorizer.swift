@@ -10,12 +10,12 @@ import Foundation
 
 protocol AuthorizationDelegate : class {
     func userDidCancel()
-    func didReachRedirectURL(redirectURL: NSURL)
+    func didReachRedirectURL(_ redirectURL: URL)
 }
 
 class Authorizer: AuthorizationDelegate {
-    var redirectURL: NSURL
-    var authorizationURL: NSURL
+    var redirectURL: URL
+    var authorizationURL: URL
     var completionHandler: ((String?, NSError?) -> Void)?
     let keychain: Keychain
     var shouldControllNetworkActivityIndicator = false
@@ -29,8 +29,8 @@ class Authorizer: AuthorizationDelegate {
             Parameter.response_type    : "token"
         ]
         
-        let authorizationURL = Parameter.buildURL(NSURL(string: baseURL)!, parameters: parameters)
-        let redirectURL = NSURL(string: configuration.client.redirectURL)
+        let authorizationURL = Parameter.buildURL(URL(string: baseURL)!, parameters: parameters)
+        let redirectURL = URL(string: configuration.client.redirectURL)
         if redirectURL == nil {
             fatalError("There is no redirect URL.")
         }
@@ -40,7 +40,7 @@ class Authorizer: AuthorizationDelegate {
         self.cleanupCookiesForURL(authorizationURL)
     }
     
-    init(authorizationURL: NSURL, redirectURL: NSURL, keychain: Keychain) {
+    init(authorizationURL: URL, redirectURL: URL, keychain: Keychain) {
         self.authorizationURL = authorizationURL
         self.redirectURL = redirectURL
         self.keychain = keychain
@@ -50,25 +50,25 @@ class Authorizer: AuthorizationDelegate {
     
     func userDidCancel() {
         let error = NSError(domain: NSCocoaErrorDomain, code: NSUserCancelledError, userInfo: nil)
-        self.finilizeAuthorization(nil, error: error)
+        self.finalizeAuthorization(nil, error: error)
     }
     
-    func didReachRedirectURL(redirectURL: NSURL) {
+    func didReachRedirectURL(_ redirectURL: URL) {
         let parameters = self.extractParametersFromURL(redirectURL)
-        self.finilizeAuthorizationWithParameters(parameters)
+        self.finalizeAuthorizationWithParameters(parameters)
     }
     
     // MARK: - Finilization
     
-    func finilizeAuthorizationWithParameters(parameters: Parameters) {
+    func finalizeAuthorizationWithParameters(_ parameters: Parameters) {
         var error: NSError?
         if let errorString = parameters["error"] {
             error = NSError.quadratOauthErrorForString(errorString)
         }
-        self.finilizeAuthorization(parameters["access_token"], error: error)
+        self.finalizeAuthorization(parameters["access_token"], error: error)
     }
     
-    func finilizeAuthorization(accessToken: String?, error: NSError?) {
+    func finalizeAuthorization(_ accessToken: String?, error: NSError?) {
         var resultError = error
         var result = accessToken
         if let accessToken = accessToken {
@@ -85,8 +85,8 @@ class Authorizer: AuthorizationDelegate {
     
     // MARK: - Helpers
     
-    func cleanupCookiesForURL(URL: NSURL) {
-        let storage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+    func cleanupCookiesForURL(_ URL: Foundation.URL) {
+        let storage = HTTPCookieStorage.shared
         storage.cookies?.forEach {
             (cookie) -> () in
             if cookie.domain == URL.host {
@@ -95,9 +95,9 @@ class Authorizer: AuthorizationDelegate {
         }
     }
     
-    func extractParametersFromURL(fromURL: NSURL) -> Parameters {
+    func extractParametersFromURL(_ fromURL: URL) -> Parameters {
         var queryString: String?
-        let components = NSURLComponents(URL: fromURL, resolvingAgainstBaseURL: false)
+        let components = URLComponents(url: fromURL, resolvingAgainstBaseURL: false)
         if components?.query == nil {
             // If we are here it's was web authorization and we have redirect URL like this:
             // testapp123://foursquare#access_token=ACCESS_TOKEN
@@ -107,10 +107,10 @@ class Authorizer: AuthorizationDelegate {
             // testapp123://foursquare?access_token=ACCESS_TOKEN
             queryString = fromURL.query
         }
-        let parameters = queryString?.componentsSeparatedByString("&")
+        let parameters = queryString?.components(separatedBy: "&")
         var map = Parameters()
         parameters?.forEach {
-            let keyValue = $0.componentsSeparatedByString("=")
+            let keyValue = $0.components(separatedBy: "=")
             if keyValue.count == 2 {
                 map[keyValue[0]] = keyValue[1]
             }
@@ -118,7 +118,7 @@ class Authorizer: AuthorizationDelegate {
         return map
     }
     
-    func errorForErrorString(errorString: String) -> NSError? {
+    func errorForErrorString(_ errorString: String) -> NSError? {
         return nil
     }
 }
