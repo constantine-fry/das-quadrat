@@ -22,15 +22,15 @@ class Request {
     let sessionParameters: Parameters
     
     /** Should be like this "https://api.foursquare.com/v2". Specified in `Configuration` */
-    let baseURL: NSURL
+    let baseURL: URL
     
     /** The timeout interval in seconds. */
-    var timeoutInterval: NSTimeInterval = 60
+    var timeoutInterval: TimeInterval = 60
     
     /** Optionally pass in a preformatted query string to append after all other params are added **/
     var preformattedQueryString: String?
     
-    init(baseURL: NSURL, path: String, parameters: Parameters?,
+    init(baseURL: URL, path: String, parameters: Parameters?,
         sessionParameters: Parameters, HTTPMethod: String, preformattedQueryString: String? = nil) {
             
             self.baseURL = baseURL
@@ -41,17 +41,17 @@ class Request {
             self.preformattedQueryString = preformattedQueryString
     }
     
-    func URLRequest() -> NSURLRequest {
+    func URLRequest() -> Foundation.URLRequest {
         // if multi,
         var allParameters = self.sessionParameters
         if let parameters = self.parameters {
             allParameters += parameters
         }
-        let URL = self.baseURL.URLByAppendingPathComponent(self.path)
+        let URL = self.baseURL.appendingPathComponent(self.path)
         let requestURL = Parameter.buildURL(URL, parameters: allParameters,
             preformattedQueryString: preformattedQueryString)
-        let request = NSMutableURLRequest(URL: requestURL)
-        request.HTTPMethod = HTTPMethod
-        return request
+        let request = NSMutableURLRequest(url: requestURL)
+        request.httpMethod = HTTPMethod
+        return request as URLRequest
     }
 }

@@ -24,7 +24,7 @@ class VenueTableViewCell: UITableViewCell {
         super.awakeFromNib()
         self.userPhotoImageView.layer.cornerRadius = 4
         self.userPhotoImageView.layer.shouldRasterize = true
-        self.userPhotoImageView.layer.rasterizationScale = UIScreen.mainScreen().scale
+        self.userPhotoImageView.layer.rasterizationScale = UIScreen.main.scale
     }
     
     override func prepareForReuse() {
@@ -43,7 +43,7 @@ class FriendTableViewCell: UITableViewCell {
         super.awakeFromNib()
         self.photoImageView.layer.cornerRadius = 4
         self.photoImageView.layer.shouldRasterize = true
-        self.photoImageView.layer.rasterizationScale = UIScreen.mainScreen().scale
+        self.photoImageView.layer.rasterizationScale = UIScreen.main.scale
     }
 }
 

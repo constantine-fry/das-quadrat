@@ -14,7 +14,7 @@ import MapKit
 import QuadratTouch
 
 protocol SearchTableViewControllerDelegate: class {
-    func searchTableViewController(controller: SearchTableViewController, didSelectVenue venue:JSONParameters)
+    func searchTableViewController(_ controller: SearchTableViewController, didSelectVenue venue:JSONParameters)
 }
 
 class SearchTableViewController: UITableViewController, UISearchResultsUpdating {
@@ -31,10 +31,10 @@ class SearchTableViewController: UITableViewController, UISearchResultsUpdating 
 
     }
     
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         // Strip out all the leading and trailing spaces.
-        let whitespaceCharacterSet = NSCharacterSet.whitespaceCharacterSet()
-        let strippedString = searchController.searchBar.text!.stringByTrimmingCharactersInSet(whitespaceCharacterSet)
+        let whitespaceCharacterSet = CharacterSet.whitespaces
+        let strippedString = searchController.searchBar.text!.trimmingCharacters(in: whitespaceCharacterSet)
         
         if self.location == nil {
             return
@@ -53,13 +53,13 @@ class SearchTableViewController: UITableViewController, UISearchResultsUpdating 
         self.currentTask?.start()
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) 
-        let venue = venues[indexPath.row]
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) 
+        let venue = venues[(indexPath as NSIndexPath).row]
         if let venueLocation = venue["location"] as? JSONParameters {
             var detailText = ""
             if let distance = venueLocation["distance"] as? CLLocationDistance {
-                detailText = distanceFormatter.stringFromDistance(distance)
+                detailText = distanceFormatter.string(fromDistance: distance)
             }
             if let address = venueLocation["address"] as? String {
                 detailText = detailText +  " - " + address
@@ -70,17 +70,17 @@ class SearchTableViewController: UITableViewController, UISearchResultsUpdating 
         return cell
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let venues = self.venues {
             return venues.count
         }
         return 0
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let venueInfo = self.venues![indexPath.row] as JSONParameters!
-        self.delegate?.searchTableViewController(self, didSelectVenue: venueInfo)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let venueInfo = self.venues![(indexPath as NSIndexPath).row] as JSONParameters!
+        self.delegate?.searchTableViewController(self, didSelectVenue: venueInfo!)
     }
 
 }

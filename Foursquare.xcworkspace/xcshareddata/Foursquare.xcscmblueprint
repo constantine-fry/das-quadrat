@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "C333CCA42B76DAB308C436958D3D72C5B6ACE147",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "C333CCA42B76DAB308C436958D3D72C5B6ACE147" : 0,
+    "96D9025AFDE288BBA479DD9281577FE3E29D729E" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "3EC70C02-EB34-4382-A4E2-734AEF1DA9AA",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "C333CCA42B76DAB308C436958D3D72C5B6ACE147" : "Quadrat\/",
+    "96D9025AFDE288BBA479DD9281577FE3E29D729E" : ".."
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Foursquare",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Foursquare.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:doo\/snap-ios-app.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "96D9025AFDE288BBA479DD9281577FE3E29D729E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Constantine-Fry\/das-quadrat.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C333CCA42B76DAB308C436958D3D72C5B6ACE147"
+    }
+  ]
+}
