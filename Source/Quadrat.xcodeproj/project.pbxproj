@@ -490,7 +490,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		4745BF9B1B1F1672004A9DD7 /* AppStoreVPP */ = {
+		4745BF9B1B1F1672004A9DD7 /* AppStorePro */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -530,9 +530,9 @@
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = AppStoreVPP;
+			name = AppStorePro;
 		};
-		4745BF9C1B1F1672004A9DD7 /* AppStoreVPP */ = {
+		4745BF9C1B1F1672004A9DD7 /* AppStorePro */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -548,9 +548,9 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0.1;
 			};
-			name = AppStoreVPP;
+			name = AppStorePro;
 		};
-		4745BF9D1B1F1672004A9DD7 /* AppStoreVPP */ = {
+		4745BF9D1B1F1672004A9DD7 /* AppStorePro */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -572,7 +572,7 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
-			name = AppStoreVPP;
+			name = AppStorePro;
 		};
 		476B709D1A0EBAE700AFAC33 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -758,7 +758,7 @@
 			};
 			name = Release;
 		};
-		9E0EB9B21ADF9DE000F7686C /* AdHoc */ = {
+		476E9FD11DD34C5400BF84B4 /* AppStoreFree */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -798,9 +798,9 @@
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = AdHoc;
+			name = AppStoreFree;
 		};
-		9E0EB9B31ADF9DE000F7686C /* AdHoc */ = {
+		476E9FD21DD34C5400BF84B4 /* AppStoreFree */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -816,9 +816,9 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0.1;
 			};
-			name = AdHoc;
+			name = AppStoreFree;
 		};
-		9E0EB9B41ADF9DE000F7686C /* AdHoc */ = {
+		476E9FD31DD34C5400BF84B4 /* AppStoreFree */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -840,7 +840,7 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
-			name = AdHoc;
+			name = AppStoreFree;
 		};
 		9E0EB9B51ADF9DFA00F7686C /* AppStore */ = {
 			isa = XCBuildConfiguration;
@@ -935,8 +935,8 @@
 				476B709D1A0EBAE700AFAC33 /* Debug */,
 				476B709E1A0EBAE700AFAC33 /* Release */,
 				9E0EB9B51ADF9DFA00F7686C /* AppStore */,
-				4745BF9B1B1F1672004A9DD7 /* AppStoreVPP */,
-				9E0EB9B21ADF9DE000F7686C /* AdHoc */,
+				476E9FD11DD34C5400BF84B4 /* AppStoreFree */,
+				4745BF9B1B1F1672004A9DD7 /* AppStorePro */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -947,8 +947,8 @@
 				476B70A01A0EBAE700AFAC33 /* Debug */,
 				476B70A11A0EBAE700AFAC33 /* Release */,
 				9E0EB9B61ADF9DFA00F7686C /* AppStore */,
-				4745BF9C1B1F1672004A9DD7 /* AppStoreVPP */,
-				9E0EB9B31ADF9DE000F7686C /* AdHoc */,
+				476E9FD21DD34C5400BF84B4 /* AppStoreFree */,
+				4745BF9C1B1F1672004A9DD7 /* AppStorePro */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -959,8 +959,8 @@
 				476B70EE1A0EBBA500AFAC33 /* Debug */,
 				476B70EF1A0EBBA500AFAC33 /* Release */,
 				9E0EB9B71ADF9DFA00F7686C /* AppStore */,
-				4745BF9D1B1F1672004A9DD7 /* AppStoreVPP */,
-				9E0EB9B41ADF9DE000F7686C /* AdHoc */,
+				476E9FD31DD34C5400BF84B4 /* AppStoreFree */,
+				4745BF9D1B1F1672004A9DD7 /* AppStorePro */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
