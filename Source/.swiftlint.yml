@@ -10,7 +10,14 @@ disabled_rules:
   - mark
   - type_name
   - vertical_whitespace
-  
+
+  - closure_parameter_position
+  - colon
+  - void_return
+  - unused_closure_parameter
+  - syntactic_sugar
+  - trailing_comma
+
 line_length: 120
 
 type_body_length:
@@ -20,11 +27,11 @@ type_body_length:
 function_body_length:
   - 40 # warning
   - 50 # error
-  
+
 file_length:
   - 250 # warning
   - 300 # error
-  
+
 variable_name_max_length:
   - 60 # warning
   - 70 # error
