@@ -17,7 +17,9 @@ disabled_rules:
   - unused_closure_parameter
   - syntactic_sugar
   - trailing_comma
-
+  - vertical_parameter_alignment
+  - shorthand_operator
+  
 line_length: 120
 
 type_body_length:
