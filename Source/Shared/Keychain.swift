@@ -52,11 +52,11 @@ class Keychain {
             Fixes the issue with Keychain access in release mode.
             https://devforums.apple.com/message/1070614#1070614
         */
-        var dataTypeRef: AnyObject? = nil
+        var dataTypeRef: AnyObject?
         let status = withUnsafeMutablePointer(to: &dataTypeRef) {cfPointer -> OSStatus in
             SecItemCopyMatching(query as CFDictionary, UnsafeMutablePointer(cfPointer))
         }
-        var accessToken: String? = nil
+        var accessToken: String?
         if status == errSecSuccess {
             if let retrievedData = dataTypeRef as? Data {
                 if retrievedData.count != 0 {
