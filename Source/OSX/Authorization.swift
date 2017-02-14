@@ -9,7 +9,6 @@
 import Foundation
 import AppKit
 
-
 extension Session {
     
     public func authorizeWithViewController(_ window: NSWindow, completionHandler: @escaping AuthorizationHandler) {
