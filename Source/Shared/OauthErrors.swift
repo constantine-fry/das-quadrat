@@ -25,8 +25,8 @@ extension NSError {
     
     /** Creates an error from string error returned by Foursquare server. */
     class func quadratOauthErrorForString(_ string: String) -> NSError {
-        var code: QuadratOauthErrorCode!
-        var description: String!
+        var code: QuadratOauthErrorCode
+        var description: String
         
         switch string {
             case "invalid_request":
