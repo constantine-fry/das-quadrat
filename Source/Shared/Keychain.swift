@@ -84,7 +84,7 @@ class Keychain {
     
     func saveAccessToken(_ accessToken: String) throws {
         do {
-            if let _ = try self.accessToken() {
+            if (try? self.accessToken()) != nil {
                 try deleteAccessToken()
             }
         } catch {
