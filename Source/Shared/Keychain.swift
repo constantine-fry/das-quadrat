@@ -60,7 +60,7 @@ class Keychain {
         if status == errSecSuccess {
             if let retrievedData = dataTypeRef as? Data {
                 if retrievedData.count != 0 {
-                    accessToken = NSString(data: retrievedData, encoding: String.Encoding.utf8.rawValue) as? String
+                    accessToken = NSString(data: retrievedData, encoding: String.Encoding.utf8.rawValue) as String?
                 }
             }
         }
