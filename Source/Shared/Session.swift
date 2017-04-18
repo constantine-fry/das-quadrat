@@ -197,7 +197,7 @@ open class Session {
                 self.dataCache.addFileAtURL(fileURL, withKey: "\((URL as NSURL).hash)")
             }
             self.completionQueue.addOperation {
-                completionHandler(data, error! as NSError)
+                completionHandler(data, error as NSError?)
             }
         }) 
         task.resume()
