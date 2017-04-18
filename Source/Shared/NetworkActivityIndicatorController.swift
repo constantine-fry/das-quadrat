@@ -21,9 +21,9 @@ private var _activeIdentifiers: [Int:Int]! = [Int:Int]()
 public let InvalidNetworkActivityIdentifier = -1
 
 /** Controlls network activity indicator on iOS. Does nothing on OSX. */
-public class NetworkActivityIndicatorController {
+open class NetworkActivityIndicatorController {
     
-    private let mainQueue = NSOperationQueue.mainQueue()
+    fileprivate let mainQueue = OperationQueue.main
 
     /** Shows network activity indicator and return activity identifier. */
     func beginNetworkActivity() -> Int {
@@ -40,7 +40,7 @@ public class NetworkActivityIndicatorController {
     }
     
     /** Hides network activity indicator when no one needed it anymore. Does nothing if you pass nil */
-    func endNetworkActivity(identifier: Int?) {
+    func endNetworkActivity(_ identifier: Int?) {
         if identifier == nil {
             return
         }
