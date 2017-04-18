@@ -120,17 +120,17 @@ class DataCache {
     fileprivate func subscribeForNotifications() {
         #if os(iOS)
             
-            let center = NSNotificationCenter.defaultCenter()
-            let didEnterBackground = UIApplicationDidEnterBackgroundNotification
-            let firstObserver = center.addObserverForName(didEnterBackground, object: nil, queue: nil) {
+            let center = NotificationCenter.default
+            let didEnterBackground = NSNotification.Name.UIApplicationDidEnterBackground
+            let firstObserver = center.addObserver(forName: didEnterBackground, object: nil, queue: nil) {
                 [weak self] (notification) -> Void in
                 self?.cleanupCache()
                 self?.cache.removeAllObjects()
             }
             self.observers.append(firstObserver)
             
-            let didReceiveMemoryWaring = UIApplicationDidReceiveMemoryWarningNotification
-            let secondObserver = center.addObserverForName(didReceiveMemoryWaring, object: nil, queue: nil) {
+            let didReceiveMemoryWaring = NSNotification.Name.UIApplicationDidReceiveMemoryWarning
+            let secondObserver = center.addObserver(forName: didReceiveMemoryWaring, object: nil, queue: nil) {
                 [weak self] (notification) -> Void in
                 self?.cache.removeAllObjects()
             }
@@ -224,7 +224,7 @@ class DataCache {
                 let values2 = try (url2 as NSURL).resourceValues(forKeys: dateKey)
                 if let date1 = values1[URLResourceKey.contentModificationDateKey] {
                     if let date2 = values2[URLResourceKey.contentModificationDateKey] {
-                        return (date1 as AnyObject).compare(date2) == .orderedAscending
+                        return (date1 as AnyObject).compare(date2 as! Date) == .orderedAscending
                     }
                 }
             } catch {

@@ -172,6 +172,7 @@
 					475D10581A0E35AB000F699A = {
 						CreatedOnToolsVersion = 6.1;
 						DevelopmentTeam = 6E9832W2ZK;
+						LastSwiftMigration = 0830;
 					};
 				};
 			};
@@ -367,6 +368,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.aoeu.fry.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -385,6 +387,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.aoeu.fry.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
