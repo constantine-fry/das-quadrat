@@ -50,25 +50,25 @@ class Authorizer: AuthorizationDelegate {
     
     func userDidCancel() {
         let error = NSError(domain: NSCocoaErrorDomain, code: NSUserCancelledError, userInfo: nil)
-        self.finilizeAuthorization(nil, error: error)
+        self.finalizeAuthorization(nil, error: error)
     }
     
     func didReachRedirectURL(_ redirectURL: URL) {
         let parameters = self.extractParametersFromURL(redirectURL)
-        self.finilizeAuthorizationWithParameters(parameters)
+        self.finalizeAuthorizationWithParameters(parameters)
     }
     
     // MARK: - Finilization
     
-    func finilizeAuthorizationWithParameters(_ parameters: Parameters) {
+    func finalizeAuthorizationWithParameters(_ parameters: Parameters) {
         var error: NSError?
         if let errorString = parameters["error"] {
             error = NSError.quadratOauthErrorForString(errorString)
         }
-        self.finilizeAuthorization(parameters["access_token"], error: error)
+        self.finalizeAuthorization(parameters["access_token"], error: error)
     }
     
-    func finilizeAuthorization(_ accessToken: String?, error: NSError?) {
+    func finalizeAuthorization(_ accessToken: String?, error: NSError?) {
         var resultError = error
         var result = accessToken
         if let accessToken = accessToken {

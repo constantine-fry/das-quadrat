@@ -30,7 +30,7 @@ open class Events: Endpoint {
     open func search(_ domain: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "search"
         var allParameters = [Parameter.domain: domain]
-        allParameters += parameters
+        let _ = allParameters += parameters
         return self.getWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
     

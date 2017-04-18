@@ -26,7 +26,7 @@ open class Lists: Endpoint {
         completionHandler: ResponseClosure? = nil) -> Task {
             let path = "add"
             var allParameters = [Parameter.name:name, Parameter.text:text]
-            allParameters += parameters
+            let _ = allParameters += parameters
             return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
     
@@ -95,7 +95,7 @@ open class Lists: Endpoint {
         parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
             let path = listId + "/moveitem"
             var allParameters = [Parameter.itemId:itemId]
-            allParameters += parameters
+            let _ = allParameters += parameters
             return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
     
@@ -122,7 +122,7 @@ open class Lists: Endpoint {
         parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
             let path = listId + "/updateitem"
             var allParameters = [Parameter.itemId:itemId]
-            allParameters += parameters
+            let _ = allParameters += parameters
             return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
 }

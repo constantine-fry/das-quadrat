@@ -182,7 +182,7 @@ open class Parameter {
     }
     
     class func buildURL(_ baseURL: URL, parameters: Parameters, preformattedQueryString: String? = nil) -> URL {
-        let components = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)!
+        var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)!
         let query = URLQuery(parameters)
         if let componentsQuery = components.query {
             components.query = componentsQuery + "&" + query

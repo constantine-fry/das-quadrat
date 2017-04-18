@@ -25,7 +25,7 @@ open class Tips: Endpoint {
         parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
             let path = "add"
             var allParameters = [Parameter.venueId:venueId, Parameter.text:text]
-            allParameters += parameters
+            let _ = allParameters += parameters
             return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
     
@@ -56,7 +56,7 @@ open class Tips: Endpoint {
         parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
             let path = tipId + "/flag"
             var allParameters = [Parameter.problem:problem]
-            allParameters += parameters
+            let _ = allParameters += parameters
             return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
     

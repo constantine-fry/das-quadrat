@@ -38,11 +38,11 @@ class Keychain {
         keychainQuery = [
             kSecClass           as String  : kSecClassGenericPassword,
             kSecAttrAccessible  as String  : kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
-            kSecAttrService     as String  : serviceAttribute,
-            kSecAttrAccount     as String  : accountAttribute
+            kSecAttrService     as String  : serviceAttribute as AnyObject,
+            kSecAttrAccount     as String  : accountAttribute as AnyObject
         ]
     }
-    
+
     func accessToken() throws -> String? {
         var query = keychainQuery
         query[kSecReturnData as String] = kCFBooleanTrue
@@ -54,13 +54,13 @@ class Keychain {
         */
         var dataTypeRef: AnyObject? = nil
         let status = withUnsafeMutablePointer(to: &dataTypeRef) {cfPointer -> OSStatus in
-            SecItemCopyMatching(query, UnsafeMutablePointer(cfPointer))
+            SecItemCopyMatching(query as CFDictionary, UnsafeMutablePointer(cfPointer))
         }
         var accessToken: String? = nil
         if status == errSecSuccess {
             if let retrievedData = dataTypeRef as? Data {
                 if retrievedData.count != 0 {
-                    accessToken = NSString(data: retrievedData, encoding: String.Encoding.utf8) as? String
+                    accessToken = NSString(data: retrievedData, encoding: String.Encoding.utf8.rawValue) as String?
                 }
             }
         }
@@ -74,7 +74,7 @@ class Keychain {
     
     func deleteAccessToken() throws {
         let query = keychainQuery
-        let status = SecItemDelete(query)
+        let status = SecItemDelete(query as CFDictionary)
         if status != errSecSuccess && status != errSecItemNotFound {
             let error = errorWithStatus(status)
             self.logger?.logError(error, withMessage: "Keychain can't delete access token .")
@@ -92,8 +92,8 @@ class Keychain {
         }
         var query = keychainQuery
         let accessTokenData = accessToken.data(using: String.Encoding.utf8, allowLossyConversion: false)
-        query[kSecValueData as String] =  accessTokenData
-        let status = SecItemAdd(query, nil)
+        query[kSecValueData as String] =  accessTokenData as AnyObject
+        let status = SecItemAdd(query as CFDictionary, nil)
         if status != errSecSuccess {
             let error = errorWithStatus(status)
             self.logger?.logError(error, withMessage: "Keychain can't add access token.")

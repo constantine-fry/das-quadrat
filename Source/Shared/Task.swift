@@ -63,10 +63,10 @@ class DataTask: Task {
             (data, response, error) -> Void in
             self.session?.networkActivityController?.endNetworkActivity(self.networkActivityId)
             
-            let result = Result.resultFromURLSessionResponse(response, data: data, error: error)
+            let result = Result.resultFromURLSessionResponse(response, data: data, error: error as NSError?)
             self.session?.processResult(result)
             self.session?.completionQueue.addOperation {
-                self.completionHandler?(result: result)
+                self.completionHandler?(result)
                 return Void()
             }
         }) 
@@ -88,10 +88,7 @@ class UploadTask: Task {
             (string: String) in
             body.append(string.data(using: String.Encoding.utf8, allowLossyConversion: false)!)
         }
-        var extention = self.fileURL!.pathExtension
-        if extention == nil {
-            extention = "png"
-        }
+        let extention = self.fileURL!.pathExtension
         appendStringBlock("\r\n--\(boundary)\r\n")
         appendStringBlock("Content-Disposition: form-data; name=\"photo\"; filename=\"photo.\(extention)\"\r\n")
         appendStringBlock("Content-Type: image/\(extention)\r\n\r\n")
@@ -102,14 +99,14 @@ class UploadTask: Task {
         }
         appendStringBlock("\r\n--\(boundary)--\r\n")
         
-        self.task = self.session?.URLSession.uploadTask(with: mutableRequest, from: body, completionHandler: {
+        self.task = self.session?.URLSession.uploadTask(with: mutableRequest as URLRequest, from: body as Data, completionHandler: {
             (data, response, error) -> Void in
             self.session?.networkActivityController?.endNetworkActivity(self.networkActivityId)
             
-            let result = Result.resultFromURLSessionResponse(response, data: data, error: error)
+            let result = Result.resultFromURLSessionResponse(response, data: data, error: error as NSError?)
             self.session?.processResult(result)
             self.session?.completionQueue.addOperation {
-                self.completionHandler?(result: result)
+                self.completionHandler?(result)
                 return Void()
             }
         }) 

@@ -17,7 +17,7 @@ open class Specials: Endpoint {
     open func get(_ specialId: String, venueId: String,
         parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
             var allParameters = [Parameter.venueId:venueId]
-            allParameters += parameters
+            let _ = allParameters += parameters
             return self.getWithPath(specialId, parameters: allParameters, completionHandler: completionHandler)
     }
     
@@ -39,7 +39,7 @@ open class Specials: Endpoint {
     open func search(_ ll: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "search"
         var allParameters = [Parameter.ll:ll]
-        allParameters += parameters
+        let _ = allParameters += parameters
         return self.getWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
 
@@ -50,7 +50,7 @@ open class Specials: Endpoint {
         problem: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
             let path = "add"
             var allParameters = ["ID": specialId, Parameter.venueId:venueId, Parameter.problem:problem]
-            allParameters += allParameters
+            let _ = allParameters += allParameters
             return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
 }

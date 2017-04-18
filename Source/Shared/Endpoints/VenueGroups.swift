@@ -24,7 +24,7 @@ open class VenueGroups: Endpoint {
     open func add(_ name: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "add"
         var allParameters = [Parameter.name: name]
-        allParameters += parameters
+        let _ = allParameters += parameters
         return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
     

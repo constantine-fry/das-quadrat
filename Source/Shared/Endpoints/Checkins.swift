@@ -24,7 +24,7 @@ open class Checkins: Endpoint {
     open func add(_ venueId: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "add"
         var allParameters = [Parameter.venueId:venueId]
-        allParameters += parameters
+        let _ = allParameters += parameters
         return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
     

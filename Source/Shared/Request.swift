@@ -45,13 +45,13 @@ class Request {
         // if multi,
         var allParameters = self.sessionParameters
         if let parameters = self.parameters {
-            allParameters += parameters
+            let _ = allParameters += parameters
         }
         let URL = self.baseURL.appendingPathComponent(self.path)
         let requestURL = Parameter.buildURL(URL, parameters: allParameters,
             preformattedQueryString: preformattedQueryString)
         let request = NSMutableURLRequest(url: requestURL)
         request.httpMethod = HTTPMethod
-        return request
+        return request as URLRequest
     }
 }

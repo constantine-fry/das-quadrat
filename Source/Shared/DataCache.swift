@@ -38,7 +38,7 @@ class DataCache {
     fileprivate let directoryURL: URL
     
     /** In memory cache for NSData. */
-    fileprivate let cache = NSCache()
+    fileprivate let cache = NSCache<AnyObject, AnyObject>()
     
     /** Obsever objects from NSNotificationCenter. */
     fileprivate var observers = [AnyObject]()
@@ -76,12 +76,12 @@ class DataCache {
     func dataForKey(_ key: String) -> Data? {
         var result: Data?
         privateQueue.addOperation {
-            result = self.cache.object(forKey: key) as? Data
+            result = self.cache.object(forKey: key as AnyObject) as? Data
             if result == nil {
                 let targetURL = self.directoryURL.appendingPathComponent(key)
                 result = try? Data(contentsOf: targetURL)
                 if let result = result {
-                    self.cache.setObject(result, forKey: key, cost: result.count)
+                    self.cache.setObject(result as AnyObject, forKey: key as AnyObject, cost: result.count)
                 }
             }
         }
@@ -182,7 +182,7 @@ class DataCache {
         /** Searches for expired files and calculates total size. */
         fileURLs.forEach {
             (aFileURL) -> () in
-            let values: [String : AnyObject]? = try? (aFileURL as NSURL).resourceValues(forKeys: properties)
+            let values: [URLResourceKey : Any]? = try! (aFileURL as NSURL).resourceValues(forKeys: properties)
             if let values = values, let modificationDate = values[URLResourceKey.contentModificationDateKey] as? Date {
                 if (modificationDate as NSDate).laterDate(expirationDate) == modificationDate {
                     validFiles.append(aFileURL)
@@ -220,11 +220,11 @@ class DataCache {
             (url1, url2) -> Bool in
             let dateKey = [URLResourceKey.contentModificationDateKey]
             do {
-                let values1 = try (url1 as NSURL).resourceValues(forKeys: dateKey) as? [String: Date]
-                let values2 = try (url2 as NSURL).resourceValues(forKeys: dateKey) as? [String: Date]
-                if let date1 = values1?[URLResourceKey.contentModificationDateKey] {
-                    if let date2 = values2?[URLResourceKey.contentModificationDateKey] {
-                        return date1.compare(date2) == .orderedAscending
+                let values1 = try (url1 as NSURL).resourceValues(forKeys: dateKey)
+                let values2 = try (url2 as NSURL).resourceValues(forKeys: dateKey)
+                if let date1 = values1[URLResourceKey.contentModificationDateKey] {
+                    if let date2 = values2[URLResourceKey.contentModificationDateKey] {
+                        return (date1 as AnyObject).compare(date2) == .orderedAscending
                     }
                 }
             } catch {

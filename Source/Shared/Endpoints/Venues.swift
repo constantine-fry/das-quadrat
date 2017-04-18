@@ -25,7 +25,7 @@ open class Venues: Endpoint {
         parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
             let path = "add"
             var allParameters = [Parameter.name:name, Parameter.ll:ll]
-            allParameters += parameters
+            let _ = allParameters += parameters
             return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
     
@@ -69,7 +69,7 @@ open class Venues: Endpoint {
     open func trending(_ ll: String, parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
         let path = "trending"
         var allParameters = [Parameter.ll:ll]
-        allParameters += parameters
+        let _ = allParameters += parameters
         return self.getWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
     
@@ -174,7 +174,7 @@ open class Venues: Endpoint {
         parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
             let path = venueId + "/flag"
             var allParameters = [Parameter.problem:problem]
-            allParameters += parameters
+            let _ = allParameters += parameters
             return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
     
@@ -197,7 +197,7 @@ open class Venues: Endpoint {
         parameters: Parameters?, completionHandler: ResponseClosure? = nil) -> Task {
             let path = venueId + "/setrole"
             var allParameters = [Parameter.userId:userId, Parameter.role:role]
-            allParameters += parameters
+            let _ = allParameters += parameters
             return self.postWithPath(path, parameters: allParameters, completionHandler: completionHandler)
     }
     

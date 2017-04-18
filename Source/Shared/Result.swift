@@ -71,7 +71,7 @@ open class Result: CustomStringConvertible {
     }
     
     open var description: String {
-        return "Status code: \(HTTPSTatusCode)\nResponse: \(response)\nError: \(error)"
+        return "Status code: \(String(describing: HTTPSTatusCode))\nResponse: \(String(describing: response))\nError: \(String(describing: error))"
     }
     
 }

@@ -12,7 +12,7 @@ import AppKit
 
 extension Session {
     
-    public func authorizeWithViewController(_ window: NSWindow, completionHandler: AuthorizationHandler) {
+    public func authorizeWithViewController(_ window: NSWindow, completionHandler: @escaping AuthorizationHandler) {
         if self.authorizer == nil {
             let authorizer = MacAuthorizer(configuration: self.configuration)
             authorizer.authorize(window) {
