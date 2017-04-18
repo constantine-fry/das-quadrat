@@ -12,10 +12,10 @@ import Foundation
 public typealias AuthorizationHandler = (Bool, NSError?) -> Void
 
 /** A nandler used by all endpoints. */
-public typealias ResponseClosure = (result: Result) -> Void
+public typealias ResponseClosure = (_ result: Result) -> Void
 
 /** A nandler for image downloading. */
-public typealias DownloadImageClosure = (imageData: Data?, error: NSError?) -> Void
+public typealias DownloadImageClosure = (_ imageData: Data?, _ error: NSError?) -> Void
 
 /** Typealias for parameters dictionary. */
 public typealias Parameters = [String:String]
