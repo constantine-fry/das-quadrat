@@ -17,7 +17,7 @@
                BlueprintIdentifier = "476B70881A0EBAE700AFAC33"
                BuildableName = "Quadrat.framework"
                BlueprintName = "Quadrat"
-               ReferencedContainer = "container:Quadrat.xcodeproj">
+               ReferencedContainer = "container:Source/Quadrat.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -48,7 +48,7 @@
             BlueprintIdentifier = "476B70881A0EBAE700AFAC33"
             BuildableName = "Quadrat.framework"
             BlueprintName = "Quadrat"
-            ReferencedContainer = "container:Quadrat.xcodeproj">
+            ReferencedContainer = "container:Source/Quadrat.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -66,7 +66,7 @@
             BlueprintIdentifier = "476B70881A0EBAE700AFAC33"
             BuildableName = "Quadrat.framework"
             BlueprintName = "Quadrat"
-            ReferencedContainer = "container:Quadrat.xcodeproj">
+            ReferencedContainer = "container:Source/Quadrat.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

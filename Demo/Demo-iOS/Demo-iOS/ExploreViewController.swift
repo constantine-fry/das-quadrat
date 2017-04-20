@@ -24,11 +24,11 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
     var venueItems : [[String: AnyObject]]?
     
     /** Number formatter for rating. */
-    let numberFormatter = NSNumberFormatter()
+    let numberFormatter = NumberFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.numberFormatter.numberStyle = .DecimalStyle
+        self.numberFormatter.numberStyle = .decimal
         
         self.session = Session.sharedSession()
         self.session.logger = ConsoleLogger()
@@ -49,22 +49,22 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
         self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         self.locationManager.delegate = self
         let status = CLLocationManager.authorizationStatus()
-        if status == .NotDetermined {
+        if status == .notDetermined {
             self.locationManager.requestWhenInUseAuthorization()
-        } else if status == CLAuthorizationStatus.AuthorizedWhenInUse
-            || status == CLAuthorizationStatus.AuthorizedAlways {
+        } else if status == CLAuthorizationStatus.authorizedWhenInUse
+            || status == CLAuthorizationStatus.authorizedAlways {
                 self.locationManager.startUpdatingLocation()
         } else {
             showNoPermissionsAlert()
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.updateLeftBarButton()
     }
     
-    private func updateLeftBarButton() {
+    fileprivate func updateLeftBarButton() {
         if self.session.isAuthorized() {
             self.navigationItem.leftBarButtonItem?.title = "Logout"
         } else {
@@ -75,51 +75,51 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
     
     func showNoPermissionsAlert() {
         let alertController = UIAlertController(title: "No permission",
-            message: "In order to work, app needs your location", preferredStyle: .Alert)
-        let openSettings = UIAlertAction(title: "Open settings", style: .Default, handler: {
+            message: "In order to work, app needs your location", preferredStyle: .alert)
+        let openSettings = UIAlertAction(title: "Open settings", style: .default, handler: {
             (action) -> Void in
-            let URL = NSURL(string: UIApplicationOpenSettingsURLString)
-            UIApplication.sharedApplication().openURL(URL!)
-            self.dismissViewControllerAnimated(true, completion: nil)
+            let URL = Foundation.URL(string: UIApplicationOpenSettingsURLString)
+            UIApplication.shared.openURL(URL!)
+            self.dismiss(animated: true, completion: nil)
         })
         alertController.addAction(openSettings)
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
-    func showErrorAlert(error: NSError) {
+    func showErrorAlert(_ error: NSError) {
         let alertController = UIAlertController(title: "Error",
-            message:error.localizedDescription, preferredStyle: .Alert)
-        let okAction = UIAlertAction(title: "Ok", style: .Default, handler: {
+            message:error.localizedDescription, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: {
             (action) -> Void in
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         })
         alertController.addAction(okAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status == .Denied || status == .Restricted {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .denied || status == .restricted {
             showNoPermissionsAlert()
         } else {
             self.locationManager.startUpdatingLocation()
         }
     }
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         // Process error.
         // kCLErrorDomain. Not localized.
-        showErrorAlert(error)
+        showErrorAlert(error as NSError)
     }
-    
-    func locationManager(manager: CLLocationManager,
-        didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
-            if self.venueItems == nil {
-                exploreVenues()
-            }
-            self.resultsTableViewController.location = newLocation
-            self.locationManager.stopUpdatingLocation()
+
+    func locationManager(_ manager: CLLocationManager,
+                         didUpdateLocations locations: [CLLocation]) {
+        if self.venueItems == nil {
+            exploreVenues()
+        }
+        self.resultsTableViewController.location = locations.first!
+        self.locationManager.stopUpdatingLocation()
     }
-    
+
     func exploreVenues() {
         guard let location = self.locationManager.location else {
             return
@@ -131,7 +131,7 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
             if self.venueItems != nil {
                 return
             }
-            if !NSThread.isMainThread() {
+            if !Thread.isMainThread {
                 fatalError("!!!")
             }
             
@@ -147,7 +147,7 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
                     self.venueItems = venues
                 }
                 self.tableView.reloadData()
-            } else if let error = result.error where !result.isCancelled() {
+            } else if let error = result.error, !result.isCancelled() {
                 self.showErrorAlert(error)
             }
         }
@@ -160,7 +160,7 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
             self.updateLeftBarButton()
             self.exploreVenues()
         } else {
-            self.session.authorizeWithViewController(self, delegate: self) {
+            self.session.authorizeWithViewController(viewController: self, delegate: self) {
                 (authorized, error) -> Void in
                 self.updateLeftBarButton()
                 self.exploreVenues()
@@ -168,27 +168,27 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
         }
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let venueItems = self.venueItems {
             return venueItems.count
         }
         return 0
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("venueCell", forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "venueCell", for: indexPath)
             as! VenueTableViewCell
         let item = self.venueItems![indexPath.row] as JSONParameters!
-        self.configureCellWithItem(cell, item: item)
+        self.configureCellWithItem(cell, item: item!)
         return cell
     }
     
     
-    func configureCellWithItem(cell:VenueTableViewCell, item: JSONParameters) {
+    func configureCellWithItem(_ cell:VenueTableViewCell, item: JSONParameters) {
         if let venueInfo = item["venue"] as? JSONParameters {
             cell.venueNameLabel.text = venueInfo["name"] as? String
             if let rating = venueInfo["rating"] as? CGFloat {
-                cell.venueRatingLabel.text = numberFormatter.stringFromNumber(rating)
+                cell.venueRatingLabel.text = numberFormatter.string(from: NSNumber(value: Double(rating)))
             }
         }
         if let tips = item["tips"] as? [JSONParameters], let tip = tips.first {
@@ -196,8 +196,8 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
         }
     }
     
-    override func tableView(tableView: UITableView,
-        willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView,
+        willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
             let cell = cell as! VenueTableViewCell
             let tips = self.venueItems![indexPath.row]["tips"] as? [JSONParameters]
             guard let tip = tips?.first, let user = tip["user"] as? JSONParameters,
@@ -211,7 +211,7 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
                 cell.userPhotoImageView.image = nil
                 session.downloadImageAtURL(URL) {
                     (imageData, error) -> Void in
-                    let cell = tableView.cellForRowAtIndexPath(indexPath) as? VenueTableViewCell
+                    let cell = tableView.cellForRow(at: indexPath) as? VenueTableViewCell
                     if let cell = cell, let imageData = imageData {
                         let image = UIImage(data: imageData)
                         cell.userPhotoImageView.image = image
@@ -220,17 +220,17 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
             }
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         let venue = venueItems![indexPath.row]["venue"] as! JSONParameters
         openVenue(venue)
     }
     
-    func searchTableViewController(controller: SearchTableViewController, didSelectVenue venue:JSONParameters) {
+    func searchTableViewController(_ controller: SearchTableViewController, didSelectVenue venue:JSONParameters) {
         openVenue(venue)
     }
     
-    func openVenue(venue: JSONParameters) {
+    func openVenue(_ venue: JSONParameters) {
         let viewController = Storyboard.create("venueDetails") as! VenueTipsViewController
         viewController.venueId = venue["id"] as? String
         viewController.session = session
@@ -238,19 +238,19 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func photoURLFromJSONObject(photo: JSONParameters) -> NSURL {
+    func photoURLFromJSONObject(_ photo: JSONParameters) -> URL {
         let prefix = photo["prefix"] as! String
         let suffix = photo["suffix"] as! String
         let URLString = prefix + "100x100" + suffix
-        let URL = NSURL(string: URLString)
+        let URL = Foundation.URL(string: URLString)
         return URL!
     }
     
-    func sessionWillPresentAuthorizationViewController(controller: AuthorizationViewController) {
+    func sessionWillPresentAuthorizationViewController(_ controller: AuthorizationViewController) {
         print("Will present authorization view controller.")
     }
     
-    func sessionWillDismissAuthorizationViewController(controller: AuthorizationViewController) {
+    func sessionWillDismissAuthorizationViewController(_ controller: AuthorizationViewController) {
         print("Will disimiss authorization view controller.")
     }
 }
@@ -273,8 +273,8 @@ extension CLLocation {
 
 
 class Storyboard: UIStoryboard {
-    class func create(name: String) -> UIViewController {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(name)
+    class func create(_ name: String) -> UIViewController {
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: name)
     }
 }
 

@@ -11,7 +11,7 @@
       location = "group:QuadratTouch.podspec">
    </FileRef>
    <FileRef
-      location = "group:Source/Quadrat.xcodeproj">
+      location = "container:Source/Quadrat.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Demo/Demo-OSX/Demo-OSX.xcodeproj">

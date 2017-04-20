@@ -15,24 +15,24 @@ import Foundation
 public protocol Logger {
     
     /** All pesponses which session receive will be passed into this method. Can be called on any thread. */
-    func session(session: Session, didReceiveResult result: Result)
+    func session(_ session: Session, didReceiveResult result: Result)
     
     /** All errors will be passed in this method. Can be called on any thread. */
-    func logError(error: NSError, withMessage message: String)
+    func logError(_ error: NSError, withMessage message: String)
 }
 
 /** A simple logger which prints result in console. */
-public class ConsoleLogger: Logger {
+open class ConsoleLogger: Logger {
     
     public init() {}
     
-    public func logError(error: NSError, withMessage message: String) {
+    open func logError(_ error: NSError, withMessage message: String) {
         print("\(message): \(error)")
     }
     
-    public func session(session: Session, didReceiveResult result: Result) {
+    open func session(_ session: Session, didReceiveResult result: Result) {
         print("")
-        print("Session did receive response:  \(result.HTTPSTatusCode), \(result.URL)")
+        print("Session did receive response:  \(String(describing: result.HTTPSTatusCode)), \(String(describing: result.URL))")
         if let warning = result.response?["warning"] as? [String: AnyObject] {
             if let text = warning["text"] as? String {
                 print("Warning: \(text)")

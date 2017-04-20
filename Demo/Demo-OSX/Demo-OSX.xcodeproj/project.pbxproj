@@ -7,22 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		470FAE3F1A334A8F00FD8348 /* Quadrat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 470FAE3E1A334A8F00FD8348 /* Quadrat.framework */; };
-		470FAE401A334A9C00FD8348 /* Quadrat.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 470FAE3E1A334A8F00FD8348 /* Quadrat.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		475D10981A0E3640000F699A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475D10971A0E3640000F699A /* AppDelegate.swift */; };
 		475D109A1A0E3640000F699A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 475D10991A0E3640000F699A /* Images.xcassets */; };
 		475D109D1A0E3640000F699A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 475D109B1A0E3640000F699A /* MainMenu.xib */; };
 		47888BF11A18C20D00A76E47 /* Apple_Swift_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 47888BF01A18C20D00A76E47 /* Apple_Swift_Logo.png */; };
+		4C465F6C1EA6C015001F0349 /* Quadrat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C465F6B1EA6C015001F0349 /* Quadrat.framework */; };
+		4C465F6D1EA6C015001F0349 /* Quadrat.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C465F6B1EA6C015001F0349 /* Quadrat.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		47BA2E6A1A0FB73B00A334D2 /* Embed Frameworks */ = {
+		4C465F6E1EA6C016001F0349 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				470FAE401A334A9C00FD8348 /* Quadrat.framework in Embed Frameworks */,
+				4C465F6D1EA6C015001F0349 /* Quadrat.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -30,7 +30,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		470FAE3E1A334A8F00FD8348 /* Quadrat.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quadrat.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Foursquare-ajlxleuqpcnpftbjjadomstzhgdt/Build/Products/Debug/Quadrat.framework"; sourceTree = "<group>"; };
 		475D10921A0E3640000F699A /* Demo-OSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Demo-OSX.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		475D10961A0E3640000F699A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		475D10971A0E3640000F699A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -38,6 +37,7 @@
 		475D109C1A0E3640000F699A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		47888BF01A18C20D00A76E47 /* Apple_Swift_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Apple_Swift_Logo.png; sourceTree = "<group>"; };
 		47BA2E671A0FB73B00A334D2 /* Quadrat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Quadrat.framework; path = "/Users/fry/Library/Developer/Xcode/DerivedData/Foursquare-anrmxufunpanzdaqztlupbwzzaux/Build/Products/Debug/Quadrat.framework"; sourceTree = "<absolute>"; };
+		4C465F6B1EA6C015001F0349 /* Quadrat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quadrat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,7 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				470FAE3F1A334A8F00FD8348 /* Quadrat.framework in Frameworks */,
+				4C465F6C1EA6C015001F0349 /* Quadrat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,7 +55,7 @@
 		475D10891A0E3640000F699A = {
 			isa = PBXGroup;
 			children = (
-				470FAE3E1A334A8F00FD8348 /* Quadrat.framework */,
+				4C465F6B1EA6C015001F0349 /* Quadrat.framework */,
 				475D10941A0E3640000F699A /* Demo-OSX */,
 				475D10931A0E3640000F699A /* Products */,
 			);
@@ -100,7 +100,7 @@
 				475D108E1A0E3640000F699A /* Sources */,
 				475D108F1A0E3640000F699A /* Frameworks */,
 				475D10901A0E3640000F699A /* Resources */,
-				47BA2E6A1A0FB73B00A334D2 /* Embed Frameworks */,
+				4C465F6E1EA6C016001F0349 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -123,6 +123,7 @@
 				TargetAttributes = {
 					475D10911A0E3640000F699A = {
 						CreatedOnToolsVersion = 6.1;
+						LastSwiftMigration = 0830;
 					};
 				};
 			};
@@ -263,17 +264,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Foursquare-anrmxufunpanzdaqztlupbwzzaux/Build/Products/Debug-iphoneos",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Foursquare-anrmxufunpanzdaqztlupbwzzaux/Build/Products/Debug",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Foursquare-ajlxleuqpcnpftbjjadomstzhgdt/Build/Products/Debug",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Demo-OSX/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.aoeu.fry.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -282,16 +279,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Foursquare-anrmxufunpanzdaqztlupbwzzaux/Build/Products/Debug-iphoneos",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Foursquare-anrmxufunpanzdaqztlupbwzzaux/Build/Products/Debug",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Foursquare-ajlxleuqpcnpftbjjadomstzhgdt/Build/Products/Debug",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Demo-OSX/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.aoeu.fry.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

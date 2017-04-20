@@ -10,17 +10,17 @@ import Cocoa
 import WebKit
 
 private enum AuthorizationWindowControllerStatus {
-    case None               // View controller has been initialized.
-    case Loading            // Web view loading page.
-    case Loaded             // Page has been loaded successfully.
-    case Failed(NSError)    // Web view failed to load page with error.
+    case none               // View controller has been initialized.
+    case loading            // Web view loading page.
+    case loaded             // Page has been loaded successfully.
+    case failed(NSError)    // Web view failed to load page with error.
 }
 
 class AuthorizationWindowController: NSWindowController {
-    var authorizationURL: NSURL!
-    var redirectURL: NSURL!
+    var authorizationURL: URL!
+    var redirectURL: URL!
     weak var delegate: AuthorizationDelegate?
-    private var status: AuthorizationWindowControllerStatus = .None {
+    fileprivate var status: AuthorizationWindowControllerStatus = .none {
         didSet {
             self.updateUI()
         }
@@ -43,56 +43,56 @@ class AuthorizationWindowController: NSWindowController {
     }
     
     func loadAuthorizationURL() {
-        self.status = .Loading
-        let request = NSURLRequest(URL: self.authorizationURL)
-        self.webView.mainFrame.loadRequest(request)
+        self.status = .loading
+        let request = URLRequest(url: self.authorizationURL)
+        self.webView.mainFrame.load(request)
     }
     
     // MARK: - Actions
     
-    @IBAction func doneButtonClicked(sender: AnyObject) {
+    @IBAction func doneButtonClicked(_ sender: AnyObject) {
         self.delegate?.userDidCancel()
     }
     
-    @IBAction func refreshButtonClicked(sender: AnyObject) {
+    @IBAction func refreshButtonClicked(_ sender: AnyObject) {
         self.loadAuthorizationURL()
     }
     
     
     // MARK: - Delegate methods
     
-    func webView(webView: WebView!, dragSourceActionMaskForPoint point: NSPoint) -> Int {
-        return Int(WebDragSourceAction.None.rawValue)
+    func webView(_ webView: WebView!, dragSourceActionMaskForPoint point: NSPoint) -> Int {
+        return Int(WebDragSourceAction().rawValue)
     }
     
-    func webView(webView: WebView!,
+    func webView(_ webView: WebView!,
         dragDestinationActionMaskForDraggingInfo draggingInfo: NSDraggingInfo!) -> Int {
-            return Int(WebDragDestinationAction.None.rawValue)
+            return Int(WebDragDestinationAction().rawValue)
     }
     
-    func webView(webView: WebView!,
-        decidePolicyForNavigationAction actionInformation: [NSObject : AnyObject]!,
-        request: NSURLRequest!, frame: WebFrame!, decisionListener listener: WebPolicyDecisionListener!) {
-            if let URLString = request.URL?.absoluteString {
+    func webView(_ webView: WebView!,
+        decidePolicyForNavigationAction actionInformation: [AnyHashable: Any]!,
+        request: URLRequest!, frame: WebFrame!, decisionListener listener: WebPolicyDecisionListener!) {
+            if let URLString = request.url?.absoluteString {
                 if URLString.hasPrefix(self.redirectURL.absoluteString) {
-                    self.delegate?.didReachRedirectURL(request.URL!)
+                    self.delegate?.didReachRedirectURL(request.url!)
                     listener.ignore()
                 }
             }
             listener.use()
     }
     
-    func webView(sender: WebView!, didFinishLoadForFrame frame: WebFrame!) {
-        self.status = .Loaded
+    func webView(_ sender: WebView!, didFinishLoadForFrame frame: WebFrame!) {
+        self.status = .loaded
     }
     
-    func webView(sender: WebView!, didFailLoadWithError error: NSError!, forFrame frame: WebFrame!) {
-        self.status = .Failed(error)
+    func webView(_ sender: WebView!, didFailLoadWithError error: NSError!, forFrame frame: WebFrame!) {
+        self.status = .failed(error)
     }
     
-    func webView(sender: WebView!,
+    func webView(_ sender: WebView!,
         didFailProvisionalLoadWithError error: NSError!, forFrame frame: WebFrame!) {
-            self.status = .Failed(error)
+            self.status = .failed(error)
     }
     
     // MARK: -
@@ -101,25 +101,25 @@ class AuthorizationWindowController: NSWindowController {
     func updateUI() {
         switch self.status {
             
-        case .Loading:
+        case .loading:
             self.loadIndicator.startAnimation(self)
             self.statusLabel.stringValue = ""
-            self.refreshButton.hidden = true
+            self.refreshButton.isHidden = true
             
-        case .Loaded:
+        case .loaded:
             self.loadIndicator.stopAnimation(self)
             self.statusLabel.stringValue = ""
-            self.refreshButton.hidden = true
+            self.refreshButton.isHidden = true
             
-        case .Failed(let error):
+        case .failed(let error):
             self.loadIndicator.stopAnimation(self)
             self.statusLabel.stringValue = error.localizedDescription
-            self.refreshButton.hidden = false
+            self.refreshButton.isHidden = false
             
-        case .None:
+        case .none:
             self.loadIndicator.stopAnimation(self)
             self.statusLabel.stringValue = ""
-            self.refreshButton.hidden = true
+            self.refreshButton.isHidden = true
         }
     }
 }
