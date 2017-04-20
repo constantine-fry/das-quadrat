@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name          = "QuadratTouch"
-  s.version       = "1.1.3"
+  s.version       = "1.1.4"
   s.summary       = "Das Quadrat is Foursquare API wrapper written in Swift."
 
   s.homepage      = "https://github.com/Constantine-Fry/das-quadrat"
