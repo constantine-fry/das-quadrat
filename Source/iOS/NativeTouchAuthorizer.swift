@@ -31,7 +31,7 @@ class NativeTouchAuthorizer: Authorizer {
         let keychain = Keychain(configuration: configuration)
         self.init(authorizationURL: authorizationURL, redirectURL: redirectURL! as URL, keychain:keychain)
         self.configuration = configuration
-        if configuration.shouldControllNetworkActivityIndicator {
+        if configuration.shouldControlNetworkActivityIndicator {
             networkActivityController = NetworkActivityIndicatorController()
         }
     }

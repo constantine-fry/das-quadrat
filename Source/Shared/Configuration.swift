@@ -60,7 +60,7 @@ public struct Configuration {
         If you set it to `true` you can use `NetworkActivityIndicatorController` 
         to control activity indicator in other parts of you application.
     */
-    public var shouldControllNetworkActivityIndicator = false
+    public var shouldControlNetworkActivityIndicator = false
     
     /** 
         The `v` parameter of API. Global parameter for session.

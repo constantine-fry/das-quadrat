@@ -114,7 +114,7 @@ open class Session {
     }()
     
     public init(configuration: Configuration, completionQueue: OperationQueue = OperationQueue.main) {
-        if configuration.shouldControllNetworkActivityIndicator {
+        if configuration.shouldControlNetworkActivityIndicator {
             self.networkActivityController = NetworkActivityIndicatorController()
         }
         self.configuration = configuration

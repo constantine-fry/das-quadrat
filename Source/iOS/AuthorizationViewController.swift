@@ -32,7 +32,7 @@ public class AuthorizationViewController: UIViewController, UIWebViewDelegate {
         Whether view controller should controll network activity indicator or not.
         Should be set before presenting view controller.
     */
-    internal var shouldControllNetworkActivityIndicator = false
+    internal var shouldControlNetworkActivityIndicator = false
     
     private var networkActivityIndicator: NetworkActivityIndicatorController?
     private var activityIdentifier: Int?
@@ -71,7 +71,7 @@ public class AuthorizationViewController: UIViewController, UIWebViewDelegate {
         let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel,
             target: self, action: #selector(AuthorizationViewController.cancelButtonTapped))
         self.navigationItem.leftBarButtonItem = cancelButton
-        if shouldControllNetworkActivityIndicator {
+        if shouldControlNetworkActivityIndicator {
             networkActivityIndicator = NetworkActivityIndicatorController()
         }
         self.loadAuthorizationPage()

@@ -18,7 +18,7 @@ class Authorizer: AuthorizationDelegate {
     var authorizationURL: URL
     var completionHandler: ((String?, NSError?) -> Void)?
     let keychain: Keychain
-    var shouldControllNetworkActivityIndicator = false
+    var shouldControlNetworkActivityIndicator = false
     
     convenience init(configuration: Configuration) {
         let baseURL = configuration.server.oauthBaseURL
@@ -36,7 +36,7 @@ class Authorizer: AuthorizationDelegate {
         }
         let keychain = Keychain(configuration: configuration)
         self.init(authorizationURL: authorizationURL, redirectURL: redirectURL!, keychain: keychain)
-        self.shouldControllNetworkActivityIndicator = configuration.shouldControllNetworkActivityIndicator
+        self.shouldControlNetworkActivityIndicator = configuration.shouldControlNetworkActivityIndicator
         self.cleanupCookiesForURL(authorizationURL)
     }
     

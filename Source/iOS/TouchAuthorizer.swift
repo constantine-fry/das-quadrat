@@ -19,8 +19,8 @@ class TouchAuthorizer: Authorizer {
         
         self.authorizationViewController = AuthorizationViewController(authorizationURL: authorizationURL as NSURL,
             redirectURL: redirectURL as NSURL, delegate: self)
-        self.authorizationViewController!.shouldControllNetworkActivityIndicator
-            = shouldControllNetworkActivityIndicator
+        self.authorizationViewController!.shouldControlNetworkActivityIndicator
+            = shouldControlNetworkActivityIndicator
 
         let navigationController = AuthorizationNavigationController(rootViewController: authorizationViewController!)
         navigationController.modalPresentationStyle = .formSheet
