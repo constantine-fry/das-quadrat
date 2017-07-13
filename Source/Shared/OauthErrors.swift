@@ -24,7 +24,7 @@ public enum QuadratOauthErrorCode: Int {
 extension NSError {
     
     /** Creates an error from string error returned by Foursquare server. */
-    class func quadratOauthErrorForString(_ string: String) -> NSError {
+    @objc class func quadratOauthErrorForString(_ string: String) -> NSError {
         let code: QuadratOauthErrorCode
         let description: String
         
