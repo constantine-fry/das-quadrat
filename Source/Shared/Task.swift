@@ -77,7 +77,6 @@ class UploadTask: Task {
     var  fileURL: URL?
     
     override func constructURLSessionTask() {
-        // swiftlint:disable force_cast
         var mutableRequest = self.request.URLRequest()
         
         let boundary = UUID().uuidString
@@ -100,7 +99,7 @@ class UploadTask: Task {
         }
         appendStringBlock("\r\n--\(boundary)--\r\n")
         
-        self.task = self.session?.URLSession.uploadTask(with: mutableRequest as URLRequest, from: body as Data,
+        self.task = self.session?.URLSession.uploadTask(with: mutableRequest, from: body as Data,
                                                         completionHandler: {
                                                             (data, response, error) -> Void in
             
