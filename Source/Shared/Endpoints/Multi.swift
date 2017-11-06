@@ -54,7 +54,7 @@ open class Multi: Endpoint {
             let encodedValue = encodeURIComponent(value)
             query += key + "=" + encodedValue + "&"
         }
-        query.remove(at: query.characters.index(before: query.endIndex))
+        query.remove(at: query.index(before: query.endIndex))
         return query
     }
     

@@ -172,7 +172,7 @@ open class Parameter {
         var result = String()
         for (key, value) in parameters {
             let parameters = key + "=" + value
-            if result.characters.count == 0 {
+            if result.count == 0 {
                 result += parameters
             } else {
                 result += "&" + parameters
