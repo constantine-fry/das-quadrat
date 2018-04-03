@@ -22,7 +22,7 @@ open class Multi: Endpoint {
         Use `subresponses` property of response object.
     */
     open func get(_ tasks: [Task], completionHandler: @escaping ResponseClosure) -> Task {
-        let firstTask = tasks.first as Task!
+        let firstTask = tasks.first as Task?
         var queries = [String]()
         for task in tasks {
             let request = task.request
