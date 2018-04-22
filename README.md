@@ -4,7 +4,7 @@ Das Quadrat [![Carthage compatible](https://img.shields.io/badge/Carthage-compat
 Das Quadrat is Foursquare API wrapper written in Swift.
 
 
-###Features
+### Features
 
 + Supports iOS and OSX.
 + Covers all API endpoints.
@@ -15,7 +15,7 @@ Das Quadrat is Foursquare API wrapper written in Swift.
 + Supports multiple accounts.
 
 
-###Installation
+### Installation
 
 #### Carthage Installation
 
@@ -50,9 +50,9 @@ pod 'QuadratTouch', '>= 1.0'
 
 You can add source code files directly into your project to support iOS 7.0.
 
-###Usage
+### Usage
 
-#####Setup session
+##### Setup session
 
 ```swift
 let client = Client(clientID:       "FOO.................FOO",
@@ -64,7 +64,7 @@ Session.setupSharedSessionWithConfiguration(configuration)
 let session = Session.sharedSession()
 ```
 
-#####Search request
+##### Search request
 
 ```swift
 var parameters = [Parameter.query:"Burgers"]
@@ -79,7 +79,7 @@ let searchTask = session.venues.search(parameters) {
 searchTask.start()
 ```
 
-#####Multi request
+##### Multi request
 
 ```swift
 let task1 = self.quadratSession.users.get()
@@ -92,7 +92,7 @@ let multiTask = self.quadratSession.multi.get([task1, task2]){
 multiTask.start()
 ```
 
-#####Native authorization
+##### Native authorization
 
 The library will attempt to authorize natively via the actual Foursquare app, if installed. It will switch to the app to authorize, and then switch back to your app on success. Currently, there is no mechanism in place in Foursquare's app to switch back to your app if the user cancels the authorization from there, so the user will need to return to your app manually if they choose to cancel the authorization.
 
@@ -103,11 +103,11 @@ To enable native authorization with Foursquare app you must add `foursquareauth`
 in info.plist file in your project.
 
 
-###Requirements
+### Requirements
 
 Swift 2.0 / iOS 8.0+ / Mac OS X 10.9+
 
-###License
+### License
 
 The BSD 2-Clause License. See License.txt for details.
 
