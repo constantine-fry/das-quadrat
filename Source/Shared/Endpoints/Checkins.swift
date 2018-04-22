@@ -34,7 +34,6 @@ open class Checkins: Endpoint {
         return self.getWithPath(path, parameters: parameters, completionHandler: completionHandler)
     }
     
-    
     // MARK: - Aspects
     
     /** https://developer.foursquare.com/docs/checkins/likes */

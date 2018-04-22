@@ -58,7 +58,6 @@ class AuthorizationWindowController: NSWindowController {
         self.loadAuthorizationURL()
     }
     
-    
     // MARK: - Delegate methods
     
     func webView(_ webView: WebView!, dragSourceActionMaskForPoint point: NSPoint) -> Int {

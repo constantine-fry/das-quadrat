@@ -12,7 +12,6 @@ public let QuadratResponseErrorDomain   = "QuadratOauthErrorDomain"
 public let QuadratResponseErrorTypeKey  = "errorType"
 public let QuadratResponseErrorDetailKey = "errorDetail"
 
-
 /**
     A response from Foursquare server.
     Read `Responses & Errors`:
@@ -36,7 +35,6 @@ open class Result: CustomStringConvertible {
         The URL which has been requested. 
     */
     open var URL: Foundation.URL?
-    
     
     /*
         Can contain error with following error domains:
@@ -77,7 +75,6 @@ open class Result: CustomStringConvertible {
     }
     
 }
-
 
 /** Response creation from HTTP response. */
 extension Result {

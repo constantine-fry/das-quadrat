@@ -54,7 +54,6 @@ open class Pages: Endpoint {
         return self.getWithPath(path, parameters: parameters, completionHandler: completionHandler)
     }
     
-    
     // MARK: - Actions
     
     /** https://developer.foursquare.com/docs/pages/follow */
