@@ -14,7 +14,8 @@ class MacAuthorizer: Authorizer {
     
     func authorize(_ window: NSWindow, completionHandler: @escaping (String?, NSError?) -> Void) {
         self.completionHandler = completionHandler
-        self.windowController = AuthorizationWindowController(windowNibName: "AuthorizationWindowController")
+        self.windowController = AuthorizationWindowController(windowNibName:
+            NSNib.Name(rawValue: "AuthorizationWindowController"))
         self.windowController?.authorizationURL = self.authorizationURL
         self.windowController?.redirectURL = self.redirectURL
         self.windowController?.delegate = self

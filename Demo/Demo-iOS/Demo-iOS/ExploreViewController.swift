@@ -179,8 +179,9 @@ SearchTableViewControllerDelegate, SessionAuthorizationDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "venueCell", for: indexPath)
             as! VenueTableViewCell
-        let item = self.venueItems![(indexPath as NSIndexPath).row] as JSONParameters!
-        self.configureCellWithItem(cell, item: item!)
+        if let item = self.venueItems?[(indexPath as NSIndexPath).row] {
+            self.configureCellWithItem(cell, item: item)
+        }
         return cell
     }
     

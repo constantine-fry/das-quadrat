@@ -79,8 +79,9 @@ class SearchTableViewController: UITableViewController, UISearchResultsUpdating 
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let venueInfo = self.venues![(indexPath as NSIndexPath).row] as JSONParameters!
-        self.delegate?.searchTableViewController(self, didSelectVenue: venueInfo!)
+        if let venueInfo = self.venues?[(indexPath as NSIndexPath).row] {
+            self.delegate?.searchTableViewController(self, didSelectVenue: venueInfo)
+        }
     }
 
 }
