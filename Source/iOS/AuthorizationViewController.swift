@@ -32,7 +32,7 @@ public class AuthorizationViewController: UIViewController, UIWebViewDelegate {
         Whether view controller should controll network activity indicator or not.
         Should be set before presenting view controller.
     */
-    internal var shouldControllNetworkActivityIndicator = false
+    @objc internal var shouldControllNetworkActivityIndicator = false
     
     private var networkActivityIndicator: NetworkActivityIndicatorController?
     private var activityIdentifier: Int?
@@ -120,7 +120,7 @@ public class AuthorizationViewController: UIViewController, UIWebViewDelegate {
     // MARK: -
     
     /** Updates UI to current status. */
-    func updateUI() {
+    @objc func updateUI() {
         switch self.status {
             
         case .loading:

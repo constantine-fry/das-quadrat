@@ -24,34 +24,34 @@ public enum QuadratOauthErrorCode: Int {
 extension NSError {
     
     /** Creates an error from string error returned by Foursquare server. */
-    class func quadratOauthErrorForString(_ string: String) -> NSError {
-        var code: QuadratOauthErrorCode!
-        var description: String!
+    @objc class func quadratOauthErrorForString(_ string: String) -> NSError {
+        let code: QuadratOauthErrorCode
+        let description: String
         
         switch string {
-            case "invalid_request":
-                code = .oauthInvalidRequest
-                description = "Oauth invalid request"
+        case "invalid_request":
+            code = .oauthInvalidRequest
+            description = "Oauth invalid request"
             
-            case "invalid_client":
-                code = .oauthInvalidClient
-                description = "Oauth invalid client"
+        case "invalid_client":
+            code = .oauthInvalidClient
+            description = "Oauth invalid client"
             
-            case "invalid_grant":
-                code = .oauthInvalidGrant
-                description = "Oauth invalid client"
+        case "invalid_grant":
+            code = .oauthInvalidGrant
+            description = "Oauth invalid client"
             
-            case "unauthorized_client":
-                code = .oauthUnauthorizedClient
-                description = "Oauth unauthorized client"
+        case "unauthorized_client":
+            code = .oauthUnauthorizedClient
+            description = "Oauth unauthorized client"
             
-            case "unsupported_grant_type":
-                code = .oauthUnsupportedGrantType
-                description = "Oauth unsupported grant type"
-        
-            default:
-                code = .oauthUnknownError
-                description = "Oauth unknown error"
+        case "unsupported_grant_type":
+            code = .oauthUnsupportedGrantType
+            description = "Oauth unsupported grant type"
+            
+        default:
+            code = .oauthUnknownError
+            description = "Oauth unknown error"
         }
         
         let info = [NSLocalizedDescriptionKey: description, QuadratOauthErrorOriginalStringKey: string]

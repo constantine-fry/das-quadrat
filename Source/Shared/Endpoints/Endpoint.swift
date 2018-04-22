@@ -24,7 +24,10 @@ open class Endpoint {
     
     init(session: Session) {
         self.session = session
-        self.baseURL = URL(string:session.configuration.server.apiBaseURL) as URL!
+        guard let baseURL = URL(string:session.configuration.server.apiBaseURL) else {
+            fatalError("Not an URL")
+        }
+        self.baseURL = baseURL
     }
     
     func getWithPath(_ path: String, parameters: Parameters?, completionHandler: ResponseClosure?) -> Task {

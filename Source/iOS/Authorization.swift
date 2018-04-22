@@ -30,10 +30,10 @@ extension Session {
     
     public func handleURL(url: URL) -> Bool {
         if let nativeAuthorizer = self.authorizer as? NativeTouchAuthorizer {
-           return nativeAuthorizer.handleURL(url: url) as Bool!
+           return nativeAuthorizer.handleURL(url: url)
         }
         let nativeAuthorizer = NativeTouchAuthorizer(configuration: self.configuration)
-        return nativeAuthorizer.handleURL(url: url) as Bool!
+        return nativeAuthorizer.handleURL(url: url)
     }
     
     public func authorizeWithViewController(viewController: UIViewController,

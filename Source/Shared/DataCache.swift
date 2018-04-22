@@ -76,7 +76,7 @@ class DataCache {
     func dataForKey(_ key: String) -> Data? {
         var result: Data?
         privateQueue.addOperation {
-            result = self.cache.object(forKey: key as NSString) as? Data
+            result = self.cache.object(forKey: key as NSString) as Data?
             if result == nil {
                 let targetURL = self.directoryURL.appendingPathComponent(key)
                 result = try? Data(contentsOf: targetURL)

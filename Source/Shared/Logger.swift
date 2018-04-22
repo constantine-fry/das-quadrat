@@ -32,7 +32,8 @@ open class ConsoleLogger: Logger {
     
     open func session(_ session: Session, didReceiveResult result: Result) {
         print("")
-        print("Session did receive response:  \(result.HTTPSTatusCode), \(result.URL)")
+        print("Session did receive response:  " + String(describing: result.HTTPSTatusCode) + ", "
+            + String(describing: result.URL))
         if let warning = result.response?["warning"] as? [String: AnyObject] {
             if let text = warning["text"] as? String {
                 print("Warning: \(text)")
